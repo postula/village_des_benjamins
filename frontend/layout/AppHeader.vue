@@ -2,7 +2,7 @@
   <header class="header-global">
     <base-nav class="navbar-main" transparent type="" effect="light" expand>
       <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-        <img src="img/brand/village_des_benjamins.png" alt="logo" />
+        <img src="static/brand/village_des_benjamins.png" alt="logo" />
       </router-link>
 
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">

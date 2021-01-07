@@ -113,7 +113,7 @@
             <div class="container">
                 <div class="row row-grid align-items-center">
                     <div class="col-md-6 order-md-2">
-                        <img src="img/theme/promo-1.png" class="img-fluid floating">
+                        <img src="static/theme/promo-1.png" class="img-fluid floating">
                     </div>
                     <div class="col-md-6 order-md-1">
                         <div class="pr-md-5">
@@ -197,7 +197,7 @@
                 <div class="row row-grid align-items-center">
                     <div class="col-md-6 order-lg-2 ml-lg-auto">
                         <div class="position-relative pl-md-5">
-                            <img src="img/ill/ill-2.svg" class="img-center img-fluid">
+                            <img src="static/ill/ill-2.svg" class="img-center img-fluid">
                         </div>
                     </div>
                     <div class="col-lg-6 order-lg-1">

@@ -22,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41"
+SECRET_KEY = os.getenv("SECRET_KEY", "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "true") == "true"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(',')
 
@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-CORS_ALLOWED_ORIGINS = ["http://village-des-benjamins.be:8000"]
+CORS_ALLOWED_ORIGINS = ALLOWED_HOSTS
 
 JWT_AUTH = {
     "JWT_ALLOW_REFRESH": True,

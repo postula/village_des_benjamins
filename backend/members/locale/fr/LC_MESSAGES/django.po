@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-22 09:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: members/models.py:22
+msgid "The Email must be set"
+msgstr ""
+
+#: members/models.py:38
+msgid "Superuser must have is_staff=True."
+msgstr "Administrateur doit avoir is_staff=True"
+
+#: members/models.py:40
+msgid "Superuser must have is_superuser=True."
+msgstr "Administrateur doit avoir is_superuser=True"
+
+#: members/models.py:46
+msgid "email address"
+msgstr "addresse email"
+
+#: members/models.py:77
+msgid "member"
+msgstr "membre"
+
+#: members/models.py:78
+msgid "members"
+msgstr "membres"
+
+#: members/models.py:94
+msgid "first name"
+msgstr "prénom"
+
+#: members/models.py:95
+msgid "last name"
+msgstr "nom"
+
+#: members/models.py:96
+msgid "birth date"
+msgstr "date de naissance"
+
+#: members/models.py:98
+msgid "gender"
+msgstr "genre"
+
+#: members/models.py:99
+msgid "male"
+msgstr "garçon"
+
+#: members/models.py:99
+msgid "female"
+msgstr "fille"
+
+#: members/models.py:103
+msgid "parent"
+msgstr "parent"
+
+#: members/models.py:126
+msgid "child"
+msgstr "enfant"
+
+#: members/models.py:127
+msgid "children"
+msgstr "enfants"

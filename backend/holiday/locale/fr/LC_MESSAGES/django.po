@@ -1,0 +1,150 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-22 09:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: holiday/models.py:19 holiday/models.py:135
+msgid "name"
+msgstr "nom"
+
+#: holiday/models.py:21 holiday/models.py:118 holiday/models.py:137
+msgid "price"
+msgstr "prix"
+
+#: holiday/models.py:21
+msgid "price per day"
+msgstr "prix par jour"
+
+#: holiday/models.py:24
+msgid "start date"
+msgstr "date de début"
+
+#: holiday/models.py:25
+msgid "end date"
+msgstr "date de fin"
+
+#: holiday/models.py:26
+msgid "description"
+msgstr "description"
+
+#: holiday/models.py:27
+msgid "registration open"
+msgstr "inscription ouverte"
+
+#: holiday/models.py:29
+msgid "sections"
+msgstr "groupes"
+
+#: holiday/models.py:35 holiday/models.py:123
+msgid "registrations"
+msgstr "inscriptions"
+
+#: holiday/models.py:45 holiday/models.py:54 holiday/models.py:85
+msgid "holiday"
+msgstr "vacances"
+
+#: holiday/models.py:46
+msgid "holidays"
+msgstr "vacances"
+
+#: holiday/models.py:51 holiday/models.py:95
+msgid "section"
+msgstr "groupe"
+
+#: holiday/models.py:56
+msgid "capacity"
+msgstr "capacité"
+
+#: holiday/models.py:64
+#, fuzzy
+#| msgid "capacity"
+msgid "remaining capacity"
+msgstr "capacité"
+
+#: holiday/models.py:74
+msgid "an outing can only be done during the holiday date, please correct it"
+msgstr "une sortie ne peut être organisé que pendant les dates de vacances, merci de corriger"
+
+#: holiday/models.py:79
+msgid "section holiday"
+msgstr "vacances de groupe"
+
+#: holiday/models.py:80
+msgid "section holidays"
+msgstr "vacances de groupes"
+
+#: holiday/models.py:88
+msgid "child"
+msgstr "enfant"
+
+#: holiday/models.py:102
+msgid "status"
+msgstr "statut"
+
+#: holiday/models.py:107
+msgid "dates"
+msgstr "dates"
+
+#: holiday/models.py:112
+msgid "number of days"
+msgstr "nombre de jour"
+
+#: holiday/models.py:122
+msgid "registration"
+msgstr "inscription"
+
+#: holiday/models.py:130
+#, fuzzy
+#| msgid "section holiday"
+msgid "section_holiday"
+msgstr "vacances de groupe"
+
+#: holiday/models.py:134
+#, fuzzy
+#| msgid "dates"
+msgid "date"
+msgstr "dates"
+
+#: holiday/models.py:138
+msgid "departure_time"
+msgstr "heure de départ"
+
+#: holiday/models.py:139
+msgid "arrival_time"
+msgstr "heure d'arrivée"
+
+#: holiday/models.py:140
+msgid "transport"
+msgstr "transport"
+
+#: holiday/models.py:143
+msgid "outing"
+msgstr "sortie"
+
+#: holiday/models.py:144
+msgid "outings"
+msgstr "sorties"
+
+#~ msgid "pending"
+#~ msgstr "payment en attente"
+
+#~ msgid "paid"
+#~ msgstr "payé"
+
+#~ msgid "cancelled"
+#~ msgstr "annulé"

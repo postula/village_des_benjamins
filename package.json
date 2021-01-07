@@ -7,6 +7,9 @@
   "engines": {
     "node": "15.x"
   },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
+  },
   "dependencies": {
     "axios": "^0.21.0",
     "bootstrap-vue": "^2.0.4",

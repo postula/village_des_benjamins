@@ -1,6 +1,5 @@
 
 const path = require('path')
-const BundleTracker = require("webpack-bundle-tracker");
 
 module.exports = {
   publicPath: "/static/",
@@ -10,11 +9,11 @@ module.exports = {
     config.publicPath = '/static/';
     config.output.filename("[name].js");
     config.output.chunkFilename("[id]-[chunkhash].js");
-
+    config.entry("app").clear().add("./frontend/main.js").end();
+    config.resolve.alias.set("@", path.join(__dirname, "./frontend"))
     config.optimization.splitChunks(false);
 
     config.resolve.alias.set("__STATIC__", "static");
-
     config.devServer
       // the first 3 lines of the following code have been added to the configuration
       .public("http://127.0.0.1:8080")

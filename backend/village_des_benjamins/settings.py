@@ -27,7 +27,7 @@ SECRET_KEY = "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["village-des-benjamins.be"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOST", "village-des-benjamins.be").split(',')
 
 
 # Application definition

@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_SCHEME = os.getenv("CORS_SCHEME", "http")
-CORS_ALLOWED_ORIGINS = lsit(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
+CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
 
 
 JWT_AUTH = {

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "http://0.0.0.0:8080/precache-manifest.400dfb0e7a58358ad130b9a07caaad9c.js"
+  "/static/precache-manifest.a23e6b97b5fdb419959108191dde2024.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "village_des_benjamins_frontend"});

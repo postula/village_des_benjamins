@@ -17,3 +17,4 @@ pytz==2020.5
 sendgrid==6.4.8
 sqlparse==0.4.1
 starkbank-ecdsa==1.1.0
+whitenoise==5.2.0

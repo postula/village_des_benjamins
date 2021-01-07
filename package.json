@@ -4,13 +4,14 @@
   "description": "Frontend du site du village des benjamins",
   "main": "index.js",
   "license": "MIT",
-  "optionalDependencies": {
-    "fsevents": "2.1.2"
+  "engines": {
+    "node": "15.x"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "bootstrap-vue": "^2.0.4",
     "flatpickr": "^4.5.1",
+    "fsevents": "^1.2.7",
     "jwt-decode": "^3.1.2",
     "luxon": "^1.25.0",
     "nouislider": "^11.1.0",

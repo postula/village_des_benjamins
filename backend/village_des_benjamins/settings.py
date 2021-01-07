@@ -53,6 +53,7 @@ AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -72,7 +73,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets"),
     #os.path.join(BASE_DIR, "frontend/dist"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": DEBUG,

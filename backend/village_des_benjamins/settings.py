@@ -71,7 +71,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets"),
-    #os.path.join(BASE_DIR, "frontend/dist"),
+    os.path.join(BASE_DIR, "../frontend/dist"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -174,15 +174,13 @@ JWT_AUTH = {
     "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
 }
 
-AWS_ACCESS_KEY_ID = "AKIA6MKUTNCKZ47GICUW"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_STORAGE_BUCKET_NAME = "village-des-benjamins.be"
 AWS_S3_REGION_NAME = "eu-central-1"
 AWS_LOCATION = "website_uploads/"
 
-SENDGRID_API_KEY = (
-    "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"
-)
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
 SENDGRID_FROM_MAIL = "info@village-des-benjamins.ga"

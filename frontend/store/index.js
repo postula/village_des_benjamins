@@ -7,7 +7,7 @@ import jwt_decode from 'jwt-decode'
 import router from '../router'
 Vue.use(Vuex);
 
-const API_URL = 'http://village-des-benjamins.ga/api/';
+const API_URL = 'http://www.village-des-benjamins.ga/api/';
 const OBTAIN_URL = API_URL + 'jwt/obtain';
 const REFRESH_URL = API_URL + 'jwt/refresh';
 const VERIFY_URL = API_URL + 'jwt/verify';

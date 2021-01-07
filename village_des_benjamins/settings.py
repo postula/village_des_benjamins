@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
-    "webpack_loader",
     "django_better_admin_arrayfield",
     "members",
     "section",
@@ -67,7 +66,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "village_des_benjamins.urls"
 
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend/dist")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets"),
@@ -75,13 +74,6 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": DEBUG,
-        "BUNDLE_DIR_NAME": "frontend/dist/",  # must end with slash
-        "STATS_FILE": os.path.join(FRONTEND_DIR, "webpack-stats.json"),
-    }
-}
 
 TEMPLATES = [
     {

@@ -40,7 +40,7 @@ urlpatterns = [
     path("api/jwt/verify", verify_jwt_token),
     path(
         "",
-        TemplateView.as_view(template_name="application.html"),
+        TemplateView.as_view(template_name="index.html"),
         name="app",
     ),
 ]

@@ -15,7 +15,7 @@ class UserAdmin(BaseUserAdmin):
     inlines = [ChildInline]
     fieldsets = [
         [None, {"fields": ["first_name", "last_name", "email",  "password", "photo"]}],
-        [_("Connection"), {"fields": ["active", "is_staff"]}]
+        [_("Connection"), {"fields": ["is_active", "is_staff"]}]
     ]
     list_display = [
         "email",

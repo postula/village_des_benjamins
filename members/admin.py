@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group
 
 from members.models import User, Child
 
@@ -35,4 +36,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 # Re-register UserAdmin
+admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)

@@ -14,7 +14,7 @@ class ChildInline(admin.TabularInline):
 class UserAdmin(BaseUserAdmin):
     inlines = [ChildInline]
     fieldsets = [
-        [None, {"fields": ["first_name", "last_name", "email", "password", "photo"]}]
+        [None, {"fields": ["first_name", "last_name", "email", "active", "password", "photo"]}]
     ]
     list_display = [
         "email",

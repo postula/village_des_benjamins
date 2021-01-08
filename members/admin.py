@@ -23,6 +23,12 @@ class UserAdmin(BaseUserAdmin):
         "is_staff",
         "photo_list_preview",
     ]
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('first_name', 'last_name', 'email', 'password1', 'password2'),
+        }),
+    )
     search_fields = ("email",)
     ordering = ("email",)
 

@@ -160,7 +160,8 @@ REST_FRAMEWORK = {
     ),
 }
 
-CORS_SCHEME = os.getenv("CORS_SCHEME", "http")
+SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
+CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
 
 

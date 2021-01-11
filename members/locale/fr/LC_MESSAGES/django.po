@@ -20,7 +20,7 @@ msgstr ""
 
 #: admin.py:25
 msgid "team"
-msgstr ""
+msgstr "équipe"
 
 #: models.py:23
 msgid "The Email must be set"

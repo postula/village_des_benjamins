@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
     inlines = [ChildInline]
     fieldsets = [
         [None, {"fields": ["first_name", "last_name", "email",  "password", "photo", "is_active"]}],
-        [_("team"), {"fields": ["is_staff", 'role', 'visible_on_site']}]
+        [_("team"), {"fields": ["is_staff", 'role', 'groups', 'visible_on_site']}]
     ]
     list_display = [
         "email",
@@ -43,6 +43,6 @@ class UserAdmin(BaseUserAdmin):
 
 
 # Re-register UserAdmin
-admin.site.unregister(Group)
+#admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
 admin.site.register(StaffFunction, StaffFunctionAdmin)

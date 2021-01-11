@@ -5,7 +5,9 @@ from rest_framework.permissions import AllowAny
 from members.models import User, Child
 from members.permissions import IsOwnerOrReadOnly, IsParent
 from members.serializers import UserSerializer, ChildSerializer, TeamSerializer
+from logging import getLogger
 
+logger = getLogger(__name__)
 
 class UserViewSet(
     mixins.CreateModelMixin,
@@ -16,8 +18,11 @@ class UserViewSet(
     serializer_class = UserSerializer
 
     def get_permissions(self):
+        logger.error(self.action)
         if self.action == "retrieve":
             self.permission_classes = [IsOwnerOrReadOnly]
+        elif self.action == "create":
+            self.permission_classes = [AllowAny]
         return super().get_permissions()
 
 

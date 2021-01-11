@@ -31,6 +31,8 @@
                   placeholder="Prénom"
                   v-model="first_name"
                   addon-left-icon="ni ni-hat-3"
+                  required
+                  :error="errors.first_name"
                 >
                 </base-input>
                 <base-input
@@ -38,7 +40,9 @@
                   class="mb-3"
                   placeholder="Nom"
                   v-model="last_name"
+                  required
                   addon-left-icon="ni ni-hat-3"
+                  :error="errors.last_name"
                 >
                 </base-input>
                 <base-input
@@ -46,6 +50,9 @@
                   class="mb-3"
                   placeholder="Email"
                   v-model="email"
+                  type="email"
+                  required
+                  :error="errors.email"
                   addon-left-icon="ni ni-email-83"
                 >
                 </base-input>
@@ -54,6 +61,8 @@
                   type="password"
                   placeholder="Mot de passe"
                   v-model="password"
+                  required
+                  :error="errors.password"
                   addon-left-icon="ni ni-lock-circle-open"
                 >
                 </base-input>
@@ -71,15 +80,43 @@
   </section>
 </template>
 <script>
+import * as types from "@/store/mutation-types";
+
 export default {
   data: () => ({
     first_name: "",
     last_name: "",
     email: "",
     password: "",
+    errors: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+    },
   }),
   methods: {
     signup: function () {
+      let has_errors = false;
+      if (! this.first_name) {
+        has_errors = true;
+        this.errors.first_name = "Ce champs est obligatoire";
+      }
+      if (! this.last_name) {
+        has_errors = true;
+        this.errors.last_name = "Ce champs est obligatoire";
+      }
+      if (! this.email) {
+        has_errors = true;
+        this.errors.email = "Ce champs est obligatoire";
+      }
+      if (! this.password) {
+        has_errors = true;
+        this.errors.password = "Ce champs est obligatoire";
+      }
+      if (has_errors) {
+        return;
+      }
       let info = {
         first_name: this.first_name,
         last_name: this.last_name,
@@ -87,8 +124,9 @@ export default {
         password: this.password,
       };
 
+
       this.$store
-        .dispatch("signup", info)
+        .dispatch(types.REGISTER, info)
         .then(() => this.$router.push("/login"));
     },
   },

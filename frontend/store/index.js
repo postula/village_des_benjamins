@@ -72,6 +72,13 @@ const mutations = {
     },
 };
 const actions = {
+    [types.REGISTER]: ({ commit }, payload) => {
+        axios.post(
+            USERS_URL + "/", payload
+        ).then(r => {
+            console.log(r);
+        })
+    },
     [types.UPDATE_TOKEN]: ({ commit }, payload) => {
         axios.post(
             OBTAIN_URL, payload.credentials
@@ -240,7 +247,7 @@ export function getUser(userID) {
 const getters = {
     getCurrentUserId: state => state.currentUser.user_id,
     IsAuthenticated: state => state.currentUser.authenticated,
-    getUser: state => id => state.users[id],
+    getUser: state => id => state.users[id] || {},
     getChildren: state => state.children,
     getHolidays: state => state.holidays,
     getRegistrations: state => state.registrations,

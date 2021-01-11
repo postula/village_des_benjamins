@@ -1,6 +1,7 @@
 export const UPDATE_TOKEN = 'UPDATE_TOKEN'
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 export const INSPECT_TOKEN = 'INSPECT_TOKEN'
+export const REGISTER = 'REGISTER'
 export const LOGOUT = 'LOGOUT'
 
 export const GET_USER = 'GET_USER'

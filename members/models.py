@@ -6,6 +6,7 @@ from django.utils.html import mark_safe
 from calendar import monthrange
 from datetime import date, datetime, timedelta
 from section.models import Section
+from ordered_model.models import OrderedModel
 
 
 class CustomUserManager(BaseUserManager):
@@ -45,6 +46,8 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
     photo = models.ImageField(null=True, blank=True, upload_to="members/")
+    role = models.ForeignKey(verbose_name=_("role"), to="members.StaffFunction", null=True, blank=True, on_delete=models.SET_NULL)
+    visible_on_site = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -125,3 +128,14 @@ class Child(models.Model):
     class Meta:
         verbose_name = _("child")
         verbose_name_plural = _("children")
+
+
+class StaffFunction(OrderedModel):
+    name = models.CharField(_("name"), max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta(OrderedModel.Meta):
+        verbose_name = _("staff_function")
+        verbose_name_plural = _("staff_functions")

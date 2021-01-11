@@ -1,9 +1,10 @@
 # from django.contrib.auth.models import User
 from rest_framework import mixins, viewsets
+from rest_framework.permissions import AllowAny
 
 from members.models import User, Child
 from members.permissions import IsOwnerOrReadOnly, IsParent
-from members.serializers import UserSerializer, ChildSerializer
+from members.serializers import UserSerializer, ChildSerializer, TeamSerializer
 
 
 class UserViewSet(
@@ -28,3 +29,9 @@ class ChildViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve" or self.action == "list":
             self.permission_classes = [IsParent]
         return super().get_permissions()
+
+
+class TeamViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    permission_classes = [AllowAny]
+    serializer_class = TeamSerializer
+    queryset = User.objects.filter(is_staff=True, visible_on_site=True).order_by("role__order")

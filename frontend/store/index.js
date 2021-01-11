@@ -15,6 +15,8 @@ const USERS_URL = API_URL + 'users';
 const CHILDREN_URL = API_URL + 'children';
 const HOLIDAYS_URL = API_URL + 'holidays';
 const REGISTRATIONS_URL = API_URL + 'registrations';
+const CONTENTS_URL = API_URL + 'contents';
+const TEAM_MEMBERS_URL = API_URL + 'team_members';
 
 const state = {
     accessToken: null,
@@ -23,6 +25,8 @@ const state = {
     children: [],
     holidays: [],
     registrations: [],
+    contents: [],
+    team_members: [],
 };
 const mutations = {
     [types.UPDATE_TOKEN]: (state, payload) => {
@@ -59,7 +63,13 @@ const mutations = {
     },
     [types.GET_REGISTRATIONS]: (state, payload) => {
         state.registrations = payload;
-    }
+    },
+    [types.GET_CONTENTS]: (state, payload) => {
+        state.contents = payload;
+    },
+    [types.GET_TEAM_MEMBERS]: (state, payload) => {
+        state.team_members = payload;
+    },
 };
 const actions = {
     [types.UPDATE_TOKEN]: ({ commit }, payload) => {
@@ -193,6 +203,28 @@ const actions = {
             console.error(e)
         });
     },
+    [types.GET_CONTENTS]: ({ commit }) => {
+        axios.get(
+            CONTENTS_URL
+        ).then((r) => {
+            if (r.data) {
+                commit(types.GET_CONTENTS, r.data)
+            }
+        }).catch((e) => {
+            console.error(e)
+        });
+    },
+    [types.GET_TEAM_MEMBERS]: ({ commit }) => {
+        axios.get(
+            TEAM_MEMBERS_URL
+        ).then((r) => {
+            if (r.data) {
+                commit(types.GET_TEAM_MEMBERS, r.data)
+            }
+        }).catch((e) => {
+            console.error(e)
+        });
+    },
 
 };
 
@@ -212,6 +244,9 @@ const getters = {
     getChildren: state => state.children,
     getHolidays: state => state.holidays,
     getRegistrations: state => state.registrations,
+    getIntroduction: state => state.contents.filter(c => c.section === "introduction")[0],
+    getServices: state => state.contents.filter(c => c.section === "service"),
+    getTeamMembers: state => state.team_members,
 }
 
 const store = new Vuex.Store({

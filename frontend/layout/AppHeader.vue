@@ -2,13 +2,13 @@
   <header class="header-global">
     <base-nav class="navbar-main" transparent type="" effect="light" expand>
       <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-        <img src="static/brand/village_des_benjamins.png" alt="logo" />
+        <img class="logo" src="static/brand/village_des_benjamins.png" alt="logo" />
       </router-link>
 
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <li class="nav-item">
           <router-link to="/" class="nav-link nav-link-icon">
-            Acceuil
+            Accueil
           </router-link>
         </li>
         <li class="nav-item">
@@ -75,5 +75,8 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
+.navbar-brand, .navbar-brand img.logo {
+  height: 100px;
+}
 </style>

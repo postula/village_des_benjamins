@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "django_better_admin_arrayfield",
+    "ordered_model",
     "members",
     "section",
     "holiday",
+    "site_content"
 ]
 
 AUTH_USER_MODEL = "members.User"

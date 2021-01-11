@@ -4,6 +4,19 @@ from rest_framework import serializers
 from members.models import User, Child
 
 
+class TeamSerializer(serializers.ModelSerializer):
+    role = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "photo",
+            "role"
+        ]
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)

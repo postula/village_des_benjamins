@@ -22,14 +22,17 @@ from rest_framework_jwt.views import (
     refresh_jwt_token,
     verify_jwt_token,
 )
-from members.views import UserViewSet, ChildViewSet
+from members.views import UserViewSet, ChildViewSet, TeamViewSet
 from holiday.views import HolidayViewSet, RegistrationViewSet
+from site_content.views import ContentViewSet
 
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(r"children", ChildViewSet)
+router.register(r"team_members", TeamViewSet)
 router.register(r"holidays", HolidayViewSet)
 router.register(r"registrations", RegistrationViewSet)
+router.register(r"contents", ContentViewSet)
 
 
 urlpatterns = [

@@ -24,7 +24,8 @@ module.exports = {
       .watchOptions({
         poll: 1000, ignored: [
           path.resolve(__dirname, 'dist'),
-          path.resolve(__dirname, 'node_modules')
+          path.resolve(__dirname, 'node_modules'),
+          path.resolve(__dirname, 'venv'),
         ]
       })
       .https(false)
@@ -34,6 +35,13 @@ module.exports = {
   },
   css: {
     // Enable CSS source maps.
-    sourceMap: process.env.NODE_ENV !== 'production'
+    sourceMap: process.env.NODE_ENV !== 'production',
+    loaderOptions: {
+      sass: {
+        data: `
+        @import "@/scss/_variables.scss";
+      `
+      }
+    }
   }
 };

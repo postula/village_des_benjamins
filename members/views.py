@@ -1,9 +1,9 @@
 # from django.contrib.auth.models import User
 from rest_framework import mixins, viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from members.models import User, Child
-from members.permissions import IsOwnerOrReadOnly, IsParent
+from members.permissions import IsOwnerOrReadOnly
 from members.serializers import UserSerializer, ChildSerializer, TeamSerializer
 from logging import getLogger
 
@@ -18,7 +18,6 @@ class UserViewSet(
     serializer_class = UserSerializer
 
     def get_permissions(self):
-        logger.error(self.action)
         if self.action == "retrieve":
             self.permission_classes = [IsOwnerOrReadOnly]
         elif self.action == "create":
@@ -30,10 +29,11 @@ class ChildViewSet(viewsets.ModelViewSet):
     queryset = Child.objects.all()
     serializer_class = ChildSerializer
 
-    def get_permissions(self):
-        if self.action == "retrieve" or self.action == "list":
-            self.permission_classes = [IsParent]
-        return super().get_permissions()
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.action in ["retrieve", "list"]:
+            qs = qs.filter(parent=self.request.user)
+        return qs
 
 
 class TeamViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

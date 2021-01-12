@@ -101,6 +101,7 @@
                           <th scope="col">Date de naissance</th>
                           <th scope="col">Sexe</th>
                           <th scope="col">Groupe</th>
+                          <th scope="col">Statut</th>
                           <th scope="col"></th>
                           <th scope="col"></th>
                         </tr>
@@ -121,6 +122,9 @@
                           </td>
                           <td class="align-middle">
                             {{ child.section || "Pas de groupe disponible" }}
+                          </td>
+                          <td class="align-middle">
+                            {{child_statuses[child.status]}}
                           </td>
                           <td>
                             <base-button
@@ -321,6 +325,10 @@ export default {
   },
   data() {
     return {
+      child_statuses: {
+        "registered": "Enregistrer",
+        "in_validation": "Validation"
+      },
       userData: "",
       modal: { show: false, child: {}, errors: {} },
       picture_modal: { show: false },

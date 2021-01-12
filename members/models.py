@@ -108,6 +108,12 @@ class Child(models.Model):
         to="members.User",
         on_delete=models.CASCADE,
     )
+    status = models.CharField(
+        _("gender"),
+        choices=[("in_validation", _("in_validation")), ("registered", _("registered"))],
+        max_length=50,
+        default="in_validation"
+    )
 
     @property
     def age(self):

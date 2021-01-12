@@ -17,6 +17,12 @@ class ChildInline(admin.TabularInline):
     extra = 0
 
 
+class ChildAdmin(admin.ModelAdmin):
+    model = Child
+    list_display = ["parent", "first_name", "last_name", "status"]
+    search_fields = ["parent", "status"]
+
+
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [ChildInline]
@@ -45,4 +51,5 @@ class UserAdmin(BaseUserAdmin):
 # Re-register UserAdmin
 #admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
+admin.site.register(Child, ChildAdmin)
 admin.site.register(StaffFunction, StaffFunctionAdmin)

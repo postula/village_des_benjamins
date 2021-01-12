@@ -69,4 +69,5 @@ class ChildSerializer(serializers.ModelSerializer):
             "section",
             "parent",
             "holidays_booked",
+            "status"
         ]

@@ -63,6 +63,7 @@ class HolidaySection(models.Model):
         verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE
     )
     capacity = models.IntegerField(_("capacity"))
+    description = models.TextField(_("description"), blank=True, null=True)
 
     def _remaining_capacity(self):
         return (

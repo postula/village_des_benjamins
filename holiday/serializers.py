@@ -51,7 +51,7 @@ class HolidaySectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HolidaySection
-        fields = ["capacity", "section_id", "section_name", "capacities", "outings"]
+        fields = ["capacity", "section_id", "section_name", "capacities", "outings", "description"]
 
 
 class HolidaySerializer(serializers.ModelSerializer):

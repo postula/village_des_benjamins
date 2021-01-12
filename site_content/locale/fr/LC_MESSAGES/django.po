@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 08:21+0000\n"
+"POT-Creation-Date: 2021-01-12 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,26 +22,26 @@ msgstr ""
 msgid "site_content"
 msgstr "Contenu du site"
 
-#: models.py:6 models.py:18
+#: models.py:7 models.py:19
 msgid "name"
 msgstr "Nom"
 
-#: models.py:12 models.py:22
+#: models.py:13 models.py:23
 msgid "site_section"
 msgstr "Rubrique du site"
 
-#: models.py:13
+#: models.py:14
 msgid "site_sections"
 msgstr "Rubriques du site"
 
-#: models.py:19
+#: models.py:20
 msgid "icon"
 msgstr "icône"
 
-#: models.py:20
+#: models.py:21
 msgid "description"
 msgstr "description"
 
-#: models.py:31 models.py:32
+#: models.py:33 models.py:34
 msgid "content"
 msgstr "contenu"

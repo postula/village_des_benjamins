@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-22 09:08+0000\n"
+"POT-Creation-Date: 2021-01-12 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: section/models.py:6
+#: models.py:6
 msgid "name"
-msgstr ""
+msgstr "Nom"
 
-#: section/models.py:7
+#: models.py:7
 msgid "minimum age"
 msgstr "age minimum"
 
-#: section/models.py:8
+#: models.py:8
 msgid "maximum age"
 msgstr "age maximum"
 
-#: section/models.py:10
+#: models.py:10
 msgid "educator"
 msgstr "éducatrice"
 
-#: section/models.py:20
+#: models.py:20
 msgid "section"
 msgstr "groupe"
 
-#: section/models.py:21
+#: models.py:21
 msgid "sections"
 msgstr "groupes"

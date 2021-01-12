@@ -79,7 +79,7 @@
                               </span>
 
                               <div class="mt-1">
-                                {{ holiday.description }}
+                                {{ section.description }}
                               </div>
                               <div v-if="section.outings.length > 0">
                                 <h4 class="mt-2">Sorties</h4>

@@ -7,6 +7,9 @@ from django.conf import settings
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 registration_statuses = [
@@ -250,8 +253,10 @@ def send_registration_notification(sender, created, **kwargs):
         ),
     )
     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-    response = sg.send(message)
-    print(response.status_code, response.body, response.headers)
+    try:
+        response = sg.send(message)
+    except Exception as e:
+        logger.exception(e)
 
 
 models.signals.post_save.connect(send_registration_notification, sender=Registration)

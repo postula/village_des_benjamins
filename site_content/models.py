@@ -1,4 +1,5 @@
 from django.db import models
+from ordered_model.models import OrderedModel
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -14,7 +15,7 @@ class SiteSection(models.Model):
 
 
 # Create your models here.
-class Content(models.Model):
+class Content(OrderedModel):
     name = models.CharField(_("name"), max_length=255)
     icon = models.CharField(_("icon"), max_length=255, help_text="https://fontawesome.com/v4.7.0/icons/", blank=True, null=True)
     description = models.TextField(_("description"))
@@ -23,10 +24,11 @@ class Content(models.Model):
         to="site_content.SiteSection",
         on_delete=models.CASCADE
     )
+    order_with_respect_to = "section"
 
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(OrderedModel.Meta):
         verbose_name = _("content")
         verbose_name_plural = _("content")

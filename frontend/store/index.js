@@ -252,7 +252,7 @@ const getters = {
     getHolidays: state => state.holidays,
     getRegistrations: state => state.registrations,
     getIntroduction: state => state.contents.filter(c => c.section === "introduction")[0],
-    getServices: state => state.contents.filter(c => c.section === "service"),
+    getServices: state => state.contents.filter(c => c.section === "service").sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0)),
     getTeamMembers: state => state.team_members,
 }
 

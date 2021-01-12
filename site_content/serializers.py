@@ -18,6 +18,7 @@ class ContentSerializer(serializers.ModelSerializer):
             "section",
             "description",
             "icon",
+            "order",
         ]
         model = Content
 

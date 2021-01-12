@@ -20,7 +20,7 @@ class ChildInline(admin.TabularInline):
 class ChildAdmin(admin.ModelAdmin):
     model = Child
     list_display = ["parent", "first_name", "last_name", "status"]
-    search_fields = ["parent", "status"]
+    list_filter = ["parent", "status"]
 
 
 # Define a new User admin

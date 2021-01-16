@@ -170,8 +170,8 @@
                           v-model="contactMail"
                           addon-left-icon="ni ni-email-83">
               </base-input>
-              <base-input required v-model="contactMessage" class="mb-4">
-                                    <textarea class="form-control form-control-alternative" name="name" rows="4"
+              <base-input class="mb-4">
+                                    <textarea v-model="contactMessage" required class="form-control form-control-alternative" name="name" rows="4"
                                               cols="80" placeholder="Votre message..."></textarea>
               </base-input>
               <base-button type="default" round block size="lg" @click="sendMessage">

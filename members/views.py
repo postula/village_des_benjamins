@@ -39,4 +39,4 @@ class ChildViewSet(viewsets.ModelViewSet):
 class TeamViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [AllowAny]
     serializer_class = TeamSerializer
-    queryset = User.objects.filter(is_staff=True, visible_on_site=True).order_by("role__order")
+    queryset = User.objects.filter(is_staff=True, visible_on_site=True).order_by("role__order", "first_name")

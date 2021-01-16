@@ -5,11 +5,24 @@ from rest_framework import serializers
 
 from site_content.models import (
     Content,
+    SiteSection,
 )
 
 
+class SiteSectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = [
+            "id",
+            "name",
+            "key",
+            "description"
+        ]
+        model = SiteSection
+
+
 class ContentSerializer(serializers.ModelSerializer):
-    section = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    section = serializers.SlugRelatedField(slug_field="key", read_only=True)
 
     class Meta:
         fields = [

@@ -181,11 +181,11 @@ html_template = """
     <meta name="x-apple-disable-message-reformatting">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="telephone=no" name="format-detection">
-    <title>New email</title>
+    <title>Réservation</title>
 </head>
 
 <body>
-    <h3> Bonjour, {parent_name},<br></h3>
+    <h3> Bonjour {parent_name},<br></h3>
     <p>
         Nous avons bien reçu l'inscription pour les
         vacances de {holiday_name} pour

@@ -6,6 +6,7 @@ from members.models import User, Child
 
 class TeamSerializer(serializers.ModelSerializer):
     role = serializers.SlugRelatedField(slug_field="name", read_only=True)
+
     class Meta:
         model = User
         fields = [

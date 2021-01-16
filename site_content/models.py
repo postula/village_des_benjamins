@@ -4,7 +4,9 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SiteSection(models.Model):
+    key = models.CharField(_("key"), max_length=255)
     name = models.CharField(_("name"), max_length=255)
+    description = models.TextField(_("description"), blank=True, null=True)
 
     def __str__(self):
         return self.name

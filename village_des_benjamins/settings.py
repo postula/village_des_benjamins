@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     "members",
     "section",
     "holiday",
-    "site_content"
+    "site_content",
+    "parent_messages",
 ]
 
 AUTH_USER_MODEL = "members.User"

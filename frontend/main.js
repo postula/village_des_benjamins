@@ -23,12 +23,16 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import Argon from "./plugins/argon-kit";
 import * as backendAPI from './common/backendAPI'
+import titleMixin from './mixins/titleMixin';
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$api = backendAPI;
 
 Vue.use(Argon);
 Vue.use(VueAxios, Axios)
+Vue.mixin(titleMixin);
+
 new Vue({
   router,
   store,

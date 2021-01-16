@@ -16,7 +16,9 @@ const CHILDREN_URL = API_URL + 'children';
 const HOLIDAYS_URL = API_URL + 'holidays';
 const REGISTRATIONS_URL = API_URL + 'registrations';
 const CONTENTS_URL = API_URL + 'contents';
+const SECTIONS_URL = API_URL + 'sections';
 const TEAM_MEMBERS_URL = API_URL + 'team_members';
+const MESSAGE_URL = API_URL + 'messages'
 
 const state = {
     accessToken: null,
@@ -26,6 +28,7 @@ const state = {
     holidays: [],
     registrations: [],
     contents: [],
+    sections: [],
     team_members: [],
 };
 const mutations = {
@@ -66,6 +69,9 @@ const mutations = {
     },
     [types.GET_CONTENTS]: (state, payload) => {
         state.contents = payload;
+    },
+    [types.GET_SECTIONS]: (state, payload) => {
+        state.sections = payload;
     },
     [types.GET_TEAM_MEMBERS]: (state, payload) => {
         state.team_members = payload;
@@ -221,6 +227,17 @@ const actions = {
             console.error(e)
         });
     },
+    [types.GET_SECTIONS]: ({ commit }) => {
+        axios.get(
+            SECTIONS_URL
+        ).then((r) => {
+            if (r.data) {
+                commit(types.GET_SECTIONS, r.data)
+            }
+        }).catch((e) => {
+            console.error(e)
+        });
+    },
     [types.GET_TEAM_MEMBERS]: ({ commit }) => {
         axios.get(
             TEAM_MEMBERS_URL
@@ -232,7 +249,11 @@ const actions = {
             console.error(e)
         });
     },
-
+    [types.CREATE_MESSAGE]: ({ commit }, payload) => {
+        axios.post(MESSAGE_URL + "/", payload).catch((e) => {
+            console.error(e)
+        });
+    },
 };
 
 
@@ -244,6 +265,8 @@ export function getUser(userID) {
     return axios.get(base() + '/users/' + userID + '/')
 }
 
+const order_sort = (a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0);
+
 const getters = {
     getCurrentUserId: state => state.currentUser.user_id,
     IsAuthenticated: state => state.currentUser.authenticated,
@@ -251,8 +274,10 @@ const getters = {
     getChildren: state => state.children,
     getHolidays: state => state.holidays,
     getRegistrations: state => state.registrations,
-    getIntroduction: state => state.contents.filter(c => c.section === "introduction")[0],
-    getServices: state => state.contents.filter(c => c.section === "service").sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0)),
+    getSections: state => state.sections,
+    getServices: state => state.contents.filter(c => c.section === "service").sort(order_sort),
+    getObjectives: state => state.contents.filter(c => c.section === "objectif").sort(order_sort),
+    getMethodologies: state => state.contents.filter(c => c.section === "methodologie").sort(order_sort),
     getTeamMembers: state => state.team_members,
 }
 

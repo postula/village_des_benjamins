@@ -24,7 +24,8 @@ from rest_framework_jwt.views import (
 )
 from members.views import UserViewSet, ChildViewSet, TeamViewSet
 from holiday.views import HolidayViewSet, RegistrationViewSet
-from site_content.views import ContentViewSet
+from site_content.views import ContentViewSet, SiteSectionViewSet
+from parent_messages.views import MessageViewSet
 
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
@@ -33,6 +34,8 @@ router.register(r"team_members", TeamViewSet)
 router.register(r"holidays", HolidayViewSet)
 router.register(r"registrations", RegistrationViewSet)
 router.register(r"contents", ContentViewSet)
+router.register(r"sections", SiteSectionViewSet)
+router.register(r"messages", MessageViewSet)
 
 
 urlpatterns = [

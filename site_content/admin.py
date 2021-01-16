@@ -14,7 +14,7 @@ class ContentAdminInline(OrderedStackedInline):
 class SiteSectionAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
     inlines = [ContentAdminInline]
     model = SiteSection
-    list_display = ["name"]
+    list_display = ["key", "name", "description"]
 
 
 admin.site.register(SiteSection, SiteSectionAdmin)

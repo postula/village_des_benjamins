@@ -19,33 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: apps.py:6
-msgid "site_content"
-msgstr "Contenu du site"
+msgid "parent_messages"
+msgstr "Message de parent"
 
-#: models.py:7
-msgid "key"
-msgstr "clé"
-
-#: models.py:8 models.py:21
+#: models.py:13
 msgid "name"
-msgstr "Nom"
+msgstr "nom"
 
-#: models.py:9 models.py:23
-msgid "description"
-msgstr "description"
+#: models.py:14
+msgid "email"
+msgstr "email"
 
-#: models.py:15 models.py:25
-msgid "site_section"
-msgstr "Rubrique du site"
-
-#: models.py:16
-msgid "site_sections"
-msgstr "Rubriques du site"
+#: models.py:15 models.py:21
+msgid "message"
+msgstr "message"
 
 #: models.py:22
-msgid "icon"
-msgstr "icône"
+msgid "messages"
+msgstr "messages"
 
-#: models.py:35 models.py:36
-msgid "content"
-msgstr "contenu"
+#: models.py:26
+msgid "subject"
+msgstr "sujet"

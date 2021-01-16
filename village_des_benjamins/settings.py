@@ -146,6 +146,10 @@ MEDIA_URL = "/media/"
 
 
 JAZZMIN_SETTINGS = {
+    "site_title": "Administration Village des Benjamins",
+    "site_header": "Village des Benjamins",
+    "welcome_sign": "Bienvenue sur le portail d'administration du Village des Benjamins",
+    "copyright": "Postula Consulting",
     "changeform_format": "vertical_tabs",
     "changeform_format_overrides": {
         "holiday.Registration": "single",

@@ -44,13 +44,13 @@ msgstr "icône"
 
 #: models.py:25
 msgid "show_more_button"
-msgstr ""
+msgstr "Titre bouton voir plus"
 
 #: models.py:26
 #, fuzzy
 #| msgid "site_content"
 msgid "show_more_content"
-msgstr "Contenu du site"
+msgstr "Contenu voir plus"
 
 #: models.py:38 models.py:39
 msgid "content"

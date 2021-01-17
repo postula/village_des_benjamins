@@ -35,7 +35,6 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(','
 # Application definition
 
 INSTALLED_APPS = [
-    "django_extensions",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",

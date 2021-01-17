@@ -7,9 +7,11 @@
 
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
         <li class="nav-item">
-          <router-link to="/" class="nav-link nav-link-icon">
-            Accueil
-          </router-link>
+          <base-dropdown tag="li" title="Acceuil">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </base-dropdown>
         </li>
         <li class="nav-item">
           <router-link to="/reservation" class="nav-link nav-link-icon">
@@ -58,10 +60,12 @@
 <script>
 import * as types from "../store/mutation-types";
 import BaseNav from "@/components/BaseNav";
+import BaseDropdown from "@/components/BaseDropdown";
 
 export default {
   components: {
     BaseNav,
+    BaseDropdown,
   },
   computed: {
     is_authenticated() {

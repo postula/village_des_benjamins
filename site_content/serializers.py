@@ -6,7 +6,20 @@ from rest_framework import serializers
 from site_content.models import (
     Content,
     SiteSection,
+    News,
 )
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d/%m/%y", read_only=True)
+
+    class Meta:
+        fields = [
+            "id",
+            "date",
+            "description"
+        ]
+        model = News
 
 
 class SiteSectionSerializer(serializers.ModelSerializer):
@@ -32,6 +45,8 @@ class ContentSerializer(serializers.ModelSerializer):
             "description",
             "icon",
             "order",
+            "show_more_button",
+            "show_more_content",
         ]
         model = Content
 

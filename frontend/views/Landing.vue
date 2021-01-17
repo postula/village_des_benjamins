@@ -18,9 +18,20 @@
         <div class="container shape-container d-flex">
           <div class="col px-0">
             <div class="row">
-              <div class="col-lg-6">
-                <h1 class="display-3  text-white">{{ introductionSection.name }}</h1>
-                <p class="lead  text-white">{{ introductionSection.description }}</p>
+              <div class="col-lg-8">
+                <h1 class="display-1  text-white">{{ introductionSection.name }}</h1>
+                <p class="lead  text-white" v-html="introductionSection.description"></p>
+              </div>
+              <div class="card col-lg-4 px-0">
+                <div class="card-header">
+                  Actualités
+                </div>
+                <div class="card-body" id="news_holder">
+                  <card class="border-0" v-for="news_item in news" :key="news_item.id">
+                    <h6 class="text-primary text-uppercase">{{news_item.date}}</h6>
+                    <p class="description mt-3" v-html="news_item.description"></p>
+                  </card>
+                </div>
               </div>
             </div>
           </div>
@@ -33,18 +44,27 @@
         <div class="row justify-content-center text-center mb-lg">
           <div class="col-lg-8">
             <h2 class="display-3">{{serviceSection.name}}</h2>
-            <p class="mt-0">{{serviceSection.description}}</p>
+            <p class="mt-0" v-html="serviceSection.description"></p>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-lg-12">
             <div class="row row-eq-height">
               <div class="col-lg-4 my-5" v-for="service in services" :key="service.id">
-                <card class="border-0" hover shadow body-classes="py-5">
+                <card class="border-0" shadow body-classes="py-5">
                   <icon v-show="service.icon" :name="`fa fa-${service.icon}`" type="primary" rounded class="mb-4">
                   </icon>
                   <h6 class="text-primary text-uppercase">{{ service.name }}</h6>
-                  <p class="description mt-3">{{ service.description }}</p>
+                  <p class="description mt-3" v-html="service.description"></p>
+                  <base-button v-if="service.show_more_button" type="primary" @click="showMore('services', service.id, $event)">{{service.show_more_button}}</base-button>
+                  <modal v-if="service.show_more_button && service.show_more_content" @close="hideMore" :show="show_more.section === 'services' && show_more.id === service.id">
+                    <template slot="header">
+                      <h5 class="modal-title">{{service.show_more_button}}</h5>
+                    </template>
+                    <div>
+                      <div v-html="service.show_more_content"></div>
+                    </div>
+                  </modal>
                 </card>
               </div>
             </div>
@@ -76,7 +96,7 @@
             </div>
             <div class="pl-4">
               <h2 class="display-3">{{objectivesSection.name}}</h2>
-              <p class="text-white">{{ objectivesSection.description }}</p>
+              <p class="text-white" v-html="objectivesSection.description"></p>
             </div>
           </div>
 
@@ -90,7 +110,16 @@
                 </div>
                 <div class="pl-4">
                   <h5 class="title text-success">{{ objective.name }}</h5>
-                  <p>{{ objective.description }}</p>
+                  <p v-html="objective.description"></p>
+                  <base-button v-if="objective.show_more_button" type="primary" @click="showMore('objectives', objective.id, $event)">{{objective.show_more_button}}</base-button>
+                  <modal v-if="objective.show_more_button && objective.show_more_content" @close="hideMore" :show="show_more.section === 'objectives' && show_more.id === objective.id">
+                    <template slot="header">
+                      <h5 class="modal-title" >{{objective.show_more_button}}</h5>
+                    </template>
+                    <div>
+                      <div v-html="objective.show_more_content"></div>
+                    </div>
+                  </modal>
                 </div>
               </div>
             </card>
@@ -103,7 +132,7 @@
         <div class="row justify-content-center text-center mb-lg">
           <div class="col-lg-8">
             <h2 class="display-3">{{teamSection.name}}</h2>
-            <p class="mt-0">{{teamSection.description}}</p>
+            <p class="mt-0" v-html="teamSection.description"></p>
           </div>
         </div>
         <div class="row">
@@ -134,14 +163,24 @@
         <div class="row text-center justify-content-center">
           <div class="col-lg-10">
             <h2 class="display-3 text-white">{{methodologySection.name}}</h2>
-            <p class="lead text-white">{{methodologySection.description}}</p>
+            <p class="lead text-white" v-html="methodologySection.description"></p>
           </div>
         </div>
         <div class="row row-grid mt-5">
           <div class="col-lg-4" v-for="methodologie in methodologies" :key="methodologie.id">
             <icon v-show="methodologie.icon" name="`fa fa-${methodologie.icon}" size="lg" gradient="white" shadow round color="primary"></icon>
             <h5 class="text-white mt-3">{{methodologie.name}}</h5>
-            <p class="text-white mt-3">{{methodologie.description}}</p>
+            <p class="text-white mt-3" v-html="methodologie.description"></p>
+
+            <base-button v-if="methodologie.show_more_button" type="primary" @click="showMore('methodologies', methodologie.id, $event)">{{methodologie.show_more_button}}</base-button>
+            <modal v-if="methodologie.show_more_button && methodologie.show_more_content" @close="hideMore" :show="show_more.section === 'methodologies' && show_more.id === methodologie.id">
+              <template slot="header">
+                <h5 class="modal-title" >{{methodologie.show_more_button}}</h5>
+              </template>
+              <div>
+                <div v-html="methodologie.show_more_content"></div>
+              </div>
+            </modal>
           </div>
         </div>
       </div>
@@ -152,7 +191,7 @@
           <div class="col-lg-8">
             <card gradient="secondary" shadow body-classes="p-lg-5">
               <h4 class="mb-1">{{contactSection.name}}</h4>
-              <p class="mt-0">{{contactSection.description}}</p>
+              <p class="mt-0" v-html="contactSection.description"></p>
               <base-alert v-if="contactFeedback" type="success">
                 {{contactFeedback}}
               </base-alert>
@@ -186,18 +225,27 @@
 </template>
 
 <script>
+import Modal from "@/components/Modal.vue";
+import BaseButton from "@/components/BaseButton";
 import {Settings} from "luxon";
 import * as types from "@/store/mutation-types";
 
 export default {
   name: "home",
-  components: {},
+  components: {
+    Modal,
+    BaseButton
+  },
   data() {
     return {
       contactName: "",
       contactMail: "",
       contactMessage: "",
       contactFeedback: "",
+      show_more: {
+        section: null,
+        id: null,
+      }
     };
   },
   mounted() {
@@ -205,8 +253,18 @@ export default {
     this.$store.dispatch(types.GET_CONTENTS);
     this.$store.dispatch(types.GET_SECTIONS);
     this.$store.dispatch(types.GET_TEAM_MEMBERS);
+    this.$store.dispatch(types.GET_NEWS);
   },
   methods: {
+    showMore: function(section, contentId, evt) {
+      evt.preventDefault();
+      this.show_more.section = section;
+      this.show_more.id = contentId;
+    },
+    hideMore: function(section, contentId, evt) {
+      this.show_more.section = null;
+      this.show_more.id = null;
+    },
     sendMessage() {
       const payload = {
         name: this.contactName,
@@ -236,6 +294,9 @@ export default {
     team_members() {
       return this.$store.getters.getTeamMembers;
     },
+    news() {
+      return this.$store.getters.getNews;
+    },
     introductionSection() {
       return this.sections.find(s => s.key === "introduction") || {}
     },
@@ -257,3 +318,11 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss">
+#news_holder {
+  max-height: 500px;
+  overflow-y: auto;
+}
+</style>

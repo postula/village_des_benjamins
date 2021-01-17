@@ -35,6 +35,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(','
 # Application definition
 
 INSTALLED_APPS = [
+    "django_extensions",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_better_admin_arrayfield",
     "ordered_model",
+    "tinymce",
     "members",
     "section",
     "holiday",
@@ -162,8 +164,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
     ),
 }
 
@@ -198,3 +198,18 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+TINYMCE_DEFAULT_CONFIG = {
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
+               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
+               "code,help,wordcount",
+    "toolbar": "undo redo | formatselect | "
+               "bold italic backcolor | alignleft aligncenter alignright alignjustify |"
+               "table tabledelete |"
+               "tableprops tablerowprops tablecellprops |"
+               "tableinsertrowbefore tableinsertrowafter tabledeleterow |"
+               "tableinsertcolbefore tableinsertcolafter tabledeletecol"
+               "bullist numlist outdent indent | "
+               "removeformat | help",
+}

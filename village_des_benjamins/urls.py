@@ -24,7 +24,7 @@ from rest_framework_jwt.views import (
 )
 from members.views import UserViewSet, ChildViewSet, TeamViewSet
 from holiday.views import HolidayViewSet, RegistrationViewSet
-from site_content.views import ContentViewSet, SiteSectionViewSet
+from site_content.views import ContentViewSet, SiteSectionViewSet, NewsViewSet
 from parent_messages.views import MessageViewSet
 
 router = routers.DefaultRouter()
@@ -36,6 +36,7 @@ router.register(r"registrations", RegistrationViewSet)
 router.register(r"contents", ContentViewSet)
 router.register(r"sections", SiteSectionViewSet)
 router.register(r"messages", MessageViewSet)
+router.register(r"news", NewsViewSet)
 
 
 urlpatterns = [
@@ -44,6 +45,7 @@ urlpatterns = [
     path("api/jwt/obtain", obtain_jwt_token),
     path("api/jwt/refresh", refresh_jwt_token),
     path("api/jwt/verify", verify_jwt_token),
+    path("tinymce/", include('tinymce.urls')),
     path(
         "",
         TemplateView.as_view(template_name="index.html"),

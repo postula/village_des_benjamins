@@ -16,5 +16,12 @@ class HolidayViewSet(
 class RegistrationViewSet(
     mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet
 ):
-    queryset = Registration.objects.filter(holiday__registration_open=True)
+    queryset = Registration.objects.all()
+    #  queryset = Registration.objects.filter(holiday__registration_open=True)
     serializer_class = RegistrationSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.action in ["retrieve", "list"]:
+            qs = qs.filter(child__parent=self.request.user)
+        return qs

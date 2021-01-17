@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.core.validators import MinValueValidator
 from decimal import Decimal
 from logging import getLogger
+from tinymce.models import HTMLField
 
 logger = getLogger(__name__)
 
@@ -32,7 +33,7 @@ class Holiday(models.Model):
     # TODO: add validation
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
-    description = models.TextField(_("description"), blank=True, null=True)
+    description = HTMLField(verbose_name=_("description"), blank=True, null=True)
     registration_open = models.BooleanField(_("registration open"), default=False)
     sections = models.ManyToManyField(
         verbose_name=_("sections"),
@@ -63,7 +64,7 @@ class HolidaySection(models.Model):
         verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE
     )
     capacity = models.IntegerField(_("capacity"))
-    description = models.TextField(_("description"), blank=True, null=True)
+    description = HTMLField(verbose_name=("description"), blank=True, null=True)
 
     def _remaining_capacity(self):
         return (
@@ -132,7 +133,7 @@ class Outing(models.Model):
     )
     date = models.DateField(_("date"))
     name = models.CharField(_("name"), max_length=255)
-    description = models.TextField("description")
+    description = HTMLField(verbose_name=_("description"))
     price = models.DecimalField(
         _("price"),
         max_digits=10,

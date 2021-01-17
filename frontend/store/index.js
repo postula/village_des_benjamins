@@ -19,6 +19,7 @@ const CONTENTS_URL = API_URL + 'contents';
 const SECTIONS_URL = API_URL + 'sections';
 const TEAM_MEMBERS_URL = API_URL + 'team_members';
 const MESSAGE_URL = API_URL + 'messages'
+const NEWS_URL = API_URL + 'news'
 
 const state = {
     accessToken: null,
@@ -30,6 +31,7 @@ const state = {
     contents: [],
     sections: [],
     team_members: [],
+    news: [],
 };
 const mutations = {
     [types.UPDATE_TOKEN]: (state, payload) => {
@@ -75,6 +77,9 @@ const mutations = {
     },
     [types.GET_TEAM_MEMBERS]: (state, payload) => {
         state.team_members = payload;
+    },
+    [types.GET_NEWS]: (state, payload) => {
+        state.news = payload;
     },
 };
 const actions = {
@@ -254,6 +259,17 @@ const actions = {
             console.error(e)
         });
     },
+    [types.GET_NEWS]: ({ commit }) => {
+        axios.get(
+            NEWS_URL
+        ).then((r) => {
+            if (r.data) {
+                commit(types.GET_NEWS, r.data)
+            }
+        }).catch((e) => {
+            console.error(e)
+        });
+    },
 };
 
 
@@ -279,6 +295,7 @@ const getters = {
     getObjectives: state => state.contents.filter(c => c.section === "objectif").sort(order_sort),
     getMethodologies: state => state.contents.filter(c => c.section === "methodologie").sort(order_sort),
     getTeamMembers: state => state.team_members,
+    getNews: state => state.news,
 }
 
 const store = new Vuex.Store({

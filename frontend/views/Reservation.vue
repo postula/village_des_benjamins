@@ -68,7 +68,7 @@
                           <card shadow>
                             <tab-pane>
                               <span slot="title">Informations Générales</span>
-                              {{ holiday.description }}
+                              <span v-html="holiday.description"></span>
                             </tab-pane>
                             <tab-pane
                               v-for="section in holiday.sections"
@@ -78,8 +78,7 @@
                                 {{ section.section_name }}
                               </span>
 
-                              <div class="mt-1">
-                                {{ section.description }}
+                              <div class="mt-1" v-html="section.description">
                               </div>
                               <div v-if="section.outings.length > 0">
                                 <h4 class="mt-2">Sorties</h4>
@@ -114,8 +113,7 @@
                                       </div>
                                     </div>
                                     <div>
-                                      <p class="description">
-                                        {{ outing.description }}
+                                      <p class="description" v-html="outing.description">
                                       </p>
                                     </div>
                                   </div>

@@ -3,4 +3,5 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SiteContentConfig(AppConfig):
-    name = _('site_content')
+    name = 'site_content'
+    verbose_name = _('site_content')

@@ -40,7 +40,7 @@ class Content(OrderedModel):
 
 
 class News(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     description = HTMLField(verbose_name=_("description"))
 
     def __str__(self):

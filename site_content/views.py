@@ -10,7 +10,7 @@ class NewsViewSet(
     viewsets.GenericViewSet,
 ):
     permission_classes = [AllowAny]
-    queryset = News.objects.all()
+    queryset = News.objects.all().order_by("-date")
     serializer_class = NewsSerializer
 
 

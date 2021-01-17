@@ -11,7 +11,7 @@ from site_content.models import (
 
 
 class NewsSerializer(serializers.ModelSerializer):
-    date = serializers.DateField(format="%d/%m/%y", read_only=True)
+    date = serializers.DateTimeField(format="%d/%m/%y", read_only=True)
 
     class Meta:
         fields = [

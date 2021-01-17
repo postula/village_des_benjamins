@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-16 19:39+0000\n"
+"POT-Creation-Date: 2021-01-17 17:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,34 +18,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: apps.py:6
+#: apps.py:7
 msgid "site_content"
 msgstr "Contenu du site"
 
-#: models.py:7
+#: models.py:8
 msgid "key"
 msgstr "clé"
 
-#: models.py:8 models.py:21
+#: models.py:9 models.py:22
 msgid "name"
 msgstr "Nom"
 
-#: models.py:9 models.py:23
-msgid "description"
-msgstr "description"
-
-#: models.py:15 models.py:25
+#: models.py:16 models.py:28
 msgid "site_section"
 msgstr "Rubrique du site"
 
-#: models.py:16
+#: models.py:17
 msgid "site_sections"
 msgstr "Rubriques du site"
 
-#: models.py:22
+#: models.py:23
 msgid "icon"
 msgstr "icône"
 
-#: models.py:35 models.py:36
+#: models.py:25
+msgid "show_more_button"
+msgstr ""
+
+#: models.py:26
+#, fuzzy
+#| msgid "site_content"
+msgid "show_more_content"
+msgstr "Contenu du site"
+
+#: models.py:38 models.py:39
 msgid "content"
 msgstr "contenu"
+
+#: models.py:44
+msgid "description"
+msgstr "description"
+
+#: models.py:50 models.py:51
+msgid "news"
+msgstr "actualité"

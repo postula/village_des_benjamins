@@ -3,4 +3,5 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ParentMessageConfig(AppConfig):
-    name = _('parent_messages')
+    name = 'parent_messages'
+    verbose_name = _('parent_messages')

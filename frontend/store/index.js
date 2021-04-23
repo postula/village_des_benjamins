@@ -7,19 +7,19 @@ import jwt_decode from 'jwt-decode'
 import router from '../router'
 Vue.use(Vuex);
 
-const API_URL = '/api/';
+const API_URL = process.env.NODE_ENV === "development" ? "http://localhost:8000/api/" : "/api/";
 const OBTAIN_URL = API_URL + 'jwt/obtain';
 const REFRESH_URL = API_URL + 'jwt/refresh';
 const VERIFY_URL = API_URL + 'jwt/verify';
-const USERS_URL = API_URL + 'users';
-const CHILDREN_URL = API_URL + 'children';
-const HOLIDAYS_URL = API_URL + 'holidays';
-const REGISTRATIONS_URL = API_URL + 'registrations';
-const CONTENTS_URL = API_URL + 'contents';
-const SECTIONS_URL = API_URL + 'sections';
-const TEAM_MEMBERS_URL = API_URL + 'team_members';
-const MESSAGE_URL = API_URL + 'messages'
-const NEWS_URL = API_URL + 'news'
+const USERS_URL = API_URL + 'users/';
+const CHILDREN_URL = API_URL + 'children/';
+const HOLIDAYS_URL = API_URL + 'holidays/';
+const REGISTRATIONS_URL = API_URL + 'registrations/';
+const CONTENTS_URL = API_URL + 'contents/';
+const SECTIONS_URL = API_URL + 'sections/';
+const TEAM_MEMBERS_URL = API_URL + 'team_members/';
+const MESSAGE_URL = API_URL + 'messages/'
+const NEWS_URL = API_URL + 'news/'
 
 const state = {
     accessToken: null,
@@ -273,13 +273,13 @@ const actions = {
 };
 
 
-export function base() {
-    return 'http://' + window.location.hostname + ':8000/api'
-}
-
-export function getUser(userID) {
-    return axios.get(base() + '/users/' + userID + '/')
-}
+// export function base() {
+//     return 'http://' + window.location.hostname + ':8000/api'
+// }
+//
+// export function getUser(userID) {
+//     return axios.get(base() + '/users/' + userID + '/')
+// }
 
 const order_sort = (a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0);
 

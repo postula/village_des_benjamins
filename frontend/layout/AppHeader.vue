@@ -1,16 +1,18 @@
 <template>
-  <header class="header-global">
+  <header class="header-global" style="position:relative">
     <base-nav class="navbar-main" transparent type="" effect="light" expand>
       <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-        <img class="logo" src="static/brand/village_des_benjamins.png" alt="logo" />
+        <img class="logo" src="@/assets/brand/village_des_benjamins.png" alt="logo" />
       </router-link>
 
-      <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+      <ul class="navbar-nav  align-items-lg-center">
         <li class="nav-item">
           <base-dropdown tag="li" title="Acceuil">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <router-link class="dropdown-item" :to="{name: 'landing', hash: '#service'}">Nos services</router-link>
+            <router-link class="dropdown-item" :to="{name: 'landing', hash: '#objectif'}">Missions et objectifs</router-link>
+            <router-link class="dropdown-item" :to="{name: 'landing', hash: '#team'}">Notre équipe</router-link>
+            <router-link class="dropdown-item" :to="{name: 'landing', hash: '#methodologie'}">Notre méthodologie</router-link>
+            <router-link class="dropdown-item" :to="{name: 'landing', hash: '#contact'}">Nous contacter</router-link>
           </base-dropdown>
         </li>
         <li class="nav-item">

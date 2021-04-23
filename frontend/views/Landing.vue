@@ -39,7 +39,7 @@
       </section>
       <!-- 1st Hero Variation -->
     </div>
-    <section class="section section-lg pt-lg-0">
+    <section class="section section-lg pt-lg-0" id="service">
       <div class="container">
         <div class="row justify-content-center text-center mb-lg">
           <div class="col-lg-8">
@@ -82,11 +82,11 @@
         <span></span>
         <span></span>
       </div>
-      <div class="container py-0">
+      <div class="container py-0" id="objectif">
         <div class="row row-grid align-items-center">
           <div class="col-md-6 order-lg-2 ml-lg-auto">
             <div class="position-relative pl-md-5">
-              <img src="static/ill/ill-2.svg" class="img-center img-fluid">
+              <img src="@/assets/ill/ill-2.svg" class="img-center img-fluid">
             </div>
           </div>
           <div class="d-flex px-3">
@@ -127,7 +127,7 @@
         </div>
       </div>
     </section>
-    <section class="section section-lg">
+    <section class="section section-lg" id="team">
       <div class="container">
         <div class="row justify-content-center text-center mb-lg">
           <div class="col-lg-8">
@@ -152,7 +152,7 @@
         </div>
       </div>
     </section>
-    <section class="section section-shaped my-0 overflow-hidden">
+    <section class="section section-shaped my-0 overflow-hidden" id="methodologie">
       <div class="shape shape-style-3 bg-gradient-default shape-skew">
         <span></span>
         <span></span>
@@ -185,7 +185,7 @@
         </div>
       </div>
     </section>
-    <section class="section section-lg pt-lg-0 section-contact-us">
+    <section class="section section-lg pt-lg-0 section-contact-us" id="contact">
       <div class="container">
         <div class="row justify-content-center mt--300">
           <div class="col-lg-8">

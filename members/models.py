@@ -61,14 +61,6 @@ class User(AbstractUser):
         )
 
     @property
-    def photo_list_preview(self):
-        if self.photo:
-            return mark_safe(
-                '<img src="{}" width="50" height="50" />'.format(self.photo.url)
-            )
-        return ""
-
-    @property
     def photo_preview(self):
         if self.photo:
             return mark_safe(

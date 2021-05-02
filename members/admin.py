@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
@@ -46,6 +47,14 @@ class UserAdmin(BaseUserAdmin):
     )
     search_fields = ("email",)
     ordering = ("email",)
+
+    def photo_list_preview(self, obj):
+        if obj.photo:
+            return mark_safe(
+                '<img src="{}" width="50" height="50" />'.format(obj.photo.url)
+            )
+        return ""
+    photo_list_preview.short_description = "Photo"
 
 
 # Re-register UserAdmin

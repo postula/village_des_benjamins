@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django_better_admin_arrayfield",
     "ordered_model",
     "tinymce",
+    "colorfield",
     "members",
     "section",
     "holiday",

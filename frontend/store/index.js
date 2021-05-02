@@ -291,6 +291,7 @@ const getters = {
     getHolidays: state => state.holidays,
     getRegistrations: state => state.registrations,
     getSections: state => state.sections,
+    getContents: state => state.contents,
     getServices: state => state.contents.filter(c => c.section === "service").sort(order_sort),
     getObjectives: state => state.contents.filter(c => c.section === "objectif").sort(order_sort),
     getMethodologies: state => state.contents.filter(c => c.section === "methodologie").sort(order_sort),

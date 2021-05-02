@@ -1,5 +1,6 @@
 from django.contrib import admin
-from ordered_model.admin import OrderedInlineModelAdminMixin, OrderedStackedInline
+from django.utils.safestring import mark_safe
+from ordered_model.admin import OrderedModelAdmin, OrderedInlineModelAdminMixin, OrderedStackedInline
 from site_content.models import Content, SiteSection, News
 
 
@@ -11,10 +12,23 @@ class ContentAdminInline(OrderedStackedInline):
     extra = 0
 
 
-class SiteSectionAdmin(OrderedInlineModelAdminMixin, admin.ModelAdmin):
+class SiteSectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
     inlines = [ContentAdminInline]
     model = SiteSection
-    list_display = ["key", "name", "description"]
+    list_display = ["key", "name", "photo_list_preview", "_description", "move_up_down_links"]
+    ordering = ["order"]
+
+    def photo_list_preview(self, obj):
+        if obj.photo:
+            return mark_safe(
+                '<img src="{}" width="50" height="50" />'.format(obj.photo.url)
+            )
+        return ""
+    photo_list_preview.short_description = "Photo"
+
+    def _description(self, obj):
+        return mark_safe(obj.description)
+    _description.allow_tags = True
 
 
 class NewsAdmin(admin.ModelAdmin):

@@ -1,16 +1,39 @@
+from colorfield.fields import ColorField
 from django.db import models
+from django.utils.safestring import mark_safe
 from ordered_model.models import OrderedModel
 from tinymce.models import HTMLField
 from django.utils.translation import ugettext_lazy as _
 
 
-class SiteSection(models.Model):
+LAYOUT_CHOICES = [
+    ("introduction", _("introduction")),
+    ("contact", _("contact")),
+    ("team", _("team")),
+    ("list_left", _("list_left")),
+    ("list_right", _("list_right")),
+    ("simple_list", _("simple_list")),
+]
+
+
+class SiteSection(OrderedModel):
     key = models.CharField(_("key"), max_length=255)
     name = models.CharField(_("name"), max_length=255)
-    description = HTMLField(verbose_name=("description"), blank=True, null=True)
+    description = HTMLField(verbose_name=_("description"), blank=True, null=True)
+    photo = models.ImageField(null=True, blank=True, upload_to="site_sections/")
+    layout = models.CharField(_("layout"), max_length=50, choices=LAYOUT_CHOICES, default="list_left")
+    background = ColorField(format="hexa")
 
     def __str__(self):
         return self.name
+
+    @property
+    def photo_preview(self):
+        if self.photo:
+            return mark_safe(
+                '<img src="{}" width="300" height="300" />'.format(self.photo.url)
+            )
+        return ""
 
     class Meta:
         verbose_name = _("site_section")

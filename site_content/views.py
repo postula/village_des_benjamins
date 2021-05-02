@@ -19,7 +19,7 @@ class SiteSectionViewSet(
     viewsets.GenericViewSet,
 ):
     permission_classes = [AllowAny]
-    queryset = SiteSection.objects.all()
+    queryset = SiteSection.objects.all().order_by("order")
     serializer_class = SiteSectionSerializer
 
 

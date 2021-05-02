@@ -29,7 +29,11 @@ class SiteSectionSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "key",
-            "description"
+            "description",
+            "order",
+            "photo",
+            "layout",
+            "background",
         ]
         model = SiteSection
 

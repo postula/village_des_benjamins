@@ -85,7 +85,7 @@ const mutations = {
 const actions = {
     [types.REGISTER]: ({ commit }, payload) => {
         axios.post(
-            USERS_URL + "/", payload
+            USERS_URL, payload
         ).then(r => {
             console.log(r);
         })
@@ -142,7 +142,7 @@ const actions = {
     },
     [types.GET_USER]: ({ commit }, id) => {
         axios.get(
-            USERS_URL + "/" + id
+            USERS_URL +  id
         ).then((r) => {
             if (r.data) {
                 commit(types.GET_USER, r.data)
@@ -163,7 +163,7 @@ const actions = {
         });
     },
     [types.CREATE_CHILD]: ({ commit }, payload) => {
-        axios.post(CHILDREN_URL + "/", payload).then((r) => {
+        axios.post(CHILDREN_URL, payload).then((r) => {
             if (r.data) {
                 commit(types.CREATE_CHILD, r.data)
             }
@@ -172,7 +172,7 @@ const actions = {
         });
     },
     [types.UPDATE_CHILD]: ({ commit }, payload) => {
-        axios.patch(CHILDREN_URL + "/" + payload.id + "/", payload).then((r) => {
+        axios.patch(CHILDREN_URL + payload.id + "/", payload).then((r) => {
             if (r.data) {
                 commit(types.UPDATE_CHILD, r.data)
             }
@@ -181,7 +181,7 @@ const actions = {
         });
     },
     [types.DELETE_CHILD]: ({ commit }, id) => {
-        axios.delete(CHILDREN_URL + "/" + id).then(() => {
+        axios.delete(CHILDREN_URL + id).then(() => {
             commit(types.DELETE_CHILD, id);
         }).catch((e) => {
             console.error(e)
@@ -199,7 +199,7 @@ const actions = {
         });
     },
     [types.CREATE_REGISTRATION]: ({ commit, dispatch }, payload) => {
-        axios.post(REGISTRATIONS_URL + "/", payload).then((r) => {
+        axios.post(REGISTRATIONS_URL, payload).then((r) => {
             if (r.data) {
                 commit(types.CREATE_REGISTRATION, r.data)
             }
@@ -255,7 +255,7 @@ const actions = {
         });
     },
     [types.CREATE_MESSAGE]: ({ commit }, payload) => {
-        axios.post(MESSAGE_URL + "/", payload).catch((e) => {
+        axios.post(MESSAGE_URL, payload).catch((e) => {
             console.error(e)
         });
     },

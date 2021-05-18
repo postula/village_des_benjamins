@@ -1,3 +1,5 @@
+from logging import getLogger
+
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
@@ -5,8 +7,16 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
 from calendar import monthrange
 from datetime import date, datetime, timedelta
+
+from sendgrid import SendGridAPIClient, Mail
+
 from section.models import Section
 from ordered_model.models import OrderedModel
+
+from django.conf import settings
+
+
+logger = getLogger(__name__)
 
 
 class CustomUserManager(BaseUserManager):
@@ -48,7 +58,7 @@ class User(AbstractUser):
     photo = models.ImageField(null=True, blank=True, upload_to="members/")
     role = models.ForeignKey(verbose_name=_("role"), to="members.StaffFunction", null=True, blank=True, on_delete=models.SET_NULL)
     visible_on_site = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
-
+    accept_newsletter = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
@@ -101,7 +111,7 @@ class Child(models.Model):
         on_delete=models.CASCADE,
     )
     status = models.CharField(
-        _("gender"),
+        _("status"),
         choices=[("in_validation", _("in_validation")), ("registered", _("registered"))],
         max_length=50,
         default="in_validation"
@@ -137,3 +147,58 @@ class StaffFunction(OrderedModel):
     class Meta(OrderedModel.Meta):
         verbose_name = _("staff_function")
         verbose_name_plural = _("staff_functions")
+
+
+html_template = """
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
+    style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <title>Inscription</title>
+</head>
+
+<body>
+    <h3> Bonjour {name},<br></h3>
+    <p>
+    Merci de votre inscription, vous pouvez maintenant vous connecter et ajouter vos enfants.
+    </p>
+    <p>
+        Amicalement vôtre,</p>
+    <p>
+        Le village des benjamins</p>
+    </td>
+</body>
+
+</html>
+"""
+
+
+def send_registration_notification(sender, created, **kwargs):
+    if not created:
+        return
+    obj = kwargs["instance"]
+    name = str(obj)
+    html_content = html_template.format(
+        name=name,
+    )
+    message = Mail(
+        from_email=settings.SENDGRID_FROM_MAIL,
+        to_emails=obj.child.parent.email,
+        subject=f"Inscription sur le site du Village des Benjamins",
+        html_content=html_content
+    )
+    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+    try:
+        response = sg.send(message)
+    except Exception as e:
+        logger.exception(e)
+
+
+models.signals.post_save.connect(send_registration_notification, sender=User)

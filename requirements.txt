@@ -11,7 +11,7 @@ django-better-admin-arrayfield==1.4.2
 django-colorfield==0.4.1
 django-cors-headers==3.6.0
 django-filter==2.4.0
-django-jazzmin==2.4.3
+django-jazzmin==2.4.7
 django-nested-admin==3.3.2
 django-ordered-model==3.4.1
 django-rest-framework==0.1.0

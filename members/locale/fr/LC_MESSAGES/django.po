@@ -111,3 +111,6 @@ msgstr "Fonction"
 #: models.py:147
 msgid "staff_functions"
 msgstr "Fonctions"
+
+msgid "status"
+msgstr "statut"

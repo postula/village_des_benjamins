@@ -66,6 +66,17 @@
                   addon-left-icon="ni ni-lock-circle-open"
                 >
                 </base-input>
+                <span v-if="!!errors.accept_newsletter" class="text-danger">
+                  {{errors.accept_newsletter}}
+                </span>
+                <base-checkbox
+                  alternative
+                  v-model="accept_newsletter"
+                  required
+                  :error="errors.accept_newsletter"
+                >
+                  J'accepte de recevoir des notifications
+                </base-checkbox>
                 <div class="text-center">
                   <base-button type="primary" class="my-4" @click="signup"
                     >S'enregistrer</base-button
@@ -88,6 +99,7 @@ export default {
     last_name: "",
     email: "",
     password: "",
+    accept_newsletter: false,
     errors: {
       first_name: "",
       last_name: "",
@@ -97,6 +109,12 @@ export default {
   }),
   methods: {
     signup: function () {
+      this.errors = {
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+    };
       let has_errors = false;
       if (! this.first_name) {
         has_errors = true;
@@ -114,6 +132,10 @@ export default {
         has_errors = true;
         this.errors.password = "Ce champs est obligatoire";
       }
+      if (! this.accept_newsletter) {
+        has_errors = true;
+        this.errors.accept_newsletter = "Ce champs est obligatoire";
+      }
       if (has_errors) {
         return;
       }
@@ -122,6 +144,7 @@ export default {
         last_name: this.last_name,
         email: this.email,
         password: this.password,
+        accept_newsletter: this.accept_newsletter,
       };
 
 

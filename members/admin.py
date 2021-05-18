@@ -47,6 +47,7 @@ class UserAdmin(BaseUserAdmin):
     )
     search_fields = ("email",)
     ordering = ("email",)
+    list_filter = ["accept_newsletter"]
 
     def photo_list_preview(self, obj):
         if obj.photo:

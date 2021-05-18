@@ -35,6 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "photo",
+            "accept_newsletter",
         ]
 
 

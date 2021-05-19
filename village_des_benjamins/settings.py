@@ -76,7 +76,6 @@ ROOT_URLCONF = "village_des_benjamins.urls"
 TEMPLATES_DIR = os.path.join(BASE_DIR, "dist")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "assets"),
     os.path.join(BASE_DIR, "dist"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

@@ -7,7 +7,7 @@
 
       <ul class="navbar-nav  align-items-lg-center">
         <li class="nav-item">
-          <base-dropdown tag="li" title="Acceuil">
+          <base-dropdown tag="li" title="Accueil">
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#service'}">Nos services</router-link>
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#objectif'}">Missions et objectifs</router-link>
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#team'}">Notre équipe</router-link>

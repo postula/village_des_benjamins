@@ -341,6 +341,7 @@ export default {
     TabPane,
     flatPicker,
   },
+  title: "Réservation",
   data() {
     return {
       // userData: "",

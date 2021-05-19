@@ -107,6 +107,7 @@ export default {
       password: "",
     },
   }),
+  title: "Enregistrement",
   methods: {
     signup: function () {
       this.errors = {

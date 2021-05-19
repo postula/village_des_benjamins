@@ -190,7 +190,7 @@ def send_registration_notification(sender, created, **kwargs):
     )
     message = Mail(
         from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=obj.child.parent.email,
+        to_emails=obj.email,
         subject=f"Inscription sur le site du Village des Benjamins",
         html_content=html_content
     )

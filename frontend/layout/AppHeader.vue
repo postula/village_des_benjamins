@@ -83,6 +83,6 @@ export default {
 </script>
 <style lang="scss">
 .navbar-brand, .navbar-brand img.logo {
-  height: 100px;
+  height: 150px;
 }
 </style>

@@ -69,6 +69,7 @@
 <script>
 import * as types from "../store/mutation-types";
 export default {
+  title: "Connexion",
   data: () => ({
     credentials: {
       email: "",

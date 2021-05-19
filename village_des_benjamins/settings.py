@@ -187,7 +187,7 @@ AWS_S3_REGION_NAME = "eu-central-1"
 AWS_LOCATION = "website_uploads/"
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
-SENDGRID_FROM_MAIL = "info@village-des-benjamins.ga"
+SENDGRID_FROM_MAIL = os.getenv("MAIL_FROM_ADDRESS", )
 
 sentry_sdk.init(
     dsn=os.getenv("SENTRY_DSN", None),

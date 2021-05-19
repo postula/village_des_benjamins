@@ -34,8 +34,8 @@ export default {
         anchor: [0.5, 1],
         anchorXUnits: 'fraction',
         anchorYUnits: 'fraction',
-        src: require('@/assets/brand/marker.png'),
-        scale: 0.1
+        src: require('@/assets/brand/buggy.png'),
+        scale: 0.5
       })
     });
     iconFeature.setStyle(iconStyle)

@@ -323,6 +323,7 @@ export default {
     BaseInput,
     flatPicker,
   },
+  title: "Mes enfants",
   data() {
     return {
       child_statuses: {

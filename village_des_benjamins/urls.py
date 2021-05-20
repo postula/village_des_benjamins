@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import debug_toolbar
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -47,10 +48,14 @@ urlpatterns = [
     path("api/jwt/refresh", refresh_jwt_token),
     path("api/jwt/verify", verify_jwt_token),
     path("tinymce/", include('tinymce.urls')),
-    path('__debug__/', include(debug_toolbar.urls)),
     path(
         "",
         TemplateView.as_view(template_name="index.html"),
         name="app",
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns.append(
+        path('__debug__/', include(debug_toolbar.urls)),
+    )

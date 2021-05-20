@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    'debug_toolbar',
     "corsheaders",
+    'import_export',
     "django_better_admin_arrayfield",
     "ordered_model",
     "tinymce",
@@ -58,7 +58,6 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -215,3 +214,7 @@ TINYMCE_DEFAULT_CONFIG = {
                "bullist numlist outdent indent | "
                "removeformat | help",
 }
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")

@@ -10,6 +10,7 @@ Django==3.1.5
 django-better-admin-arrayfield==1.4.2
 django-colorfield==0.4.1
 django-cors-headers==3.6.0
+django-debug-toolbar==3.2.1
 django-filter==2.4.0
 django-jazzmin==2.4.7
 django-nested-admin==3.3.2
@@ -25,6 +26,7 @@ gunicorn==20.0.4
 jmespath==0.10.0
 mccabe==0.6.1
 mypy-extensions==0.4.3
+numpy==1.20.3
 pathspec==0.8.1
 Pillow==8.1.0
 psycopg2-binary==2.8.6

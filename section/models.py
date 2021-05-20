@@ -1,8 +1,9 @@
 from django.db import models
+from ordered_model.models import OrderedModel
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
-class Section(models.Model):
+class Section(OrderedModel):
     name = models.CharField(_("name"), max_length=255)
     min_age = models.DecimalField(_("minimum age"), decimal_places=2, max_digits=4)
     max_age = models.DecimalField(_("maximum age"), decimal_places=2, max_digits=4)

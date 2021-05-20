@@ -2,7 +2,7 @@
 const path = require('path')
 
 module.exports = {
-  publicPath: "/static/",
+  publicPath: process.env.NODE_ENV !== 'production' ? "/" : "/static/",
   outputDir: "./dist/",
   chainWebpack: (config) => {
     config.outputDir = path.resolve(__dirname, "../static");

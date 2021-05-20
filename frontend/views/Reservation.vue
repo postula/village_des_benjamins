@@ -192,7 +192,8 @@
                           @on-day-create="onDayCreate"
                           :events="['onChange', 'onDayCreate']"
                           class="form-control datepicker"
-                          v-model="reservation_modal.dates"
+                          :value="reservation_modal.dates"
+                          @on-change="dateChanged"
                         >
                         </flat-picker>
                       </base-input>
@@ -379,8 +380,52 @@ export default {
     this.$store.dispatch(types.GET_REGISTRATIONS);
   },
   methods: {
+    dateChanged(selectedDates, dateStr, instance) {
+      let current_dates = [];
+      if (this.reservation_modal.dates) {
+        current_dates = this.reservation_modal.dates.split(", ");
+      }
+      const new_dates = dateStr.split(", ");
+      let date;
+      let action;
+      if (!dateStr || current_dates.length > new_dates.length) {
+        if (current_dates.length === 1) {
+          date = current_dates[0];
+        } else {
+          date = current_dates.filter(f => !new_dates.includes(f))[0];
+        }
+        action = "remove";
+      } else {
+        date = new_dates.filter(f => !current_dates.includes(f))[0];
+        action = "add";
+      }
+      if (date) {
+        const additional_dates = [date];
+        const parsed_date = instance.parseDate(date, "Y-m-d");
+        let weekday = parsed_date.getDay();
+        while (weekday > 1) {
+          const cand_date = new Date(parsed_date);
+          cand_date.setDate(cand_date.getDate() - (parsed_date.getDay() - weekday + 1));
+          additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          weekday -= 1;
+        }
+        weekday = parsed_date.getDay();
+        while (weekday < 5) {
+          const cand_date = new Date(parsed_date);
+          cand_date.setDate(cand_date.getDate() + (weekday - parsed_date.getDay() + 1));
+          additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          weekday += 1;
+        }
+        if (action === "add") {
+          current_dates = current_dates.concat(additional_dates);
+        } else {
+          current_dates = current_dates.filter(d => !additional_dates.includes(d));
+        }
+      }
+      this.reservation_modal.dates = current_dates.join(", ");
+    },
     log(item) {
-      console.log(item);
+      //console.log(item);
     },
     formatDate(d) {
       return DateTime.fromISO(d).toLocaleString(DateTime.DATE_FULL);

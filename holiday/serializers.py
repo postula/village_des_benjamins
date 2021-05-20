@@ -55,7 +55,19 @@ class HolidaySectionSerializer(serializers.ModelSerializer):
 
 
 class HolidaySerializer(serializers.ModelSerializer):
-    sections = HolidaySectionSerializer(source="holidaysection_set", many=True)
+    sections = serializers.SerializerMethodField('get_sections_list')
+
+    def get_sections_list(self, instance):
+        hs = HolidaySection.objects.filter(
+            holiday_id=instance.id
+        ).order_by(
+            "section__order"
+        )
+        return HolidaySectionSerializer(
+            hs,
+            many=True,
+            context=self.context
+        ).data
 
     class Meta:
         model = Holiday

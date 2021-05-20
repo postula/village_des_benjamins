@@ -1,5 +1,6 @@
 # from django.contrib.auth.models import User
 from rest_framework import mixins, viewsets
+from rest_framework.permissions import AllowAny
 
 from holiday.models import Holiday, Registration
 from holiday.serializers import HolidaySerializer, RegistrationSerializer
@@ -11,6 +12,7 @@ class HolidayViewSet(
 ):
     queryset = Holiday.objects.all()
     serializer_class = HolidaySerializer
+    permission_classes = [AllowAny]
 
 
 class RegistrationViewSet(

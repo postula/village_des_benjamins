@@ -87,7 +87,7 @@ const actions = {
         axios.post(
             USERS_URL, payload
         ).then(r => {
-            console.log(r);
+            //console.log(r);
         })
     },
     [types.UPDATE_TOKEN]: ({ commit }, payload) => {
@@ -101,7 +101,7 @@ const actions = {
                 };
                 mutationPayload.user.authenticated = true
                 mutationPayload.redirect = payload.redirect
-                console.log(mutationPayload)
+                //console.log(mutationPayload)
                 commit(types.UPDATE_TOKEN, mutationPayload)
             }
         }).catch((e) => {

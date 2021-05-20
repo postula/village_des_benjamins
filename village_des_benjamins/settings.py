@@ -31,7 +31,6 @@ DEBUG = os.getenv("DEBUG", "true") == "true"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(',')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'debug_toolbar',
     "corsheaders",
     "django_better_admin_arrayfield",
     "ordered_model",
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -71,7 +72,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "village_des_benjamins.urls"
-
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+}
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "dist")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")

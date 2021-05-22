@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
-    'import_export',
     "django_better_admin_arrayfield",
     "ordered_model",
     "tinymce",

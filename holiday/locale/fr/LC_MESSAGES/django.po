@@ -79,9 +79,6 @@ msgstr "capacité"
 msgid "remaining capacity"
 msgstr "capacité restante"
 
-msgid "capacity"
-msgstr "capacité"
-
 #: holiday/models.py:79
 msgid "section holiday"
 msgstr "vacances de groupe"

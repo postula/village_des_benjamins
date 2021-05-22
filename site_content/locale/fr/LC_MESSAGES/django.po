@@ -85,9 +85,7 @@ msgstr "Titre bouton voir plus"
 msgid "show_more_content"
 msgstr "Contenu voir plus"
 
-#: site_content/models.py:61 site_content/models.py:62
-msgid "content"
-msgstr "contenu"
+
 
 #: site_content/models.py:73 site_content/models.py:74
 msgid "news"

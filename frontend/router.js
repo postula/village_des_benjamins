@@ -9,6 +9,8 @@ import Children from "./views/Children.vue";
 import Reservation from "./views/Reservation.vue";
 import store from './store'
 import * as types from "./store/mutation-types";
+import ForgotPassword from "./views/ForgotPassword";
+import FinalizePassword from "./views/FinalizePassword";
 
 Vue.use(Router);
 
@@ -39,6 +41,24 @@ const router = new Router({
       components: {
         header: AppHeader,
         default: Register,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/forgot",
+      name: "forgot",
+      components: {
+        header: AppHeader,
+        default: ForgotPassword,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/forgot_finalize",
+      name: "forgot_finalize",
+      components: {
+        header: AppHeader,
+        default: FinalizePassword,
         footer: AppFooter
       }
     },

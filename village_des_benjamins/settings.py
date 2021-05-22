@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "holiday",
     "site_content",
     "parent_messages",
+    'reset_password',
 ]
 
 AUTH_USER_MODEL = "members.User"
@@ -87,6 +88,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             TEMPLATES_DIR,
+            "village_des_benjamins/templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -167,10 +169,22 @@ REST_FRAMEWORK = {
     ),
 }
 
+
 SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
 CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
 
+DRF_RESET_EMAIL = {
+    "RESET_PASSWORD_EMAIL_TITLE": "Village des Benjamins -- Oubli de mot de passe",
+    'RESET_PASSWORD_EMAIL_TEMPLATE': 'reset_email.html',
+    'EMAIL_EXPIRATION_TIME': 24,
+    'REDIRECT_LINK': f'{CORS_ALLOWED_ORIGINS[0]}/#/forgot_finalize',
+    'APP_NAME': 'test',
+    'EMAIL_PROVIDER': 'village_des_benjamins.providers.SendgridEmailProvider',
+    'CONTENT_PROVIDER': 'reset_password.models.DefaultContentProvider',
+    'EMAIL_FIELD': 'email',
+    'CUSTOM_PASSWORD_SET': False,
+}
 
 JWT_AUTH = {
     "JWT_ALLOW_REFRESH": True,

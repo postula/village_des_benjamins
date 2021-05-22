@@ -50,3 +50,4 @@ urllib3==1.26.2
 wcwidth==0.2.5
 whitenoise==5.2.0
 openpyxl==3.0.7
+drf-reset-password==1.2.8

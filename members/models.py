@@ -167,12 +167,13 @@ html_template = """
 <body>
     <h3> Bonjour {name},<br></h3>
     <p>
-    Merci de votre inscription, vous pouvez maintenant vous connecter et ajouter vos enfants.
+    Bienvenue sur le site internet du Village des Benjamins.
     </p>
     <p>
-        Amicalement vôtre,</p>
+    Merci de votre inscription, vous pouvez maintenant vous connecter et ajouter votre/vos enfant(s).
+    </p>
     <p>
-        Le village des benjamins</p>
+        L'Équipe du Village des Benjamins</p>
     </td>
 </body>
 

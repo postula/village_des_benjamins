@@ -10,7 +10,7 @@
       <WhiteDot top="58%" left="56%" :opacity=".05"/>
     </div>
     <div class="container">
-      <div class="row justify-content-center text-center mb-lg text-white">
+      <div class="row justify-content-center text-center text-white">
         <div class="col-lg-8">
           <h2 class="display-3 text-white">{{section.name}}</h2>
           <p class="mt-0" v-html="section.description"></p>

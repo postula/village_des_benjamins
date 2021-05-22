@@ -1,5 +1,5 @@
 <template>
-  <section class="section section-shaped my-0 overflow-hidden" :id="section.key">
+  <section class="section section-shaped my-0" :id="section.key">
       <div class="shape shape-style-3 shape-skew" :style="cssVars">
         <span></span>
         <span></span>
@@ -61,5 +61,9 @@ export default {
 }
 .section-shaped .shape.shape-skew {
   background-color: var(--background);
+  transform-origin: -180px;
+      position: absolute;
+    top: 0;
 }
+
 </style>

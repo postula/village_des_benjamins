@@ -22,28 +22,23 @@
           >
             <template>
               <div class="text-center text-muted mb-4">
-                <small>Connexion</small>
+                <small>Oubli de mot de passe</small>
               </div>
+              <base-alert type="success" v-if="feedback">
+                {{feedback}}
+              </base-alert>
               <form role="form">
                 <base-input
                   alternative
                   class="mb-3"
                   placeholder="Email"
-                  v-model="credentials.email"
+                  v-model="email"
                   addon-left-icon="ni ni-email-83"
                 >
                 </base-input>
-                <base-input
-                  alternative
-                  type="password"
-                  placeholder="Mot de passe"
-                  v-model="credentials.password"
-                  addon-left-icon="ni ni-lock-circle-open"
-                >
-                </base-input>
                 <div class="text-center">
-                  <base-button type="primary" class="my-4" @click="login()"
-                    >Se Connecter</base-button
+                  <base-button type="primary" class="my-4" @click="submit"
+                    >Réinitialiser</base-button
                   >
                 </div>
               </form>
@@ -51,8 +46,8 @@
           </card>
           <div class="row mt-3">
             <div class="col-6">
-              <router-link to="forgot" class="text-light">
-                <small>Mot de passe oublié?</small>
+              <router-link to="login" class="text-light">
+                <small>Connexion</small>
               </router-link>
             </div>
             <div class="col-6 text-right">
@@ -69,25 +64,17 @@
 <script>
 import * as types from "../store/mutation-types";
 export default {
-  title: "Connexion",
+  title: "Mot de passe oublié",
   data: () => ({
-    credentials: {
-      email: "",
-      password: "",
-    },
-    error: "",
+    email: "",
+    feedback: "",
   }),
   methods: {
-    login() {
-      const credentials = {
-        email: this.credentials.email,
-        password: this.credentials.password,
-      };
-      let redirect = decodeURIComponent(this.$route.query.redirect || "/");
-      this.$store.dispatch(types.UPDATE_TOKEN, {
-        credentials: credentials,
-        redirect: redirect,
+    async submit() {
+      await this.$store.dispatch(types.FORGOT_PASSWORD, {
+        email: this.email,
       });
+      this.feedback = "Si l'adresse est connue de nos systèmes, un email avec les instructions vous ont été envoyées";
     },
   },
 };

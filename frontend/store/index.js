@@ -20,6 +20,7 @@ const SECTIONS_URL = API_URL + 'sections/';
 const TEAM_MEMBERS_URL = API_URL + 'team_members/';
 const MESSAGE_URL = API_URL + 'messages/'
 const NEWS_URL = API_URL + 'news/'
+const FORGET_PASSWORD_URL = API_URL + 'reset-password/'
 
 const state = {
     accessToken: null,
@@ -82,6 +83,7 @@ const mutations = {
         state.news = payload;
     },
 };
+
 const actions = {
     [types.REGISTER]: ({ commit }, payload) => {
         axios.post(
@@ -270,18 +272,36 @@ const actions = {
             console.error(e)
         });
     },
+    [types.FORGOT_PASSWORD]: ({}, payload) => {
+        axios.post(FORGET_PASSWORD_URL, payload).catch((e) => {
+            console.error(e)
+        });
+    },
+    [types.VERIFY_FORGOT_PASSWORD_TOKEN]: ({}, payload) => {
+        return new Promise((resolve) => {
+            axios.get(FORGET_PASSWORD_URL + "token-validation?token=" + payload.token)
+                .then((r) => {
+                    resolve({success: r.status === 200})
+                })
+                .catch((e) => {
+                    resolve({success: false}
+                )
+            })
+        });
+    },
+    [types.RESET_PASSWORD]: ({}, payload) => {
+        return new Promise((resolve) => {
+            axios.post(FORGET_PASSWORD_URL + "submit/?token=" + payload.token, {password: payload.password})
+                .then((r) => {
+                    resolve({success: true})
+                })
+                .catch((e) => {
+                    resolve({success: false, error: e})
+                });
+        })
+    }
 };
 
-
-// export function base() {
-//     return 'http://' + window.location.hostname + ':8000/api'
-// }
-//
-// export function getUser(userID) {
-//     return axios.get(base() + '/users/' + userID + '/')
-// }
-
-const order_sort = (a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0);
 
 const getters = {
     getCurrentUserId: state => state.currentUser.user_id,
@@ -292,10 +312,6 @@ const getters = {
     getRegistrations: state => state.registrations,
     getSections: state => state.sections,
     getContents: state => state.contents,
-    getServices: state => state.contents.filter(c => c.section === "service").sort(order_sort),
-    getObjectives: state => state.contents.filter(c => c.section === "objectif").sort(order_sort),
-    getMethodologies: state => state.contents.filter(c => c.section === "methodologie").sort(order_sort),
-    getTeamMembers: state => state.team_members,
     getNews: state => state.news,
 }
 

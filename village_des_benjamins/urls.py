@@ -28,6 +28,7 @@ from members.views import UserViewSet, ChildViewSet, TeamViewSet
 from holiday.views import HolidayViewSet, RegistrationViewSet
 from site_content.views import ContentViewSet, SiteSectionViewSet, NewsViewSet
 from parent_messages.views import MessageViewSet
+from reset_password.views import ResetPasswordView
 
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
@@ -39,6 +40,7 @@ router.register(r"contents", ContentViewSet)
 router.register(r"sections", SiteSectionViewSet)
 router.register(r"messages", MessageViewSet)
 router.register(r"news", NewsViewSet)
+router.register(r"reset-password", ResetPasswordView, basename="reset_password")
 
 
 urlpatterns = [

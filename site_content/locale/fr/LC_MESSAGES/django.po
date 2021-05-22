@@ -30,7 +30,6 @@ msgstr "introduction"
 msgid "content"
 msgstr "contenu"
 
-
 msgid "contact"
 msgstr "contact"
 
@@ -85,9 +84,6 @@ msgstr "Titre bouton voir plus"
 #: site_content/models.py:49
 msgid "show_more_content"
 msgstr "Contenu voir plus"
-
-msgid "site_content"
-msgstr "contenu du site"
 
 #: site_content/models.py:61 site_content/models.py:62
 msgid "content"

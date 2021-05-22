@@ -63,10 +63,6 @@ msgstr "inscription ouverte"
 msgid "sections"
 msgstr "groupes"
 
-#: holiday/models.py:45 holiday/models.py:123
-msgid "registrations"
-msgstr "inscriptions"
-
 #: holiday/models.py:56
 msgid "holidays"
 msgstr "vacances"

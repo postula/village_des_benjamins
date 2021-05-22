@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 08:57+0000\n"
+"POT-Creation-Date: 2021-05-22 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,99 +18,100 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:31
+#: members/admin.py:32
 msgid "team"
 msgstr "équipe"
 
-#: models.py:23
-msgid "The Email must be set"
-msgstr "L'email doit être rempli"
-
-#: models.py:39
-msgid "Superuser must have is_staff=True."
-msgstr "Administrateur doit avoir is_staff=True"
-
-#: models.py:41
-msgid "Superuser must have is_superuser=True."
-msgstr "Administrateur doit avoir is_superuser=True"
-
-#: models.py:47
-msgid "email address"
-msgstr "addresse email"
-
-#: models.py:49
-msgid "role"
-msgstr "fonction"
-
-#: models.py:50
-msgid "visible_on_site"
-msgstr "visible sur le site"
-
-#: models.py:80
-msgid "member"
-msgstr "membre"
-
-#: models.py:81
+#: members/apps.py:7 members/models.py:83
 msgid "members"
 msgstr "membres"
 
-#: models.py:97
+#: members/models.py:33
+msgid "The Email must be set"
+msgstr "L'email doit être rempli"
+
+#: members/models.py:49
+msgid "Superuser must have is_staff=True."
+msgstr "Administrateur doit avoir is_staff=True"
+
+#: members/models.py:51
+msgid "Superuser must have is_superuser=True."
+msgstr "Administrateur doit avoir is_superuser=True"
+
+#: members/models.py:57
+msgid "email address"
+msgstr "addresse email"
+
+#: members/models.py:59
+msgid "role"
+msgstr "fonction"
+
+#: members/models.py:60 members/models.py:61
+msgid "visible_on_site"
+msgstr "visible sur le site"
+
+#: members/models.py:82
+msgid "member"
+msgstr "membre"
+
+#: members/models.py:99
 msgid "first name"
 msgstr "prénom"
 
-#: models.py:98
+#: members/models.py:100
 msgid "last name"
 msgstr "nom"
 
-#: models.py:99
+#: members/models.py:101
 msgid "birth date"
 msgstr "date de naissance"
 
-#: models.py:101 models.py:112
+#: members/models.py:103
 msgid "gender"
 msgstr "genre"
 
-#: models.py:102
+#: members/models.py:104
 msgid "male"
 msgstr "garçon"
 
-#: models.py:102
+#: members/models.py:104
 msgid "female"
 msgstr "fille"
 
-#: models.py:106
+#: members/models.py:108
 msgid "parent"
 msgstr "parent"
 
-#: models.py:113
+#: members/models.py:114
+msgid "status"
+msgstr "statut"
+
+#: members/models.py:115
 msgid "in_validation"
 msgstr "validation"
 
-#: models.py:113
+#: members/models.py:115
 msgid "registered"
 msgstr "enregistré"
 
-#: models.py:135
+#: members/models.py:137
 msgid "child"
 msgstr "enfant"
 
-#: models.py:136
+#: members/models.py:138
 msgid "children"
 msgstr "enfants"
 
-#: models.py:140
+#: members/models.py:142
 #, fuzzy
 #| msgid "last name"
 msgid "name"
 msgstr "nom"
 
-#: models.py:146
+#: members/models.py:148
 msgid "staff_function"
 msgstr "Fonction"
 
-#: models.py:147
+#: members/models.py:149
 msgid "staff_functions"
 msgstr "Fonctions"
-
-msgid "status"
-msgstr "statut"

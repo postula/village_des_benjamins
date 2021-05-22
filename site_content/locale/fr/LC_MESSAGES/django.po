@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 17:45+0000\n"
+"POT-Creation-Date: 2021-05-22 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,48 +18,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: apps.py:7
+#: site_content/apps.py:7
 msgid "site_content"
 msgstr "Contenu du site"
 
-#: models.py:8
-msgid "key"
-msgstr "clé"
+#: site_content/models.py:10
+msgid "introduction"
+msgstr "introduction"
 
-#: models.py:9 models.py:22
-msgid "name"
-msgstr "Nom"
-
-#: models.py:16 models.py:28
-msgid "site_section"
-msgstr "Rubrique du site"
-
-#: models.py:17
-msgid "site_sections"
-msgstr "Rubriques du site"
-
-#: models.py:23
-msgid "icon"
-msgstr "icône"
-
-#: models.py:25
-msgid "show_more_button"
-msgstr "Titre bouton voir plus"
-
-#: models.py:26
-#, fuzzy
-#| msgid "site_content"
-msgid "show_more_content"
-msgstr "Contenu voir plus"
-
-#: models.py:38 models.py:39
+#: site_content/models.py:11
 msgid "content"
 msgstr "contenu"
 
-#: models.py:44
+
+msgid "contact"
+msgstr "contact"
+
+#: site_content/models.py:12
+msgid "team"
+msgstr "équipe"
+
+#: site_content/models.py:13
+msgid "list_left"
+msgstr ""
+
+#: site_content/models.py:14
+msgid "list_right"
+msgstr ""
+
+#: site_content/models.py:15
+msgid "simple_list"
+msgstr ""
+
+#: site_content/models.py:20
+msgid "key"
+msgstr "clé"
+
+#: site_content/models.py:21 site_content/models.py:45
+msgid "name"
+msgstr "Nom"
+
+#: site_content/models.py:22 site_content/models.py:67
 msgid "description"
 msgstr "description"
 
-#: models.py:50 models.py:51
+#: site_content/models.py:24
+msgid "layout"
+msgstr ""
+
+#: site_content/models.py:39 site_content/models.py:51
+msgid "site_section"
+msgstr "Rubrique du site"
+
+#: site_content/models.py:40
+msgid "site_sections"
+msgstr "Rubriques du site"
+
+#: site_content/models.py:46
+msgid "icon"
+msgstr "icône"
+
+#: site_content/models.py:48
+msgid "show_more_button"
+msgstr "Titre bouton voir plus"
+
+#: site_content/models.py:49
+msgid "show_more_content"
+msgstr "Contenu voir plus"
+
+msgid "site_content"
+msgstr "contenu du site"
+
+#: site_content/models.py:61 site_content/models.py:62
+msgid "content"
+msgstr "contenu"
+
+#: site_content/models.py:73 site_content/models.py:74
 msgid "news"
 msgstr "actualité"

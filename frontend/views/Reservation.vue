@@ -359,6 +359,7 @@ export default {
           allowInput: true,
           mode: "multiple",
           inline: true,
+          enable: [],
           locale: {
             firstDayOfWeek: 1,
           },
@@ -399,28 +400,39 @@ export default {
         date = new_dates.filter(f => !current_dates.includes(f))[0];
         action = "add";
       }
-      if (date) {
-        const additional_dates = [date];
-        const parsed_date = instance.parseDate(date, "Y-m-d");
-        let weekday = parsed_date.getDay();
-        while (weekday > 1) {
-          const cand_date = new Date(parsed_date);
-          cand_date.setDate(cand_date.getDate() - (parsed_date.getDay() - weekday + 1));
+      if (!date) {
+        return;
+      }
+      const additional_dates = [date];
+      const min_date = instance.parseDate(this.reservation_modal.holiday.start_date, "Y-m-d");
+      const max_date = instance.parseDate(this.reservation_modal.holiday.end_date, "Y-m-d");
+      const parsed_date = instance.parseDate(date, "Y-m-d");
+      let weekday = parsed_date.getDay();
+      while (weekday > 1) {
+        const cand_date = new Date(parsed_date);
+        cand_date.setDate(cand_date.getDate() - (parsed_date.getDay() - weekday + 1));
+        if (cand_date >= min_date) {
           additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
           weekday -= 1;
+        } else {
+          weekday = 0;
         }
-        weekday = parsed_date.getDay();
-        while (weekday < 5) {
-          const cand_date = new Date(parsed_date);
-          cand_date.setDate(cand_date.getDate() + (weekday - parsed_date.getDay() + 1));
+      }
+      weekday = parsed_date.getDay();
+      while (weekday < 5) {
+        const cand_date = new Date(parsed_date);
+        cand_date.setDate(cand_date.getDate() + (weekday - parsed_date.getDay() + 1));
+        if (cand_date <= max_date) {
           additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
           weekday += 1;
-        }
-        if (action === "add") {
-          current_dates = current_dates.concat(additional_dates);
         } else {
-          current_dates = current_dates.filter(d => !additional_dates.includes(d));
+          weekday = 5;
         }
+      }
+      if (action === "add") {
+        current_dates = current_dates.concat(additional_dates);
+      } else {
+        current_dates = current_dates.filter(d => !additional_dates.includes(d));
       }
       this.reservation_modal.dates = current_dates.join(", ");
     },
@@ -468,20 +480,6 @@ export default {
           dates.push(date);
         }
       }
-      this.$set(this.reservation_modal.dp_config, "disable", dates);
-    },
-    makeReservation(holiday_id) {
-      this.reservation_modal = Object.assign(this.reservation_modal, {
-        show: true,
-        dates: "",
-        holiday: this.holidays.find((h) => h.id == holiday_id),
-        child_id: undefined,
-        errors: {},
-        children: this.children.filter(
-          (c) => !c.holidays_booked.includes(holiday_id)
-        ),
-        action: "add",
-      });
       this.$set(
         this.reservation_modal.dp_config,
         "minDate",
@@ -492,6 +490,20 @@ export default {
         "maxDate",
         this.reservation_modal.holiday.end_date
       );
+      this.$set(this.reservation_modal.dp_config, "disable", dates);
+    },
+    makeReservation(holiday_id) {
+      this.reservation_modal = Object.assign(this.reservation_modal, {
+        show: true,
+        dates: "",
+        holiday: this.holidays.find((h) => h.id === holiday_id),
+        child_id: undefined,
+        errors: {},
+        children: this.children.filter(
+          (c) => !c.holidays_booked.includes(holiday_id)
+        ),
+        action: "add",
+      });
     },
     submitReservationModal() {
       let has_error = false;
@@ -501,7 +513,7 @@ export default {
       }
       if (
         !this.reservation_modal.dates ||
-        this.reservation_modal.dates.split(",").length == 0
+        this.reservation_modal.dates.split(",").length === 0
       ) {
         this.reservation_modal.errors.dates = "Champs obligatoire";
         has_error = true;

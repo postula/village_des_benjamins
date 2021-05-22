@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 17:44+0000\n"
+"POT-Creation-Date: 2021-05-22 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: apps.py:6
+#: parent_messages/apps.py:7
 msgid "parent_messages"
 msgstr "Message de parent"
 
-#: models.py:13
+#: parent_messages/models.py:13
 msgid "name"
 msgstr "nom"
 
-#: models.py:14
+#: parent_messages/models.py:14
 msgid "email"
 msgstr "email"
 
-#: models.py:15 models.py:21
+#: parent_messages/models.py:15 parent_messages/models.py:21
 msgid "message"
 msgstr "message"
 
-#: models.py:22
+#: parent_messages/models.py:22
 msgid "messages"
 msgstr "messages"
 
-#: models.py:26
+#: parent_messages/models.py:26
 msgid "subject"
 msgstr "sujet"

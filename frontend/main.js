@@ -16,10 +16,10 @@ Vue.prototype.$api = backendAPI;
 Vue.use(Argon);
 Vue.use(VueAxios, Axios)
 Vue.mixin(titleMixin);
-Sentry.init({
-  Vue: Vue,
-  dsn: "https://d5d4f8ab79e44e238be6d6e0253e8144@o207892.ingest.sentry.io/5583101",
-})
+// Sentry.init({
+//   Vue: Vue,
+//   dsn: "https://d5d4f8ab79e44e238be6d6e0253e8144@o207892.ingest.sentry.io/5583101",
+// })
 new Vue({
   router,
   store,

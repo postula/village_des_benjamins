@@ -8,8 +8,38 @@ from holiday.models import (
     HolidaySection,
     Registration,
     registration_statuses,
-    Outing,
+    Outing, SectionProgram,
 )
+from members.models import User
+
+
+class AnimateurSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = [
+            "id",
+            "first_name",
+            "last_name"
+        ]
+        model = User
+
+
+class SectionProgramSerializer(serializers.ModelSerializer):
+    animateur = AnimateurSerializer(many=True)
+
+    class Meta:
+        fields = [
+            "id",
+            "description",
+            "start_date",
+            "end_date",
+            "animateur",
+            "theme",
+            "bricolage",
+            "food",
+            "game",
+            "other"
+        ]
+        model = SectionProgram
 
 
 class OutingSerializer(serializers.ModelSerializer):
@@ -30,28 +60,13 @@ class OutingSerializer(serializers.ModelSerializer):
 class HolidaySectionSerializer(serializers.ModelSerializer):
     section_id = serializers.ReadOnlyField(source="section.id")
     section_name = serializers.ReadOnlyField(source="section.name")
-    capacities = serializers.SerializerMethodField()
     outings = OutingSerializer(many=True)
+    activities = SectionProgramSerializer(many=True)
 
-    def get_capacities(self, obj):
-        holiday = obj.holiday
-        capacities = {}
-        current_date = holiday.start_date
-        max_capacity = obj.capacity
-        while current_date <= holiday.end_date:
-            if current_date.weekday() < 5:
-                already_booked = holiday.registration_set.filter(
-                    dates__contains=[current_date]
-                ).count()
-            else:
-                already_booked = max_capacity
-            capacities[current_date.isoformat()] = max_capacity - already_booked
-            current_date += datetime.timedelta(days=1)
-        return capacities
 
     class Meta:
         model = HolidaySection
-        fields = ["capacity", "section_id", "section_name", "capacities", "outings", "description"]
+        fields = ["activities", "section_id", "section_name", "outings", "description"]
 
 
 class HolidaySerializer(serializers.ModelSerializer):
@@ -62,6 +77,10 @@ class HolidaySerializer(serializers.ModelSerializer):
             holiday_id=instance.id
         ).order_by(
             "section__order"
+        ).prefetch_related(
+            "outings",
+            "activities",
+            "activities__animateur"
         )
         return HolidaySectionSerializer(
             hs,

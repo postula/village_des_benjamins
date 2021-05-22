@@ -1,3 +1,6 @@
+import datetime
+from pprint import pprint
+
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.db import models
@@ -9,6 +12,9 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 from logging import getLogger
 from tinymce.models import HTMLField
+from ordered_model.models import OrderedModel
+
+from section.models import Section
 
 logger = getLogger(__name__)
 
@@ -124,6 +130,50 @@ class Registration(models.Model):
         unique_together = [["holiday", "child"]]
 
 
+class SectionProgram(OrderedModel):
+    section_holiday = models.ForeignKey(
+        to="holiday.HolidaySection",
+        verbose_name=_("section_holiday"),
+        on_delete=models.CASCADE,
+        related_name="activities",
+    )
+    order_with_respect_to = "section_holiday"
+    description = HTMLField(verbose_name=("description"), blank=True, null=True)
+    # TODO: add validation
+    start_date = models.DateField(_("start date"))
+    end_date = models.DateField(_("end date"))
+    animateur = models.ManyToManyField(
+        to="members.User",
+        verbose_name=_('animateur'),
+        related_name="holiday_weeks"
+    )
+    theme = models.CharField(
+        max_length=255,
+        verbose_name=_('theme'), blank=True, null=True
+    )
+    bricolage = models.CharField(
+        max_length=255,
+        verbose_name=_('bricolage'), blank=True, null=True
+    )
+    food = models.CharField(
+        max_length=255,
+        verbose_name=_('food'), blank=True, null=True
+    )
+    game = models.CharField(
+        max_length=255,
+        verbose_name=_('game'), blank=True, null=True
+    )
+    other = models.CharField(
+        max_length=255,
+        verbose_name=_('other'), blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = _("section_program")
+        verbose_name_plural = _("section_programs")
+        ordering = ["order"]
+
+
 class Outing(models.Model):
     section_holiday = models.ForeignKey(
         to="holiday.HolidaySection",
@@ -198,18 +248,18 @@ html_template = """
     </p>
     <p>
         Afin de finaliser l'inscription veuillez
-        procédér au versement de {cost}€ sur le compte
+        procéder au versement de {cost}€ sur le compte
         BEXX XXXX XXXX XXXX XXXX en mentionant la
         communication suivante:
         "{payment_communication}"</p>
     <p>
-        Merci de votre confiance, on se réjouit de voir
-        {child_first_name} pendant les vacances de
-        {holiday_name}!<br></p>
+        Merci de votre confiance,
+    </p>
     <p>
-        Amicalement vôtre,</p>
+        On se réjouit de voir {child_first_name} pendant les vacances!
+    </p>
     <p>
-        Le village des benjamins</p>
+        L'Équipe du Village des Benjamins</p>
     </td>
 </body>
 
@@ -261,4 +311,39 @@ def send_registration_notification(sender, created, **kwargs):
         logger.exception(e)
 
 
+def create_section_holiday(sender, created, **kwargs):
+    if not created:
+        return
+    obj = kwargs["instance"]
+    # 1. Split by week
+    weeks = []
+    prev_date = obj.start_date
+    start_week = prev_date
+    while prev_date < obj.end_date:
+        if prev_date.weekday() == 4:
+            weeks.append((start_week, prev_date))
+            prev_date = prev_date + datetime.timedelta(days=3)
+            start_week = prev_date
+        else:
+            prev_date = prev_date + datetime.timedelta(days=1)
+    weeks.append((start_week, prev_date))
+    for section in Section.objects.all():
+        hs = HolidaySection.objects.create(
+            section=section,
+            holiday=obj,
+            capacity=20,
+        )
+        hs.save()
+        i = 0
+        for (start_date, end_date) in weeks:
+            SectionProgram.objects.create(
+                section_holiday=hs,
+                start_date=start_date,
+                end_date=end_date,
+                order=i
+            ).save()
+            i += 1
+
+
 models.signals.post_save.connect(send_registration_notification, sender=Registration)
+models.signals.post_save.connect(create_section_holiday, sender=Holiday)

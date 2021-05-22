@@ -80,6 +80,53 @@
 
                               <div class="mt-1" v-html="section.description">
                               </div>
+                              <div>
+                                <h4 class="mt-2">Programe</h4>
+                                <div class="list-group">
+                                  <div
+                                    v-for="activity in section.activities"
+                                    :key="activity.id"
+                                    class="list-group-item list-group-item-action flex-column align-items-start"
+                                  >
+                                    <div
+                                      class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap flex-sm-column flex-md-row"
+                                    >
+                                      <div class="d-flex flex-sm-column flex-md-row">
+                                        <i class="fa fa-calendar mr-1" />
+                                        <span>{{formatDate(activity.start_date)}}</span>
+                                        <span> - </span>
+                                        <span>{{formatDate(activity.end_date)}}</span>
+                                      </div>
+                                      <div class="d-flex justify-content-between">
+                                        <span class="mr-1" v-for="(animateur, index) in activity.animateur" :key="animateur.id">
+                                          {{animateur.first_name}}
+                                          <span v-if="index !== (activity.animateur.length - 1)"> & </span>
+                                        </span>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <h5 class="mt-1 mb-1">
+                                        {{ activity.theme }}
+                                      </h5>
+                                    </div>
+                                    <p class="description" v-html="activity.description" v-if="activity.description"></p>
+                                    <div class="d-flex justify-content-between">
+                                      <div v-if="activity.bricolage" title="Bricolages">
+                                        <i class="fa fa-cubes mr-1" />{{activity.bricolage}}
+                                      </div>
+                                      <div v-if="activity.food" title="Activités Culinaires">
+                                        <i class="fa fa-cutlery mr-1" />{{activity.food}}
+                                      </div>
+                                      <div v-if="activity.game" title="Jeux">
+                                        <i class="fa fa-gamepad mr-1" />{{activity.game}}
+                                      </div>
+                                      <div v-if="activity.other" title="Divers">
+                                        <i class="fa fa-magic mr-1" />{{activity.other}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                               <div v-if="section.outings.length > 0">
                                 <h4 class="mt-2">Sorties</h4>
                                 <div class="list-group">
@@ -153,7 +200,10 @@
                   </h5>
                 </template>
                 <div>
-                  <div class="row justify-content-center text-left">
+                  <div v-if="capacityLoading">
+                    <div id="loading" />
+                  </div>
+                  <div class="row justify-content-center text-left" v-else>
                     <div class="col-lg-9">
                       <base-input
                         label="Enfant"
@@ -349,7 +399,7 @@ export default {
       reservationModalSection: {},
       reservation_modal: {
         show: false,
-        dates: "",
+        dates: null,
         holiday: {},
         child_id: undefined,
         errors: {},
@@ -358,7 +408,7 @@ export default {
         dp_config: {
           allowInput: true,
           mode: "multiple",
-          inline: true,
+          inline: false,
           enable: [],
           locale: {
             firstDayOfWeek: 1,
@@ -434,7 +484,12 @@ export default {
       } else {
         current_dates = current_dates.filter(d => !additional_dates.includes(d));
       }
-      this.reservation_modal.dates = current_dates.join(", ");
+      if (current_dates.length > 0) {
+        this.reservation_modal.dates = current_dates.join(", ");
+      } else {
+        this.reservation_modal.dates = null;
+        instance.jumpToDate(min_date);
+      }
     },
     log(item) {
       //console.log(item);
@@ -468,13 +523,21 @@ export default {
       const child_id = this.reservation_modal.child_id;
       this.reservation_modal.child_id = child_id;
       const child = this.children.find((c) => c.id == child_id);
-      if (!child) return;
+      if (!child) {
+        this.$set(
+          this.reservation_modal.dp_config,
+          "inline",
+          false
+        );
+        return;
+      }
       this.reservationModalSection =
         this.reservation_modal.holiday.sections.find(
-          (s) => s.section_name == child.section
+          (s) => s.section_name === child.section
         ) || {};
       const dates = [];
       for (const date in this.reservationModalSection.capacities) {
+        if (!this.reservationModalSection.capacities.hasOwnProperty(date)) continue;
         const capacity = this.reservationModalSection.capacities[date];
         if (capacity <= 0) {
           dates.push(date);
@@ -490,9 +553,17 @@ export default {
         "maxDate",
         this.reservation_modal.holiday.end_date
       );
+      // this.$set(
+      //   this.reservation_modal.dp_config,
+      //   "inline",
+      //   true
+      // );
       this.$set(this.reservation_modal.dp_config, "disable", dates);
     },
     makeReservation(holiday_id) {
+      this.$store.dispatch(types.GET_HOLIDAYS_SECTION_CAPACITY, {
+        holiday_id: holiday_id
+      })
       this.reservation_modal = Object.assign(this.reservation_modal, {
         show: true,
         dates: "",
@@ -588,8 +659,29 @@ export default {
     registrations() {
       return this.$store.getters.getRegistrations;
     },
+    capacityLoading() {
+      return this.$store.getters.getCapacityLoading;
+    }
   },
 };
 </script>
-<style>
+<style scoped>
+
+#loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: black;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
 </style>

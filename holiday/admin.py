@@ -7,8 +7,9 @@ from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 from django.utils.translation import ugettext_lazy as _
 from openpyxl import Workbook
 from openpyxl.styles import Alignment
+from ordered_model.admin import OrderedStackedInline, OrderedInlineModelAdminMixin, OrderedModelAdmin
 
-from holiday.models import Holiday, HolidaySection, Registration, Outing
+from holiday.models import Holiday, HolidaySection, Registration, Outing, SectionProgram
 
 
 class OutingInline(admin.StackedInline):
@@ -16,10 +17,15 @@ class OutingInline(admin.StackedInline):
     extra = 0
 
 
-class HolidaySectionAdmin(admin.ModelAdmin):
+class SectionProgramInline(OrderedStackedInline):
+    model = SectionProgram
+    extra = 0
+
+
+class HolidaySectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
     model = HolidaySection
     extra = 0
-    inlines = [OutingInline]
+    inlines = [SectionProgramInline, OutingInline]
     list_display = ["section", "holiday", "capacity", "remaining_capacity"]
     list_filter = ["section", "holiday", "capacity"]
 

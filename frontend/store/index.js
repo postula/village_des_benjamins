@@ -33,6 +33,7 @@ const state = {
     sections: [],
     team_members: [],
     news: [],
+    capacity_loading: false,
 };
 const mutations = {
     [types.UPDATE_TOKEN]: (state, payload) => {
@@ -63,6 +64,25 @@ const mutations = {
     },
     [types.GET_HOLIDAYS]: (state, payload) => {
         state.holidays = payload;
+    },
+    [types.SET_CAPACITY_LOADING]: (state, payload) => {
+        state.capacity_loading = payload;
+    },
+    [types.GET_HOLIDAYS_SECTION_CAPACITY]: (state, payload) => {
+        const holidays = [];
+        for (const holiday of state.holidays) {
+            if (holiday.id !== payload.holiday) {
+                holidays.push(holiday)
+                continue;
+            }
+            const sections = [];
+            for (const section of holiday.sections) {
+                section.capacities = payload.capacities[section.section_id]
+                sections.push(section);
+            }
+            holiday.sections = sections;
+        }
+        state.holidays = holidays;
     },
     [types.CREATE_REGISTRATION]: (state, payload) => {
         state.registrations.push(payload);
@@ -200,6 +220,22 @@ const actions = {
             console.error(e)
         });
     },
+    [types.GET_HOLIDAYS_SECTION_CAPACITY]: ({ commit }, payload) => {
+        commit(types.SET_CAPACITY_LOADING, true);
+        axios.get(
+            `${HOLIDAYS_URL}${payload.holiday_id}/get_capacity`
+        ).then((r) => {
+            if (r.data) {
+                commit(types.GET_HOLIDAYS_SECTION_CAPACITY, {
+                    holiday: payload.holiday_id,
+                    capacities: r.data
+                });
+                commit(types.SET_CAPACITY_LOADING, false);
+            }
+        }).catch((e) => {
+            console.error(e)
+        })
+    },
     [types.CREATE_REGISTRATION]: ({ commit, dispatch }, payload) => {
         axios.post(REGISTRATIONS_URL, payload).then((r) => {
             if (r.data) {
@@ -313,6 +349,7 @@ const getters = {
     getSections: state => state.sections,
     getContents: state => state.contents,
     getNews: state => state.news,
+    getCapacityLoading: state => state.capacity_loading,
 }
 
 const store = new Vuex.Store({

@@ -74,7 +74,7 @@ export default {
       await this.$store.dispatch(types.FORGOT_PASSWORD, {
         email: this.email,
       });
-      this.feedback = "Si l'adresse est connue de nos systèmes, un email avec les instructions vous ont été envoyées";
+      this.feedback = "Si l'adresse est connue de nos systèmes, un email avec les instructions vous a été envoyé";
     },
   },
 };

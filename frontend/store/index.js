@@ -349,6 +349,7 @@ const getters = {
     getSections: state => state.sections,
     getContents: state => state.contents,
     getNews: state => state.news,
+    getTeamMembers: state => state.team_members,
     getCapacityLoading: state => state.capacity_loading,
 }
 

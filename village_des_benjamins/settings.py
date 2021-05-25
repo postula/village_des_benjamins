@@ -165,7 +165,7 @@ JAZZMIN_SETTINGS = {
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        "village_des_benjamins.auth.JSONWebTokenAuthenticationNewHeader",
     ),
 }
 
@@ -173,6 +173,18 @@ REST_FRAMEWORK = {
 SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
 CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'authorizationfb',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 DRF_RESET_EMAIL = {
     "RESET_PASSWORD_EMAIL_TITLE": "Village des Benjamins -- Oubli de mot de passe",

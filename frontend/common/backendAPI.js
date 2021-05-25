@@ -7,6 +7,7 @@ axios.interceptors.request.use(
     config => {
         if (store.state.accessToken) {
             config.headers.Authorization = `JWT ${store.state.accessToken}`
+            config.headers.AuthorizationFB = `JWT ${store.state.accessToken}`
         }
         return config
     },

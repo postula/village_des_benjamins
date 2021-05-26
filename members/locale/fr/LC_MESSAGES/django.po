@@ -49,6 +49,9 @@ msgstr "fonction"
 #: members/models.py:60 members/models.py:61
 msgid "visible_on_site"
 msgstr "visible sur le site"
+#: members/models.py:60 members/models.py:61
+msgid "accept_newsletter"
+msgstr "accepte newsletter"
 
 #: members/models.py:82
 msgid "member"

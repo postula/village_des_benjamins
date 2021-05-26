@@ -58,7 +58,7 @@ class User(AbstractUser):
     photo = models.ImageField(null=True, blank=True, upload_to="members/")
     role = models.ForeignKey(verbose_name=_("role"), to="members.StaffFunction", null=True, blank=True, on_delete=models.SET_NULL)
     visible_on_site = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
-    accept_newsletter = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
+    accept_newsletter = models.BooleanField(verbose_name=_("accept_newsletter"), default=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = CustomUserManager()

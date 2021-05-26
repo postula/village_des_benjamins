@@ -20,8 +20,13 @@ class ChildInline(admin.TabularInline):
 
 class ChildAdmin(admin.ModelAdmin):
     model = Child
-    list_display = ["parent", "first_name", "last_name", "status"]
+    list_display = ["parent", "first_name", "last_name", "status", "section"]
     list_filter = ["parent", "status"]
+    search_fields = ["first_name"]
+    fieldsets = [
+        [None, {"fields": ["first_name", "last_name", "birth_date", "gender", "parent", "status", "section"]}]
+    ]
+    readonly_fields = ["section"]
 
 
 # Define a new User admin
@@ -47,7 +52,7 @@ class UserAdmin(BaseUserAdmin):
     )
     search_fields = ("email",)
     ordering = ("email",)
-    list_filter = ["accept_newsletter"]
+    list_filter = ["accept_newsletter", "is_staff"]
 
     def photo_list_preview(self, obj):
         if obj.photo:

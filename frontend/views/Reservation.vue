@@ -651,7 +651,7 @@ export default {
       return out;
     },
     holidays() {
-      return this.$store.getters.getHolidays.filter((h) => h.registration_open);
+      return this.$store.getters.getHolidays;
     },
     children() {
       return this.$store.getters.getChildren.filter(c => c.status === "registered");

@@ -11,7 +11,6 @@ import store from './store'
 import * as types from "./store/mutation-types";
 import ForgotPassword from "./views/ForgotPassword";
 import FinalizePassword from "./views/FinalizePassword";
-
 Vue.use(Router);
 
 const router = new Router({

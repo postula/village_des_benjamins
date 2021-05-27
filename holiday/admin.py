@@ -10,6 +10,7 @@ from openpyxl.styles import Alignment
 from ordered_model.admin import OrderedStackedInline, OrderedInlineModelAdminMixin, OrderedModelAdmin
 
 from holiday.models import Holiday, HolidaySection, Registration, Outing, SectionProgram
+from members.models import User
 
 
 class OutingInline(admin.StackedInline):
@@ -18,6 +19,12 @@ class OutingInline(admin.StackedInline):
 
 
 class SectionProgramInline(OrderedStackedInline):
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        print(db_field)
+        if db_field.name == "animateur":
+            kwargs['queryset'] = User.objects.filter(is_staff=True)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
     model = SectionProgram
     extra = 0
 

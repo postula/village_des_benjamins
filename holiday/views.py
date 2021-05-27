@@ -19,6 +19,14 @@ class HolidayViewSet(
     serializer_class = HolidaySerializer
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.action in ["retrieve", "list"]:
+            if self.request.user.is_staff:
+                return qs
+            return qs.filter(registration_open=True)
+        return qs
+
     @action(detail=True, methods=['get'])
     def get_capacity(self, request, pk=None):
         holiday = self.get_object()

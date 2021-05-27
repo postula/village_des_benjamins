@@ -3,6 +3,8 @@ from logging import getLogger
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.db.models import ExpressionWrapper, Value, DateField, F, DurationField, DecimalField, OuterRef, Subquery
+from django.db.models.functions import Extract
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
 from calendar import monthrange
@@ -94,8 +96,30 @@ def monthdelta(d1, d2):
             break
     return delta
 
+class ChildManager(models.Manager):
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        age_expr = ExpressionWrapper(Value(datetime.today(), DateField()) - F('birth_date'), output_field=DurationField())
+        qs = qs.annotate(
+            _age_inter=age_expr,
+            _age_epoch=Extract('_age_inter', 'epoch'),
+            _age=ExpressionWrapper(
+                F('_age_epoch') / Value(31556952, output_field=DecimalField()),
+                output_field=DecimalField(decimal_places=1)
+            ),
+            _section=Subquery(
+                Section.objects.filter(
+                    min_age__lte=OuterRef('_age'),
+                    max_age__gt=OuterRef('_age')
+                ).values('name')
+            )
+        )
+        return qs
+
 
 class Child(models.Model):
+    objects = ChildManager()
     first_name = models.CharField(_("first name"), max_length=30)
     last_name = models.CharField(_("last name"), max_length=30)
     birth_date = models.DateField(_("birth date"))
@@ -124,6 +148,9 @@ class Child(models.Model):
 
     @property
     def section(self):
+        section = getattr(self, '_section', None)
+        if section:
+            return section
         age = self.age
         section = Section.objects.filter(min_age__lte=age, max_age__gt=age)
         if section.exists():

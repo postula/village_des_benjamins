@@ -52,7 +52,7 @@ class CurrentUserDefault:
 
 
 class ChildSerializer(serializers.ModelSerializer):
-    section = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    section = serializers.CharField(read_only=True)
     parent = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     holidays_booked = serializers.SerializerMethodField()

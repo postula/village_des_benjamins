@@ -20,7 +20,6 @@ class OutingInline(admin.StackedInline):
 
 class SectionProgramInline(OrderedStackedInline):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        print(db_field)
         if db_field.name == "animateur":
             kwargs['queryset'] = User.objects.filter(is_staff=True)
         return super().formfield_for_manytomany(db_field, request, **kwargs)

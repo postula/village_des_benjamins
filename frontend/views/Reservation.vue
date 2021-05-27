@@ -128,7 +128,7 @@
                                 </div>
                               </div>
                               <div v-if="section.outings.length > 0">
-                                <h4 class="mt-2">Sorties</h4>
+                                <h4 class="mt-2">Sorties et Activités Spéciales</h4>
                                 <div class="list-group">
                                   <div
                                     v-for="outing in section.outings"
@@ -148,7 +148,7 @@
                                           ><i class="fa fa-calendar mr-1" />{{
                                             formatDate(outing.date)
                                           }}</span
-                                        ><span
+                                        ><span v-if="outing.departure_time && outing.arrival_time"
                                           ><i class="fa fa-hourglass mr-1" />{{
                                             formatTime(outing.departure_time)
                                           }}-{{
@@ -156,7 +156,7 @@
                                           }}</span
                                         >
                                         <span>{{ outing.price }} €</span>
-                                        <span>{{ outing.transport }}</span>
+                                        <span v-if="outing.transport">{{ outing.transport }}</span>
                                       </div>
                                     </div>
                                     <div>
@@ -247,6 +247,16 @@
                         >
                         </flat-picker>
                       </base-input>
+                      <base-input
+                        label="Problème de santé / Allergies"
+                      >
+                      <textarea
+                        class="form-control"
+                        rows="4"
+                        placeholder="Si votre enfant souffre d'allergies ou d'un problème santé, veuillez le noter ici"
+                        v-model="reservation_modal.notes"
+                      ></textarea>
+                      </base-input>
                       <base-input label="Prix" readonly>
                         <table class="table table-borderless">
                           <tr>
@@ -267,7 +277,7 @@
                             v-for="outing in currentSection.outings"
                             :key="outing.id"
                           >
-                            <td>Sortie {{ outing.name }}</td>
+                            <td>Sortie / Activité spéciale "{{ outing.name }}"</td>
                             <td>{{ outingsBooked[outing.id] ? 1 : 0 }}</td>
                             <td>x</td>
                             <td>{{ outing.price }}</td>
@@ -400,6 +410,7 @@ export default {
       reservation_modal: {
         show: false,
         dates: null,
+        notes: "",
         holiday: {},
         child_id: undefined,
         errors: {},
@@ -502,6 +513,13 @@ export default {
     },
     onDayCreate(dObj, dStr, fp, dayElem) {
       const d = DateTime.fromJSDate(dayElem.dateObj);
+      // if (this.reservationModalSection && this.reservationModalSection.capacities) {
+      //   console.log(dayElem.dateObj.toDateString(DateTime.DATE_FULL))
+      //   const capacity = this.reservationModalSection.capacities[dStr];
+      //   if (capacity <= 0) {
+      //     console.log(dayElem);
+      //   }
+      // }
       if (this.currentSection) {
         const outings = this.currentSection.outings;
         if (outings && outings.length != 0) {
@@ -598,6 +616,7 @@ export default {
           holiday: this.reservation_modal.holiday.id,
           dates: this.reservation_modal.dates.split(", "),
           section: this.reservationModalSection.section_id,
+          notes: this.reservation_modal.notes,
         })
         .then(() => {
           this.reservation_modal.show = false;

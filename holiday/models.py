@@ -111,6 +111,7 @@ class Registration(models.Model):
         default="pending",
     )
     dates = ArrayField(models.DateField(), verbose_name=_("dates"), default=list)
+    notes = models.TextField(verbose_name=_("notes"), blank=True, null=True)
 
     def _number_of_days(self):
         return len(self.dates)
@@ -168,6 +169,9 @@ class SectionProgram(OrderedModel):
         verbose_name=_('other'), blank=True, null=True
     )
 
+    def __str__(self):
+        return f"{self.start_date} - {self.end_date}"
+
     class Meta:
         verbose_name = _("section_program")
         verbose_name_plural = _("section_programs")
@@ -190,9 +194,9 @@ class Outing(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(Decimal("0"))],
     )
-    departure_time = models.TimeField(_("departure_time"))
-    arrival_time = models.TimeField(_("arrival_time"))
-    transport = models.CharField(_("transport"), max_length=255)
+    departure_time = models.TimeField(_("departure_time"), blank=True, null=True)
+    arrival_time = models.TimeField(_("arrival_time"), blank=True, null=True)
+    transport = models.CharField(_("transport"), max_length=255, blank=True, null=True)
 
     def clean(self):
         start_date = self.section_holiday.holiday.start_date
@@ -206,7 +210,7 @@ class Outing(models.Model):
             ] = "La sortie doit être organisée entre le {} et le {}".format(
                 start_date, end_date
             )
-        if self.departure_time > self.arrival_time:
+        if self.departure_time and self.arrival_time and self.departure_time > self.arrival_time:
             has_errors = True
             error = "L'heure de départ doit-être avant l'heure d'arrivée"
             errors[NON_FIELD_ERRORS] = error
@@ -239,7 +243,7 @@ html_template = """
     <h3> Bonjour {parent_name},<br></h3>
     <p>
         Nous avons bien reçu l'inscription pour les
-        vacances de {holiday_name} pour
+        vacances de "{holiday_name}" pour
         {child_name}.</p>
     <p>
         {child_name} est inscrit{child_gender_accord}
@@ -249,7 +253,7 @@ html_template = """
     <p>
         Afin de finaliser l'inscription veuillez
         procéder au versement de {cost}€ sur le compte
-        BEXX XXXX XXXX XXXX XXXX en mentionant la
+        BE45 3631 4231 3689 en mentionant la
         communication suivante:
         "{payment_communication}"</p>
     <p>
@@ -274,7 +278,7 @@ def send_registration_notification(sender, created, **kwargs):
     child_name = f"{obj.child.first_name} {obj.child.last_name}"
     parent_name = f"{obj.child.parent.first_name} {obj.child.parent.last_name}"
     payment_communication = (
-        f"reservation {obj.holiday.name.lower()} {child_name.lower()}"
+        f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
     )
     child_gender_accord = "e" if obj.child.gender == "female" else "male"
     date_li = (
@@ -332,16 +336,19 @@ def create_section_holiday(sender, created, **kwargs):
             section=section,
             holiday=obj,
             capacity=20,
+            animateur=section.educators
         )
         hs.save()
         i = 0
         for (start_date, end_date) in weeks:
-            SectionProgram.objects.create(
+            p = SectionProgram.objects.create(
                 section_holiday=hs,
                 start_date=start_date,
                 end_date=end_date,
                 order=i
-            ).save()
+            )
+            p.animateur.set(section.educators.all())
+            p.save()
             i += 1
 
 

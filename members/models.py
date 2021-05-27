@@ -66,11 +66,11 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return (
-            f"{self.first_name} {self.last_name}"
-            if self.first_name and self.last_name
-            else self.email
-        )
+        if self.first_name:
+            if self.last_name:
+                return f"{self.first_name} {self.last_name}"
+            return self.first_name
+        return self.email
 
     @property
     def photo_preview(self):

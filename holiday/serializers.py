@@ -123,6 +123,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             "child",
             "status",
             "dates",
+            "notes",
             "cost",
             "status_type",
             "section",

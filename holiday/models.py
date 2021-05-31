@@ -336,7 +336,6 @@ def create_section_holiday(sender, created, **kwargs):
             section=section,
             holiday=obj,
             capacity=20,
-            animateur=section.educators
         )
         hs.save()
         i = 0

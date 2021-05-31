@@ -25,12 +25,16 @@
                 <small>Connexion</small>
               </div>
               <form role="form">
+                <base-alert type="danger" v-if="errors.non_field_errors">
+                  {{errors.non_field_errors[0]}}
+                </base-alert>
                 <base-input
                   alternative
                   class="mb-3"
                   placeholder="Email"
                   v-model="credentials.email"
                   addon-left-icon="ni ni-email-83"
+                  :error="errors.email && errors.email[0]"
                 >
                 </base-input>
                 <base-input
@@ -39,6 +43,7 @@
                   placeholder="Mot de passe"
                   v-model="credentials.password"
                   addon-left-icon="ni ni-lock-circle-open"
+                  :error="errors.password && errors.password[0]"
                 >
                 </base-input>
                 <div class="text-center">
@@ -75,19 +80,24 @@ export default {
       email: "",
       password: "",
     },
-    error: "",
+    errors: {},
   }),
   methods: {
-    login() {
+    async login() {
       const credentials = {
         email: this.credentials.email,
         password: this.credentials.password,
       };
       let redirect = decodeURIComponent(this.$route.query.redirect || "/");
-      this.$store.dispatch(types.UPDATE_TOKEN, {
+      const {error} = await this.$store.dispatch(types.UPDATE_TOKEN, {
         credentials: credentials,
         redirect: redirect,
       });
+      if (error) {
+        console.log(error);
+        this.errors = error;
+      }
+
     },
   },
 };

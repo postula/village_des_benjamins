@@ -81,6 +81,7 @@ const mutations = {
                 sections.push(section);
             }
             holiday.sections = sections;
+            holidays.push(holiday);
         }
         state.holidays = holidays;
     },
@@ -113,21 +114,24 @@ const actions = {
         })
     },
     [types.UPDATE_TOKEN]: ({ commit }, payload) => {
-        axios.post(
-            OBTAIN_URL, payload.credentials
-        ).then((r) => {
-            if (r.data.token) {
-                const mutationPayload = {
-                    token: r.data.token,
-                    user: JSON.parse(atob(r.data.token.split('.')[1])),
-                };
-                mutationPayload.user.authenticated = true
-                mutationPayload.redirect = payload.redirect
-                //console.log(mutationPayload)
-                commit(types.UPDATE_TOKEN, mutationPayload)
-            }
-        }).catch((e) => {
-            console.error(e)
+        return new Promise((resolve) => {
+            axios.post(
+                OBTAIN_URL, payload.credentials
+            ).then((r) => {
+                if (r.data.token) {
+                    const mutationPayload = {
+                        token: r.data.token,
+                        user: JSON.parse(atob(r.data.token.split('.')[1])),
+                    };
+                    mutationPayload.user.authenticated = true
+                    mutationPayload.redirect = payload.redirect
+                    //console.log(mutationPayload)
+                    commit(types.UPDATE_TOKEN, mutationPayload)
+                }
+                resolve({success: true});
+            }).catch((e) => {
+                resolve({success: false, error: e});
+            });
         });
     },
     [types.LOGOUT]: ({ commit }) => {

@@ -1,177 +1,102 @@
 <template>
   <div class="profile-page">
-    <section class="section-profile-cover section-shaped my-0">
-      <div class="shape shape-style-1 shape-default shape-skew alpha-4">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </section>
+    <Skew :dots="7" />
     <section class="section section-skew">
       <div class="container">
-        <card shadow class="card-profile mt--300">
-          <h5 class="card-title">Réservations ouvertes</h5>
-          <div class="px-4">
-            <div class="text-center">
-              <div class="row justify-content-center">
-                <div class="col-lg-12">
-                  <div class="list-group">
-                    <!-- <h5 class="col-xl-12 text-left">{{ holiday.name }}</h5>
-                    <div class="col-sm-12 col-md-6">
-                      {{ holiday.start_date }} - {{ holiday.end_date }}
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                      {{ holiday.price }}€ / jour
-                    </div> -->
-                    <div
+        <card shadow class="card-profile mt--300" body-classes="px-1 px-md-4">
+          <h5 slot="header">Réservations ouvertes</h5>
+          <div class="text-center">
+            <div class="row justify-content-center">
+              <div class="col-lg-12">
+                <div class="list-group">
+                  <div
                       v-for="holiday in holidays"
                       :key="holiday.id"
-                      class="list-group-item list-group-item-action flex-column align-items-start"
-                    >
-                      <div
+                      class="list-group-item list-group-item-action flex-column align-items-start px-1"
+                  >
+                    <div
                         class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
-                      >
-                        <h5 class="mb-1">
-                          {{ holiday.name }}
-                        </h5>
-                        <div
+                    >
+                      <h5 class="mb-1">
+                        {{ holiday.name }}
+                      </h5>
+                      <div
                           class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
-                        >
-                          <span>{{ holiday.price }}€ / jour</span>
-                          <div class="">
-                            <i class="fa fa-calendar" />
-                            {{
-                              new Date(holiday.start_date).toLocaleDateString(
+                      >
+                        <span>{{ holiday.price }}€ / jour</span>
+                        <div class="">
+                          <i class="fa fa-calendar"/>
+                          {{
+                            new Date(holiday.start_date).toLocaleDateString(
                                 "fr-BE"
-                              )
-                            }}
-                            -
-                            {{
-                              new Date(holiday.end_date).toLocaleDateString(
+                            )
+                          }}
+                          -
+                          {{
+                            new Date(holiday.end_date).toLocaleDateString(
                                 "fr-BE"
-                              )
-                            }}
-                          </div>
+                            )
+                          }}
                         </div>
                       </div>
-                      <div class="mt-2">
-                        <tabs
+                    </div>
+                    <div class="mt-2">
+                      <tabs
                           type="info"
                           fill
                           centered
                           class="flex-column flex-md-row text-left"
-                        >
-                          <card shadow>
-                            <tab-pane>
-                              <span slot="title">Informations Générales</span>
-                              <span v-html="holiday.description"></span>
-                            </tab-pane>
-                            <tab-pane
+                      >
+                        <card shadow>
+                          <tab-pane>
+                            <span slot="title">Informations Générales</span>
+                            <span v-html="holiday.description"></span>
+                          </tab-pane>
+                          <tab-pane
                               v-for="section in holiday.sections"
                               :key="section.id"
-                            >
+                          >
                               <span slot="title">
                                 {{ section.section_name }}
                               </span>
-
-                              <div class="mt-1" v-html="section.description">
-                              </div>
-                              <div>
-                                <h4 class="mt-2">Programe</h4>
-                                <div class="list-group">
-                                  <div
+                            <div class="mt-1" v-html="section.description" />
+                            <HolidaySection title="Programme">
+                              <ProgramCard
                                     v-for="activity in section.activities"
                                     :key="activity.id"
-                                    class="list-group-item list-group-item-action flex-column align-items-start"
-                                  >
-                                    <div
-                                      class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap flex-sm-column flex-md-row"
-                                    >
-                                      <div class="d-flex flex-sm-column flex-md-row">
-                                        <i class="fa fa-calendar mr-1" />
-                                        <span>{{formatDate(activity.start_date)}}</span>
-                                        <span> - </span>
-                                        <span>{{formatDate(activity.end_date)}}</span>
-                                      </div>
-                                      <div class="d-flex justify-content-between">
-                                        <span class="mr-1" v-for="(animateur, index) in activity.animateur" :key="animateur.id">
-                                          {{animateur.first_name}}
-                                          <span v-if="index !== (activity.animateur.length - 1)"> & </span>
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <h5 class="mt-1 mb-1">
-                                        {{ activity.theme }}
-                                      </h5>
-                                    </div>
-                                    <p class="description" v-html="activity.description" v-if="activity.description"></p>
-                                    <div class="d-flex justify-content-between">
-                                      <div v-if="activity.bricolage" title="Bricolages">
-                                        <i class="fa fa-cubes mr-1" />{{activity.bricolage}}
-                                      </div>
-                                      <div v-if="activity.food" title="Activités Culinaires">
-                                        <i class="fa fa-cutlery mr-1" />{{activity.food}}
-                                      </div>
-                                      <div v-if="activity.game" title="Jeux">
-                                        <i class="fa fa-gamepad mr-1" />{{activity.game}}
-                                      </div>
-                                      <div v-if="activity.other" title="Divers">
-                                        <i class="fa fa-magic mr-1" />{{activity.other}}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div v-if="section.outings.length > 0">
-                                <h4 class="mt-2">Sorties et Activités Spéciales</h4>
-                                <div class="list-group">
-                                  <div
-                                    v-for="outing in section.outings"
-                                    :key="outing.id"
-                                    class="list-group-item list-group-item-action flex-column align-items-start"
-                                  >
-                                    <div
-                                      class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
-                                    >
-                                      <h5 class="mb-1">
-                                        {{ outing.name }}
-                                      </h5>
-                                      <div
-                                        class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
-                                      >
-                                        <span
-                                          ><i class="fa fa-calendar mr-1" />{{
-                                            formatDate(outing.date)
-                                          }}</span
-                                        ><span v-if="outing.departure_time && outing.arrival_time"
-                                          ><i class="fa fa-hourglass mr-1" />{{
-                                            formatTime(outing.departure_time)
-                                          }}-{{
-                                            formatTime(outing.arrival_time)
-                                          }}</span
-                                        >
-                                        <span>{{ outing.price }} €</span>
-                                        <span v-if="outing.transport">{{ outing.transport }}</span>
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <p class="description" v-html="outing.description">
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </tab-pane>
-                          </card>
-                        </tabs>
-                      </div>
-                      <div class="mt-1">
-                        <base-button
+                                    :start_date="activity.start_date"
+                                    :end_date="activity.end_date"
+                                    :educators="activity.educators"
+                                    :theme="activity.theme"
+                                    :description="activity.description"
+                                    :bricolage="activity.bricolage"
+                                    :food="activity.food"
+                                    :game="activity.game"
+                                    :other="activity.other"
+                                />
+                            </HolidaySection>
+                            <HolidaySection
+                                v-if="section.outings.length > 0"
+                                title="Sorties et Activités Spéciales"
+                            >
+                              <Outing
+                                v-for="outing in section.outings"
+                                :key="outing.id"
+                                :name="outing.name"
+                                :date="outing.date"
+                                :arrival_time="outing.arrival_time"
+                                :departure_time="outing.departure_time"
+                                :price="outing.price"
+                                :transport="outing.transport"
+                                :description="outing.description"
+                              />
+                            </HolidaySection>
+                          </tab-pane>
+                        </card>
+                      </tabs>
+                    </div>
+                    <div class="mt-1">
+                      <base-button
                           type="success"
                           icon="fa fa-plus"
                           @click="makeReservation(holiday.id)"
@@ -180,195 +105,69 @@
                               (c) => !c.holidays_booked.includes(holiday.id)
                             ).length == 0
                           "
-                          >Réserver</base-button
-                        >
-                      </div>
+                      >Réserver
+                      </base-button
+                      >
                     </div>
                   </div>
                 </div>
               </div>
-              <modal
-                :show.sync="reservation_modal.show"
-                modal-classes="modal-dialog-centered modal-lg"
-              >
-                <template slot="header">
-                  <h5>
-                    {{
-                      reservation_modal.action == "add" ? "Ajouter" : "Modifier"
-                    }}
-                    une réservation pour {{ reservation_modal.holiday.name }}
-                  </h5>
-                </template>
-                <div>
-                  <div v-if="capacityLoading">
-                    <div id="loading" />
-                  </div>
-                  <div class="row justify-content-center text-left" v-else>
-                    <div class="col-lg-9">
-                      <base-input
-                        label="Enfant"
-                        required
-                        :error="reservation_modal.errors.child_id"
-                        ><select
-                          v-model="reservation_modal.child_id"
-                          @change="setChildId"
-                          class="form-control"
-                        >
-                          <option
-                            v-for="child in reservation_modal.children"
-                            :key="child.id"
-                            :value="child.id"
-                          >
-                            {{ child.first_name }} {{ child.last_name }}
-                          </option>
-                        </select></base-input
-                      >
-                      <base-input
-                        label="Groupe"
-                        readonly
-                        :value="reservationModalSection.section_name"
-                      ></base-input>
-                      <base-input
-                        label="Dates"
-                        required
-                        :error="reservation_modal.errors.dates"
-                      >
-                        <flat-picker
-                          slot-scope="{ focus, blur }"
-                          @on-open="focus"
-                          @on-close="blur"
-                          :disabled="!reservation_modal.child_id"
-                          :config="reservation_modal.dp_config"
-                          @on-day-create="onDayCreate"
-                          :events="['onChange', 'onDayCreate']"
-                          class="form-control datepicker"
-                          :value="reservation_modal.dates"
-                          @on-change="dateChanged"
-                        >
-                        </flat-picker>
-                      </base-input>
-                      <base-input
-                        label="Problème de santé / Allergies"
-                      >
-                      <textarea
-                        class="form-control"
-                        rows="4"
-                        placeholder="Si votre enfant souffre d'allergies ou d'un problème santé, veuillez le noter ici"
-                        v-model="reservation_modal.notes"
-                      ></textarea>
-                      </base-input>
-                      <base-input label="Prix" readonly>
-                        <table class="table table-borderless">
-                          <tr>
-                            <td>Journée</td>
-                            <td>
-                              {{ numDayChoosen }}
-                            </td>
-                            <td>x</td>
-                            <td>{{ reservation_modal.holiday.price }}</td>
-                            <td>=</td>
-                            <td>
-                              {{
-                                numDayChoosen * reservation_modal.holiday.price
-                              }}
-                            </td>
-                          </tr>
-                          <tr
-                            v-for="outing in currentSection.outings"
-                            :key="outing.id"
-                          >
-                            <td>Sortie / Activité spéciale "{{ outing.name }}"</td>
-                            <td>{{ outingsBooked[outing.id] ? 1 : 0 }}</td>
-                            <td>x</td>
-                            <td>{{ outing.price }}</td>
-                            <td>=</td>
-                            <td>
-                              {{
-                                (outingsBooked[outing.id] ? 1 : 0) *
-                                outing.price
-                              }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><b>Total</b></td>
-                            <td>
-                              {{ bookingPrice }}
-                            </td>
-                          </tr>
-                        </table>
-                      </base-input>
-                    </div>
-                  </div>
-                </div>
-                <template slot="footer">
-                  <base-button
-                    type="secondary"
-                    @click="reservation_modal.show = false"
-                    >Annuler</base-button
-                  >
-                  <base-button type="primary" @click="submitReservationModal">{{
-                    reservation_modal.action == "add" ? "Réserver" : "Modifier"
-                  }}</base-button>
-                </template>
-              </modal>
             </div>
           </div>
-          <h5 class="card-title border-top mt-5 py-5">Mes Réservations</h5>
+        </card>
+        <card shadow class="mt-5" body-classes="px-1 px-md-4">
+          <h5 slot="header">Mes Réservations</h5>
           <div class="px-4">
             <div class="text-center">
               <div class="row justify-content-center">
                 <div class="col-lg-12">
                   <div class="list-group">
                     <div
-                      v-for="registration in registrations"
-                      :key="registration.id"
-                      class="list-group-item list-group-item-action flex-column align-items-start"
+                        v-for="registration in registrations"
+                        :key="registration.id"
+                        class="list-group-item list-group-item-action flex-column align-items-start"
                     >
                       <div
-                        class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
+                          class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                       >
                         <h5 class="mb-1">
                           {{
                             (
-                              holidays.find(
-                                (h) => h.id == registration.holiday
-                              ) || {}
+                                holidays.find(
+                                    (h) => h.id == registration.holiday
+                                ) || {}
                             ).name
                           }}
                         </h5>
                         <div
-                          class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
+                            class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
                         >
                           <span>{{ registration.cost }}€</span>
                           <div>
                             {{ registration_statuses[registration.status] }}
                             <i
-                              :class="`fa fa-circle text-${registration.status_type}`"
+                                :class="`fa fa-circle text-${registration.status_type}`"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                        class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
+                          class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                       >
                         <h6 class="mb-1">
                           {{
                             getChildName(
-                              children.find((c) => c.id == registration.child)
+                                children.find((c) => c.id == registration.child)
                             )
                           }}
                         </h6>
                         <div>
                           {{
                             registration.dates
-                              .map((d) =>
-                                new Date(d).toLocaleDateString("fr-BE")
-                              )
-                              .join(", ")
+                                .map((d) =>
+                                    new Date(d).toLocaleDateString("fr-BE")
+                                )
+                                .join(", ")
                           }}
                         </div>
                       </div>
@@ -379,20 +178,151 @@
             </div>
           </div>
         </card>
+        <modal
+          :show.sync="reservation_modal.show"
+          modal-classes="modal-dialog-centered modal-lg"
+        >
+          <h5 slot="header"> Ajouter une réservation pour {{ reservation_modal.holiday.name }}</h5>
+          <div>
+            <div v-if="capacityLoading">
+              <div id="loading"/>
+            </div>
+            <div class="row justify-content-center text-left" v-else>
+              <div class="col-lg-9">
+                <base-input
+                    label="Enfant"
+                    required
+                    :error="reservation_modal.errors.child_id"
+                ><select
+                    v-model="reservation_modal.child_id"
+                    @change="setChildId"
+                    class="form-control"
+                >
+                  <option
+                      v-for="child in reservation_modal.children"
+                      :key="child.id"
+                      :value="child.id"
+                  >
+                    {{ child.first_name }} {{ child.last_name }}
+                  </option>
+                </select></base-input
+                >
+                <base-input
+                    label="Groupe"
+                    readonly
+                    :value="reservationModalSection.section_name"
+                ></base-input>
+                <base-input
+                    label="Dates"
+                    required
+                    :error="reservation_modal.errors.dates"
+                >
+                  <flat-picker
+                      slot-scope="{ focus, blur }"
+                      @on-open="focus"
+                      @on-close="blur"
+                      :disabled="!reservation_modal.child_id"
+                      :config="reservation_modal.dp_config"
+                      @on-day-create="onDayCreate"
+                      :events="['onChange', 'onDayCreate']"
+                      class="form-control datepicker"
+                      :value="reservation_modal.dates"
+                      @on-change="dateChanged"
+                  >
+                  </flat-picker>
+                </base-input>
+                <base-input
+                    label="Problème de santé / Allergies"
+                >
+                  <textarea
+                      class="form-control"
+                      rows="4"
+                      placeholder="Si votre enfant souffre d'allergies ou d'un problème santé, veuillez le noter ici"
+                      v-model="reservation_modal.notes"
+                  ></textarea>
+                </base-input>
+                <base-input label="Prix" readonly>
+                  <table class="table table-borderless">
+                    <tr>
+                      <td>Journée</td>
+                      <td>
+                        {{ numDayChoosen }}
+                      </td>
+                      <td>x</td>
+                      <td>{{ reservation_modal.holiday.price }}</td>
+                      <td>=</td>
+                      <td>
+                        {{
+                          numDayChoosen * reservation_modal.holiday.price
+                        }}
+                      </td>
+                    </tr>
+                    <tr
+                        v-for="outing in currentSection.outings"
+                        :key="outing.id"
+                    >
+                      <td>Sortie / Activité spéciale "{{ outing.name }}"</td>
+                      <td>{{ outingsBooked[outing.id] ? 1 : 0 }}</td>
+                      <td>x</td>
+                      <td>{{ outing.price }}</td>
+                      <td>=</td>
+                      <td>
+                        {{
+                          (outingsBooked[outing.id] ? 1 : 0) *
+                          outing.price
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><b>Total</b></td>
+                      <td>
+                        {{ bookingPrice }}
+                      </td>
+                    </tr>
+                  </table>
+                </base-input>
+              </div>
+            </div>
+          </div>
+          <template slot="footer">
+            <base-button
+                type="secondary"
+                @click="reservation_modal.show = false"
+            >Annuler
+            </base-button
+            >
+            <base-button type="primary" @click="submitReservationModal">{{
+                reservation_modal.action == "add" ? "Réserver" : "Modifier"
+              }}
+            </base-button>
+          </template>
+        </modal>
       </div>
     </section>
   </div>
 </template>
 <script>
+import flatPicker from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+
+import {DateTime, Settings} from "luxon";
+
 import Modal from "@/components/Modal.vue";
 import BaseButton from "@/components/BaseButton";
 import BaseInput from "@/components/BaseInput";
 import Tabs from "@/components/Tabs/Tabs";
 import TabPane from "@/components/Tabs/TabPane";
-import flatPicker from "vue-flatpickr-component";
-import "flatpickr/dist/flatpickr.css";
-import * as types from "../store/mutation-types";
-import { DateTime, Settings } from "luxon";
+import ProgramCard from "@/components/ProgramCard";
+import HolidaySection from "@/components/HolidaySection";
+import Outing from "@/components/Outing";
+import Skew from "@/components/Skew";
+
+import * as types from "@/store/mutation-types";
+
 export default {
   components: {
     Modal,
@@ -401,6 +331,10 @@ export default {
     Tabs,
     TabPane,
     flatPicker,
+    HolidaySection,
+    ProgramCard,
+    Outing,
+    Skew,
   },
   title: "Réservation",
   data() {

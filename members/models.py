@@ -96,11 +96,11 @@ def monthdelta(d1, d2):
             break
     return delta
 
-class ChildManager(models.Manager):
 
-    def get_queryset(self):
+class ChildManager(models.Manager):
+    def get_date_queryset(self, check_date):
         qs = super().get_queryset()
-        age_expr = ExpressionWrapper(Value(datetime.today(), DateField()) - F('birth_date'), output_field=DurationField())
+        age_expr = ExpressionWrapper(Value(check_date, DateField()) - F('birth_date'), output_field=DurationField())
         qs = qs.annotate(
             _age_inter=age_expr,
             _age_epoch=Extract('_age_inter', 'epoch'),
@@ -116,6 +116,9 @@ class ChildManager(models.Manager):
             )
         )
         return qs
+
+    def get_queryset(self):
+        return self.get_date_queryset(datetime.today())
 
 
 class Child(models.Model):

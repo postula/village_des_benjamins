@@ -111,7 +111,13 @@ class Registration(models.Model):
     number_of_days = property(_number_of_days)
 
     def _cost(self):
-        return self.number_of_days * self.holiday.price
+        section_holiday = self.holiday.holidaysection_set.get(section=self.section)
+        outing_cost = Decimal(0.0)
+        dates = self.dates
+        for outing in section_holiday.outings.all():
+            if outing.date in dates:
+                outing_cost += outing.price
+        return round(self.number_of_days * self.holiday.price + outing_cost, 2)
 
     _cost.short_description = _("price")
     cost = property(_cost)

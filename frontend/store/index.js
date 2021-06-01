@@ -339,8 +339,30 @@ const actions = {
                     resolve({success: false, error: e})
                 });
         })
-    }
+    },
+    [types.GET_CHILD_SECTION]: ({}, payload) => {
+        return new promise((resolve) => {
+            axios.get(HOLIDAYS_URL + payload.holiday_id + "/get_section_for_child?child_id=" + payload.child_id)
+                .then((r) => {
+                    resolve(Object.assign(r.data, {success: true}));
+                })
+                .catch((e) => {
+                    resolve({success: false, error: e})
+                });
+        })
+    },
 };
+
+export const getChildSection = (payload) =>
+    new Promise((resolve) => {
+            axios.get(HOLIDAYS_URL + payload.holiday_id + "/get_section_for_child?child_id=" + payload.child_id)
+                .then((r) => {
+                    resolve(Object.assign(r.data, {success: true}));
+                })
+                .catch((e) => {
+                    resolve({success: false, error: e})
+                });
+        })
 
 
 const getters = {

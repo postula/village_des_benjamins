@@ -28,3 +28,5 @@ export const GET_SECTIONS = 'GET_SECTIONS'
 export const GET_TEAM_MEMBERS = 'GET_TEAM_MEMBERS'
 
 export const GET_NEWS = 'GET_NEWS'
+
+export const GET_CHILD_SECTION = 'GET_CHILD_SECTION'

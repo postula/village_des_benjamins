@@ -219,12 +219,12 @@
                 >
                   <flat-picker
                       slot-scope="{ focus, blur }"
-                      @on-open="focus"
+                      @on-open="onOpen"
                       @on-close="blur"
                       :disabled="!reservation_modal.child_id"
                       :config="reservation_modal.dp_config"
                       @on-day-create="onDayCreate"
-                      :events="['onChange', 'onDayCreate']"
+                      :events="['onChange', 'onDayCreate', 'onOpen']"
                       class="form-control datepicker"
                       :value="reservation_modal.dates"
                       @on-change="dateChanged"
@@ -261,7 +261,13 @@
                         v-for="outing in currentSection.outings"
                         :key="outing.id"
                     >
-                      <td>Sortie / Activité spéciale "{{ outing.name }}"</td>
+                      <td>
+                        <div class="d-flex flex-column">
+                          <span>Sortie / Activité spéciale</span>
+                          <span class="text-bold">{{ outing.name }}</span>
+                          <span>{{ formatDate(outing.date) }}</span>
+                        </div>
+                      </td>
                       <td>{{ outingsBooked[outing.id] ? 1 : 0 }}</td>
                       <td>x</td>
                       <td>{{ outing.price }}</td>
@@ -322,6 +328,7 @@ import Outing from "@/components/Outing";
 import Skew from "@/components/Skew";
 
 import * as types from "@/store/mutation-types";
+import {getChildSection} from "../store";
 
 export default {
   components: {
@@ -360,6 +367,7 @@ export default {
           },
         },
       },
+      currentChildSection: "",
       registration_statuses: {
         pending: "impayée",
         paid: "payée",
@@ -445,6 +453,9 @@ export default {
     formatTime(t) {
       return DateTime.fromISO(t).toLocaleString(DateTime.TIME_24_SIMPLE);
     },
+    onOpen(selectedDates, dateStr, instance) {
+      instance.redraw();
+    },
     onDayCreate(dObj, dStr, fp, dayElem) {
       const d = DateTime.fromJSDate(dayElem.dateObj);
       // if (this.reservationModalSection && this.reservationModalSection.capacities) {
@@ -471,10 +482,9 @@ export default {
       if (!c) return;
       return `${c.first_name} ${c.last_name}`;
     },
-    setChildId() {
+    async setChildId() {
       const child_id = this.reservation_modal.child_id;
-      this.reservation_modal.child_id = child_id;
-      const child = this.children.find((c) => c.id == child_id);
+      const child = this.children.find((c) => c.id === child_id);
       if (!child) {
         this.$set(
           this.reservation_modal.dp_config,
@@ -483,9 +493,15 @@ export default {
         );
         return;
       }
+      const { section_name } = await getChildSection({
+        holiday_id: this.reservation_modal.holiday.id,
+        child_id
+      });
+      this.reservation_modal.child_id = child_id;
+      this.currentChildSection = section_name;
       this.reservationModalSection =
         this.reservation_modal.holiday.sections.find(
-          (s) => s.section_name === child.section
+          (s) => s.section_name === this.currentChildSection
         ) || {};
       const dates = [];
       for (const date in this.reservationModalSection.capacities) {
@@ -505,11 +521,6 @@ export default {
         "maxDate",
         this.reservation_modal.holiday.end_date
       );
-      // this.$set(
-      //   this.reservation_modal.dp_config,
-      //   "inline",
-      //   true
-      // );
       this.$set(this.reservation_modal.dp_config, "disable", dates);
     },
     makeReservation(holiday_id) {
@@ -561,12 +572,9 @@ export default {
     currentSection() {
       if (!this.reservation_modal.show) return {};
       if (!this.reservation_modal.child_id) return {};
-      const child = this.children.find(
-        (c) => c.id == this.reservation_modal.child_id
-      );
-      const section_name = child.section;
+      if (!this.currentChildSection) return {};
       return this.reservation_modal.holiday.sections.find(
-        (c) => c.section_name == section_name
+        (c) => c.section_name === this.currentChildSection
       );
     },
     dayChoosen() {
@@ -578,10 +586,10 @@ export default {
       return this.dayChoosen.length;
     },
     outingsBooked() {
-      const section = this.currentSection;
-      if (!section.outings) return {};
-      const dayChoosen = this.dayChoosen.map((d) => DateTime.fromISO(d));
       const out = {};
+      const section = this.currentSection;
+      if (!section.outings) return out;
+      const dayChoosen = this.dayChoosen.map((d) => DateTime.fromISO(d));
       for (const outing of section.outings) {
         if (this.dayChoosen.includes(outing.date)) {
           out[outing.id] = true;
@@ -601,7 +609,7 @@ export default {
           out += Number(outing.price);
         }
       }
-      return out;
+      return out.toFixed(2);
     },
     holidays() {
       return this.$store.getters.getHolidays;

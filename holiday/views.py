@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from holiday.models import Holiday, Registration
 from holiday.serializers import HolidaySerializer, RegistrationSerializer
+from members.models import Child
 
 
 class HolidayViewSet(
@@ -26,6 +27,13 @@ class HolidayViewSet(
                 return qs
             return qs.filter(registration_open=True)
         return qs
+
+    @action(detail=True, methods=['get'])
+    def get_section_for_child(self, request, pk=None):
+        holiday = self.get_object()
+        child_id = request.query_params.get("child_id")
+        child = Child.objects.get_date_queryset(holiday.start_date).get(id=child_id)
+        return Response({"section_name": child.section})
 
     @action(detail=True, methods=['get'])
     def get_capacity(self, request, pk=None):

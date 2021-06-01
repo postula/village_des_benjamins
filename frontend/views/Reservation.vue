@@ -77,7 +77,7 @@
                             </HolidaySection>
                             <HolidaySection
                                 v-if="section.outings.length > 0"
-                                title="Sorties et Activités Spéciales"
+                                title="Sorties et Activités Payantes"
                             >
                               <Outing
                                 v-for="outing in section.outings"

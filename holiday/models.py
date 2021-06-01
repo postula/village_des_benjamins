@@ -72,15 +72,6 @@ class HolidaySection(models.Model):
     capacity = models.IntegerField(_("capacity"))
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
 
-    def _remaining_capacity(self):
-        return (
-            self.capacity
-            - self.holiday.registration_set.filter(section=self.section).count()
-        )
-
-    _remaining_capacity.short_description = _("remaining capacity")
-    remaining_capacity = property(_remaining_capacity)
-
     class Meta:
         verbose_name = _("section holiday")
         verbose_name_plural = _("section holidays")
@@ -131,14 +122,13 @@ class Registration(models.Model):
         unique_together = [["holiday", "child"]]
 
 
-class SectionProgram(OrderedModel):
+class SectionProgram(models.Model):
     section_holiday = models.ForeignKey(
         to="holiday.HolidaySection",
         verbose_name=_("section_holiday"),
         on_delete=models.CASCADE,
         related_name="activities",
     )
-    order_with_respect_to = "section_holiday"
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
     # TODO: add validation
     start_date = models.DateField(_("start date"))
@@ -175,7 +165,7 @@ class SectionProgram(OrderedModel):
     class Meta:
         verbose_name = _("section_program")
         verbose_name_plural = _("section_programs")
-        ordering = ["order"]
+        ordering = ["start_date"]
 
 
 class Outing(models.Model):
@@ -222,6 +212,7 @@ class Outing(models.Model):
     class Meta:
         verbose_name = _("outing")
         verbose_name_plural = _("outings")
+        ordering = ["date"]
 
 
 html_template = """

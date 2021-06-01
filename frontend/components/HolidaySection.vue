@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h4 class="mt-2">{{title}}</h4>
+  <h2 class="mt-2 holiday_title text-xl">{{title}}</h2>
   <div class="list-group">
     <slot></slot>
   </div>
@@ -17,5 +17,7 @@ export default {
 </script>
 
 <style scoped>
-
+.holiday_title {
+  color: #e63e7d;
+}
 </style>

@@ -60,9 +60,28 @@ class OutingSerializer(serializers.ModelSerializer):
 class HolidaySectionSerializer(serializers.ModelSerializer):
     section_id = serializers.ReadOnlyField(source="section.id")
     section_name = serializers.ReadOnlyField(source="section.name")
-    outings = OutingSerializer(many=True)
-    activities = SectionProgramSerializer(many=True)
+    outings = serializers.SerializerMethodField('get_outings_list')
+    activities = serializers.SerializerMethodField('get_activities_list')
 
+    def get_outings_list(self, instance):
+        outings = instance.outings.order_by(
+            "date"
+        )
+        return OutingSerializer(
+            outings,
+            many=True,
+            context=self.context
+        ).data
+
+    def get_activities_list(self, instance):
+        activities = instance.activities.order_by(
+            "start_date",
+        ).prefetch_related('animateur')
+        return SectionProgramSerializer(
+            activities,
+            many=True,
+            context=self.context
+        ).data
 
     class Meta:
         model = HolidaySection

@@ -18,7 +18,7 @@ class OutingInline(admin.StackedInline):
     extra = 0
 
 
-class SectionProgramInline(OrderedStackedInline):
+class SectionProgramInline(admin.StackedInline):
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "animateur":
             kwargs['queryset'] = User.objects.filter(is_staff=True)
@@ -28,11 +28,11 @@ class SectionProgramInline(OrderedStackedInline):
     extra = 0
 
 
-class HolidaySectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
+class HolidaySectionAdmin(admin.ModelAdmin):
     model = HolidaySection
     extra = 0
     inlines = [SectionProgramInline, OutingInline]
-    list_display = ["section", "holiday", "capacity", "remaining_capacity"]
+    list_display = ["section", "holiday", "capacity"]
     list_filter = ["section", "holiday", "capacity"]
 
 

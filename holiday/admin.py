@@ -134,11 +134,17 @@ class HolidayAdmin(admin.ModelAdmin):
 
 class RegistrationAdmin(admin.ModelAdmin, DynamicArrayMixin):
     model = Registration
-    list_display = ["holiday", "child", "number_of_days", "status", "cost"]
+    list_display = ["holiday", "_child", "number_of_days", "section", "status", "cost"]
+
+    def _child(self, obj):
+        return f"{obj.child.first_name} {obj.child.last_name}"
+    _child.short_description = _("child")
+
     list_filter = [
         "holiday",
         "child__parent",
         "status",
+        "section"
     ]
 
 

@@ -85,7 +85,7 @@ export default {
   methods: {
     async login() {
       const credentials = {
-        email: this.credentials.email,
+        email: this.credentials.email.toLowerCase(),
         password: this.credentials.password,
       };
       let redirect = decodeURIComponent(this.$route.query.redirect || "/");
@@ -94,7 +94,6 @@ export default {
         redirect: redirect,
       });
       if (error) {
-        console.log(error);
         this.errors = error;
       }
 

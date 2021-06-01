@@ -143,7 +143,7 @@ export default {
       let info = {
         first_name: this.first_name,
         last_name: this.last_name,
-        email: this.email,
+        email: this.email.toLowerCase(),
         password: this.password,
         accept_newsletter: this.accept_newsletter,
       };

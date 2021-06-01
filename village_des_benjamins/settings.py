@@ -215,15 +215,16 @@ AWS_LOCATION = "website_uploads/"
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
 SENDGRID_FROM_MAIL = os.getenv("MAIL_FROM_ADDRESS", )
 
-sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN", None),
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
+if not DEBUG:
+    sentry_sdk.init(
+        dsn=os.getenv("SENTRY_DSN", None),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
 
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
 
 TINYMCE_DEFAULT_CONFIG = {
     "menubar": "file edit view insert format tools table help",

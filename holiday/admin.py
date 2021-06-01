@@ -32,8 +32,15 @@ class HolidaySectionAdmin(admin.ModelAdmin):
     model = HolidaySection
     extra = 0
     inlines = [SectionProgramInline, OutingInline]
-    list_display = ["section", "holiday", "capacity"]
+    list_display = ["section", "holiday", "capacity", "remaining_capacity"]
     list_filter = ["section", "holiday", "capacity"]
+
+    readonly_fields = ["remaining_capacity_table"]
+
+    fieldsets = [
+        [None, {"fields": ["section", "holiday", "capacity", "description"]}],
+        [_("remaining capacity"), {"fields": ["remaining_capacity_table"]}]
+    ]
 
 
 # Register your models here.

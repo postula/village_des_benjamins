@@ -1,6 +1,8 @@
 import datetime
 from pprint import pprint
 
+from django.db.models import Count
+from django.utils.safestring import mark_safe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.db import models
@@ -71,6 +73,72 @@ class HolidaySection(models.Model):
     )
     capacity = models.IntegerField(_("capacity"))
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
+
+    def _remaining_capacity(self):
+        # Num days is number of non weekend days in the holiday
+        num_days = 0
+        current_date = self.holiday.start_date
+        while current_date < self.holiday.end_date:
+            if current_date.weekday() > 4:
+                # weekend
+                current_date += datetime.timedelta(days=1)
+                continue
+            current_date += datetime.timedelta(days=1)
+            num_days += 1
+        # Total capacity is the numof days time the capacity
+        max_capacity = num_days * self.capacity
+        # Taken capacity is the sum of unique date registered
+        taken_capacity = 0
+        registrations = self.holiday.registration_set.filter(
+            section=self.section
+        )
+        for registration in registrations:
+            taken_capacity += len(registration.dates)
+        remaining_capacity = 100 - (round(Decimal(taken_capacity / max_capacity), 2) * 100)
+        return f"{remaining_capacity}%"
+    _remaining_capacity.short_description = _("remaining capacity")
+    remaining_capacity = property(_remaining_capacity)
+
+    def _remaining_capacity_table(self):
+        capacities = {}
+        dates = []
+        current_date = self.holiday.start_date
+        while current_date < self.holiday.end_date:
+            if current_date.weekday() > 4:
+                # weekend
+                current_date += datetime.timedelta(days=1)
+                continue
+            dates.append(current_date)
+            current_date += datetime.timedelta(days=1)
+        dates.append(current_date)
+        capacities = {}
+        for date in dates:
+            capacities[date] = self.capacity - Registration.objects.filter(section=self.section, dates__contains=[date]).count()
+        table_raw = """
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Capacité Restante</th>
+                    </tr>
+                </thead>
+                <tbody>
+        """
+        for date in capacities:
+            capacity = capacities[date]
+            table_raw += f"""
+                    <tr>
+                        <td>{date.strftime("%d/%m/%Y")}</td/>
+                        <td style="text-align: right">{capacity}</td/>
+                    </tr>
+                    """
+        table_raw += """
+                </tbody>
+            </table>
+        """
+        return mark_safe(table_raw)
+    _remaining_capacity_table.short_description = ""
+    remaining_capacity_table = property(_remaining_capacity_table)
 
     class Meta:
         verbose_name = _("section holiday")

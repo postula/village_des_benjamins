@@ -65,18 +65,19 @@ class HolidayAdmin(admin.ModelAdmin):
         ws.cell(3, 1, value="Prénom").alignment = Alignment(horizontal='center', vertical='center')
         ws.cell(3, 2, value="Nom").alignment = Alignment(horizontal='center', vertical='center')
         ws.cell(3, 3, value="Date de Naissance").alignment = Alignment(horizontal='center', vertical='center')
-        ws.merge_cells(start_row=2, end_row=2, start_column=1, end_column=3)
-        ws.cell(2, 4, value="Parent").alignment = Alignment(horizontal='center', vertical='center')
-        ws.cell(3, 4, value="Prénom").alignment = Alignment(horizontal='center', vertical='center')
-        ws.cell(3, 5, value="Nom").alignment = Alignment(horizontal='center', vertical='center')
-        ws.cell(3, 6, value="Email").alignment = Alignment(horizontal='center', vertical='center')
-        ws.merge_cells(start_row=2, end_row=2, start_column=4, end_column=6)
-        ws.cell(2, 7, value="Section").alignment = Alignment(horizontal='center', vertical='center')
-        ws.merge_cells(start_row=2, end_row=3, start_column=7, end_column=7)
-        ws.cell(2, 8, value="# jours").alignment = Alignment(horizontal='center', vertical='center')
+        ws.cell(3, 4, value="Allergies").alignment = Alignment(horizontal='center', vertical='center')
+        ws.merge_cells(start_row=2, end_row=2, start_column=1, end_column=4)
+        ws.cell(2, 5, value="Parent").alignment = Alignment(horizontal='center', vertical='center')
+        ws.cell(3, 5, value="Prénom").alignment = Alignment(horizontal='center', vertical='center')
+        ws.cell(3, 6, value="Nom").alignment = Alignment(horizontal='center', vertical='center')
+        ws.cell(3, 7, value="Email").alignment = Alignment(horizontal='center', vertical='center')
+        ws.merge_cells(start_row=2, end_row=2, start_column=5, end_column=7)
+        ws.cell(2, 8, value="Section").alignment = Alignment(horizontal='center', vertical='center')
         ws.merge_cells(start_row=2, end_row=3, start_column=8, end_column=8)
+        ws.cell(2, 9, value="# jours").alignment = Alignment(horizontal='center', vertical='center')
+        ws.merge_cells(start_row=2, end_row=3, start_column=9, end_column=9)
         prev_date = holiday.start_date
-        num_col = 9
+        num_col = 10
         while prev_date < holiday.end_date:
             if prev_date.weekday() > 4:
                 # weekend
@@ -88,14 +89,16 @@ class HolidayAdmin(admin.ModelAdmin):
             num_col += 1
         ws.merge_cells(start_row=1, end_row=1, start_column=1, end_column=num_col)
         num_row = 4
-        num_col = 1
         for registration in holiday.registration_set.all():
+            num_col = 1
             # Child Info
             ws.cell(num_row, num_col, value=registration.child.first_name)
             num_col += 1
             ws.cell(num_row, num_col, value=registration.child.last_name)
             num_col += 1
             ws.cell(num_row, num_col, value=registration.child.birth_date.strftime("%d-%m-%Y"))
+            num_col += 1
+            ws.cell(num_row, num_col, value=registration.notes)
             num_col += 1
             ws.cell(num_row, num_col, value=registration.child.parent.first_name)
             num_col += 1

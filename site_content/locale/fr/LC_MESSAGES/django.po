@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-22 12:00+0000\n"
+"POT-Creation-Date: 2021-06-02 08:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,9 +27,6 @@ msgid "introduction"
 msgstr "introduction"
 
 #: site_content/models.py:11
-msgid "content"
-msgstr "contenu"
-
 msgid "contact"
 msgstr "contact"
 
@@ -85,7 +82,9 @@ msgstr "Titre bouton voir plus"
 msgid "show_more_content"
 msgstr "Contenu voir plus"
 
-
+#: site_content/models.py:61 site_content/models.py:62
+msgid "content"
+msgstr "contenu"
 
 #: site_content/models.py:73 site_content/models.py:74
 msgid "news"

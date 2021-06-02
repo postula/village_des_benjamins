@@ -38,21 +38,22 @@ class HolidayViewSet(
     @action(detail=True, methods=['get'])
     def get_capacity(self, request, pk=None):
         holiday = self.get_object()
-        sections = {}
-        for section in holiday.holidaysection_set.all():
-            capacities = {}
-            current_date = holiday.start_date
-            max_capacity = section.capacity
-            while current_date <= holiday.end_date:
-                if current_date.weekday() < 5:
-                    already_booked = holiday.registration_set.filter(
-                        dates__contains=[current_date]
-                    ).count()
-                else:
-                    already_booked = max_capacity
-                capacities[current_date.isoformat()] = max_capacity - already_booked
+        dates = []
+        current_date = holiday.start_date
+        while current_date < holiday.end_date:
+            if current_date.weekday() > 4:
+                # weekend
                 current_date += datetime.timedelta(days=1)
-            sections[section.section_id] = capacities
+                continue
+            dates.append(current_date)
+            current_date += datetime.timedelta(days=1)
+        dates.append(current_date)
+        sections = {}
+        for holiday_section in holiday.holidaysection_set.all():
+            sections[holiday_section.section.id] = {}
+            for date in dates:
+                sections[holiday_section.section.id][date.isoformat()] = holiday_section.capacity - Registration.objects.filter(section=holiday_section.section,
+                                                                           dates__contains=[date]).count()
         return Response(sections)
 
 

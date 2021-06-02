@@ -100,7 +100,6 @@ class HolidaySection(models.Model):
     remaining_capacity = property(_remaining_capacity)
 
     def _remaining_capacity_table(self):
-        capacities = {}
         dates = []
         current_date = self.holiday.start_date
         while current_date < self.holiday.end_date:

@@ -115,6 +115,7 @@ class HolidaySerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "price",
+            "blacklisted_dates",
             "registration_open",
             "description",
             "sections",

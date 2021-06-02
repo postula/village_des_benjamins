@@ -415,7 +415,10 @@ export default {
         const cand_date = new Date(parsed_date);
         cand_date.setDate(cand_date.getDate() - (parsed_date.getDay() - weekday + 1));
         if (cand_date >= min_date) {
-          additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          const date_str = instance.formatDate(cand_date, "Y-m-d");
+          if (!this.reservation_modal.dp_config.disable.includes(date_str)) {
+            additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          }
           weekday -= 1;
         } else {
           weekday = 0;
@@ -426,7 +429,10 @@ export default {
         const cand_date = new Date(parsed_date);
         cand_date.setDate(cand_date.getDate() + (weekday - parsed_date.getDay() + 1));
         if (cand_date <= max_date) {
-          additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          const date_str = instance.formatDate(cand_date, "Y-m-d");
+          if (!this.reservation_modal.dp_config.disable.includes(date_str)) {
+            additional_dates.push(instance.formatDate(cand_date, "Y-m-d"));
+          }
           weekday += 1;
         } else {
           weekday = 5;
@@ -510,6 +516,9 @@ export default {
         if (capacity <= 0) {
           dates.push(date);
         }
+      }
+      for (const date of this.reservation_modal.holiday.blacklisted_dates) {
+          dates.push(date);
       }
       this.$set(
         this.reservation_modal.dp_config,

@@ -5,12 +5,23 @@ from django.contrib import admin, messages
 from django.http import HttpResponse
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 from django.utils.translation import ugettext_lazy as _
+from django_better_admin_arrayfield.forms.fields import DynamicArrayField
+from django_better_admin_arrayfield.forms.widgets import DynamicArrayWidget
 from openpyxl import Workbook
 from openpyxl.styles import Alignment
+from django import forms
 from ordered_model.admin import OrderedStackedInline, OrderedInlineModelAdminMixin, OrderedModelAdmin
 
-from holiday.models import Holiday, HolidaySection, Registration, Outing, SectionProgram
+from holiday.models import Holiday, HolidaySection, Registration, Outing, SectionProgram, \
+    _send_registration_notification
 from members.models import User
+
+
+class DynamicArrayDateInputWidget(DynamicArrayWidget):
+    def __init__(self, *args, **kwargs):
+        print("lol")
+        kwargs["subwidget_form"] = forms.DateInput
+        super().__init__(*args, **kwargs)
 
 
 class OutingInline(admin.StackedInline):
@@ -44,11 +55,21 @@ class HolidaySectionAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-class HolidayAdmin(admin.ModelAdmin):
+class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
     model = Holiday
     list_display = ["name", "start_date", "end_date", "price", "registration_open"]
 
     actions = ["export_registration"]
+
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        if db_field.name == "blacklisted_dates":
+            kwargs["widget"] = DynamicArrayDateInputWidget()
+        return super().formfield_for_dbfield(db_field, request, **kwargs)
+
+    formfield_overrides = {
+        DynamicArrayField: {'widget': DynamicArrayDateInputWidget}
+    }
 
     def export_registration(self, request, queryset):
         if queryset.count() > 1:
@@ -153,6 +174,14 @@ class RegistrationAdmin(admin.ModelAdmin, DynamicArrayMixin):
         "status",
         "section"
     ]
+    actions = ["resend_email"]
+
+    list_per_page = 20
+
+    def resend_email(self, request, queryset):
+        for registration in queryset.all():
+            _send_registration_notification(registration)
+    resend_email.short_description = _("resend_email")
 
 
 admin.site.register(Holiday, HolidayAdmin)

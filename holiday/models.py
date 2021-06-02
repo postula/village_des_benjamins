@@ -41,6 +41,7 @@ class Holiday(models.Model):
     # TODO: add validation
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
+    blacklisted_dates = ArrayField(models.DateField(), verbose_name=_("blacklisted_dates"), default=list)
     description = HTMLField(verbose_name=_("description"), blank=True, null=True)
     registration_open = models.BooleanField(_("registration open"), default=False)
     sections = models.ManyToManyField(
@@ -335,10 +336,7 @@ html_template = """
 """
 
 
-def send_registration_notification(sender, created, **kwargs):
-    if not created:
-        return
-    obj = kwargs["instance"]
+def _send_registration_notification(obj):
     child_name = f"{obj.child.first_name} {obj.child.last_name}"
     parent_name = f"{obj.child.parent.first_name} {obj.child.parent.last_name}"
     payment_communication = (
@@ -346,7 +344,7 @@ def send_registration_notification(sender, created, **kwargs):
     )
     child_gender_accord = "e" if obj.child.gender == "female" else "male"
     date_li = (
-        "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
+            "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
     )
     html_content = html_template.format(
         holiday_name=obj.holiday.name,
@@ -377,6 +375,13 @@ def send_registration_notification(sender, created, **kwargs):
         response = sg.send(message)
     except Exception as e:
         logger.exception(e)
+
+
+def send_registration_notification(sender, created, **kwargs):
+    if not created:
+        return
+    obj = kwargs["instance"]
+    return _send_registration_notification(obj)
 
 
 def create_section_holiday(sender, created, **kwargs):

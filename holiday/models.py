@@ -413,7 +413,7 @@ def create_section_holiday(sender, created, **kwargs):
                 section_holiday=hs,
                 start_date=start_date,
                 end_date=end_date,
-                order=i
+                # order=i
             )
             p.animateur.set(section.educators.all())
             p.save()

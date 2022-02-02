@@ -8,30 +8,30 @@
               <div class="col-lg-8">
                 <h4 class="mb-1">{{section.name}}</h4>
                 <p class="mt-0" v-html="section.description"></p>
-                <base-alert v-if="contactFeedback" type="success">
-                  {{contactFeedback}}
-                </base-alert>
-                <base-input class="mt-5"
-                            alternative
-                            required
-                            placeholder="Votre nom"
-                            v-model="contactName"
-                            addon-left-icon="ni ni-user-run">
-                </base-input>
-                <base-input alternative
-                            placeholder="Adresse électronique"
-                            required
-                            type="email"
-                            v-model="contactMail"
-                            addon-left-icon="ni ni-email-83">
-                </base-input>
-                <base-input class="mb-4">
-                                      <textarea v-model="contactMessage" required class="form-control form-control-alternative" name="name" rows="4"
-                                                cols="80" placeholder="Votre message..."></textarea>
-                </base-input>
-                <base-button type="default" round block size="lg" @click="sendMessage">
-                  Envoyer
-                </base-button>
+<!--                <base-alert v-if="contactFeedback" type="success">-->
+<!--                  {{contactFeedback}}-->
+<!--                </base-alert>-->
+<!--                <base-input class="mt-5"-->
+<!--                            alternative-->
+<!--                            required-->
+<!--                            placeholder="Votre nom"-->
+<!--                            v-model="contactName"-->
+<!--                            addon-left-icon="ni ni-user-run">-->
+<!--                </base-input>-->
+<!--                <base-input alternative-->
+<!--                            placeholder="Adresse électronique"-->
+<!--                            required-->
+<!--                            type="email"-->
+<!--                            v-model="contactMail"-->
+<!--                            addon-left-icon="ni ni-email-83">-->
+<!--                </base-input>-->
+<!--                <base-input class="mb-4">-->
+<!--                                      <textarea v-model="contactMessage" required class="form-control form-control-alternative" name="name" rows="4"-->
+<!--                                                cols="80" placeholder="Votre message..."></textarea>-->
+<!--                </base-input>-->
+<!--                <base-button type="default" round block size="lg" @click="sendMessage">-->
+<!--                  Envoyer-->
+<!--                </base-button>-->
               </div>
               <div class="col-lg-4">
                 <MapContainer />

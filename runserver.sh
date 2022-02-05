@@ -7,4 +7,4 @@ python manage.py compilemessages -l fr
 echo "migrate"
 python manage.py migrate
 echo "Gunicorn"
-gunicorn village_des_benjamins.wsgi --bind=0.0.0.0:80
+gunicorn village_des_benjamins.wsgi --bind=0.0.0.0:8000

@@ -37,6 +37,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --from=static_builder /usr/src/app/dist dist
 COPY ./ /usr/src/app
 
-EXPOSE 80
+EXPOSE 8000
 
 CMD ["sh", "runserver.sh"]

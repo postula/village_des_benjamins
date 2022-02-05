@@ -38,4 +38,4 @@ COPY ./ /usr/src/app
 
 EXPOSE 80
 
-CMD ["runserver.sh"]
+CMD ["sh", "runserver.sh"]

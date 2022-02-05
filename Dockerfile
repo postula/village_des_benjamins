@@ -26,7 +26,8 @@ RUN apk update && apk upgrade && \
       postgresql-dev \
       jpeg-dev \
       zlib-dev \
-      curl
+      curl \
+      gettext
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

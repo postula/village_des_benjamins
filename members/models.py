@@ -212,6 +212,8 @@ html_template = """
 
 
 def send_registration_notification(sender, created, **kwargs):
+    if kwargs.get("raw", False):
+        return
     if not created:
         return
     obj = kwargs["instance"]

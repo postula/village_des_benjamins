@@ -90,6 +90,8 @@ html_contact_template = """
 
 
 def send_message_notification(sender, created, **kwargs):
+    if kwargs.get("raw", False):
+        return
     if not created:
         return
     obj = kwargs["instance"]

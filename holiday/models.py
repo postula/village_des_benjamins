@@ -378,6 +378,8 @@ def _send_registration_notification(obj):
 
 
 def send_registration_notification(sender, created, **kwargs):
+    if kwargs.get("raw", False):
+        return
     if not created:
         return
     obj = kwargs["instance"]
@@ -385,6 +387,8 @@ def send_registration_notification(sender, created, **kwargs):
 
 
 def create_section_holiday(sender, created, **kwargs):
+    if kwargs.get("raw", False):
+        return
     if not created:
         return
     obj = kwargs["instance"]

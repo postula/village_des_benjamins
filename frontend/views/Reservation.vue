@@ -361,7 +361,6 @@ export default {
           allowInput: true,
           mode: "multiple",
           inline: false,
-          enable: [],
           locale: {
             firstDayOfWeek: 1,
           },
@@ -631,7 +630,7 @@ export default {
     },
     capacityLoading() {
       return this.$store.getters.getCapacityLoading;
-    }
+    },
   },
 };
 </script>

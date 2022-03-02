@@ -511,15 +511,17 @@ export default {
           (s) => s.section_name === this.currentChildSection
         ) || {};
       const dates = [];
-      for (const date in this.reservationModalSection.capacities) {
-        if (!this.reservationModalSection.capacities.hasOwnProperty(date)) continue;
-        const capacity = this.reservationModalSection.capacities[date];
-        if (capacity <= 0) {
-          dates.push(date);
+      const start = new Date(this.reservation_modal.holiday.start_date);
+      const end = new Date(this.reservation_modal.holiday.end_date);
+      let loop = new Date(start);
+      while(loop <= end){
+        let loop_str = `${loop.getFullYear()}-${String(loop.getMonth() + 1).padStart(2, "0")}-${String(loop.getDate()).padStart(2, "0")}`;
+        let newDate = loop.setDate(loop.getDate() + 1);
+        const capacity = this.reservationModalSection.capacities[loop_str];
+        if (!capacity) {
+          dates.push(loop_str);
         }
-      }
-      for (const date of this.reservation_modal.holiday.blacklisted_dates) {
-          dates.push(date);
+        loop = new Date(newDate);
       }
       this.$set(
         this.reservation_modal.dp_config,

@@ -52,6 +52,8 @@ class HolidayViewSet(
         for holiday_section in holiday.holiday_sections.all():
             sections[holiday_section.section.id] = {}
             for date in dates:
+                if date in holiday.blacklisted_dates:
+                    continue
                 sections[holiday_section.section.id][date.isoformat()] = holiday_section.capacity - Registration.objects.filter(section=holiday_section.section,
                                                                            dates__contains=[date]).count()
         return Response(sections)

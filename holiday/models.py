@@ -41,7 +41,14 @@ class Holiday(models.Model):
     # TODO: add validation
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
-    blacklisted_dates = ArrayField(models.DateField(), verbose_name=_("blacklisted_dates"), default=list)
+    blacklisted_dates = ArrayField(
+        models.DateField(),
+        verbose_name=_("blacklisted_dates"),
+        default=list,
+        blank=True,
+        null=True,
+    )
+    book_by_day = models.BooleanField(default=False, verbose_name=_("book_by_day"))
     description = HTMLField(verbose_name=_("description"), blank=True, null=True)
     registration_open = models.BooleanField(_("registration open"), default=False)
     sections = models.ManyToManyField(
@@ -70,7 +77,8 @@ class HolidaySection(models.Model):
         verbose_name=_("section"), to="section.Section", on_delete=models.CASCADE
     )
     holiday = models.ForeignKey(
-        verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE
+        verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE,
+        related_name="holiday_sections"
     )
     capacity = models.IntegerField(_("capacity"))
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
@@ -179,7 +187,7 @@ class Registration(models.Model):
     number_of_days = property(_number_of_days)
 
     def _cost(self):
-        section_holiday = self.holiday.holidaysection_set.get(section=self.section)
+        section_holiday = self.holiday.holiday_sections.get(section=self.section)
         outing_cost = Decimal(0.0)
         dates = self.dates
         for outing in section_holiday.outings.all():

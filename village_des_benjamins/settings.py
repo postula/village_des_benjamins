@@ -35,6 +35,7 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(','
 
 INSTALLED_APPS = [
     "jazzmin",
+    "silk",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
+    # "silk.middleware.SilkyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

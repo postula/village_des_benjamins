@@ -19,7 +19,6 @@ from members.models import User
 
 class DynamicArrayDateInputWidget(DynamicArrayWidget):
     def __init__(self, *args, **kwargs):
-        print("lol")
         kwargs["subwidget_form"] = forms.DateInput
         super().__init__(*args, **kwargs)
 

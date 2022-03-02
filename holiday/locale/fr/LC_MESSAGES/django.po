@@ -201,3 +201,7 @@ msgstr "sorties"
 
 #~ msgid "cancelled"
 #~ msgstr "annulé"
+
+
+msgid "book_by_day"
+msgstr "inscription par jour"

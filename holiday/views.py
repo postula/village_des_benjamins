@@ -21,7 +21,7 @@ class HolidayViewSet(
     # permission_classes = [AllowAny]
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        qs = super().get_queryset().order_by("-start_date")
         if self.action in ["retrieve", "list"]:
             if self.request.user.is_staff:
                 return qs
@@ -49,7 +49,7 @@ class HolidayViewSet(
             current_date += datetime.timedelta(days=1)
         dates.append(current_date)
         sections = {}
-        for holiday_section in holiday.holidaysection_set.all():
+        for holiday_section in holiday.holiday_sections.all():
             sections[holiday_section.section.id] = {}
             for date in dates:
                 sections[holiday_section.section.id][date.isoformat()] = holiday_section.capacity - Registration.objects.filter(section=holiday_section.section,

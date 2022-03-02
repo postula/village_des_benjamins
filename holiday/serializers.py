@@ -118,6 +118,7 @@ class HolidaySerializer(serializers.ModelSerializer):
             "blacklisted_dates",
             "registration_open",
             "description",
+            "book_by_day",
             "sections",
         ]
 

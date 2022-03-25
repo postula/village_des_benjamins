@@ -139,7 +139,7 @@ class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
             num_col += 1
             prev_date = holiday.start_date
             dates = list(registration.dates)
-            while prev_date < holiday.end_date:
+            while prev_date <= holiday.end_date:
                 if prev_date.weekday() > 4:
                     # weekend
                     prev_date = prev_date + datetime.timedelta(days=1)

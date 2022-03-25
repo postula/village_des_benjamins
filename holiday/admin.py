@@ -105,7 +105,7 @@ class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
         ws.merge_cells(start_row=2, end_row=3, start_column=9, end_column=9)
         prev_date = holiday.start_date
         num_col = 10
-        while prev_date < holiday.end_date:
+        while prev_date <= holiday.end_date:
             if prev_date.weekday() > 4:
                 # weekend
                 prev_date = prev_date + datetime.timedelta(days=1)

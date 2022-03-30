@@ -23,7 +23,7 @@
                       <div
                           class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
                       >
-                        <span>{{ holiday.price }}€ / jour</span>
+                        <span v-if="holiday.registration_open">{{ holiday.price }}€ / jour</span>
                         <div class="">
                           <i class="fa fa-calendar"/>
                           {{
@@ -95,7 +95,7 @@
                         </card>
                       </tabs>
                     </div>
-                    <div class="mt-1">
+                    <div class="mt-1" v-if="holiday.registration_open">
                       <base-button
                           type="success"
                           icon="fa fa-plus"

@@ -22,10 +22,6 @@ class HolidayViewSet(
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("-start_date")
-        if self.action in ["retrieve", "list"]:
-            if self.request.user.is_staff:
-                return qs
-            return qs.filter(registration_open=True)
         return qs
 
     @action(detail=True, methods=['get'])

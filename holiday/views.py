@@ -27,7 +27,7 @@ class HolidayViewSet(
         if not self.request.user.is_staff and self.action in ["retrieve", "list"]:
             # only show holidays with open registrations or holidays already past
             now = datetime.datetime.now()
-            filters = Q(registration_open=True) | Q(start_date__ge=now.date())
+            filters = Q(registration_open=True) | Q(start_date__gte=now.date())
         return qs.filter(filters)
 
     @action(detail=True, methods=['get'])

@@ -1,6 +1,7 @@
 # from django.contrib.auth.models import User
 import datetime
 
+from django.db.models import Q
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
@@ -22,7 +23,12 @@ class HolidayViewSet(
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("-start_date")
-        return qs
+        filters = Q()
+        if not self.request.user.is_stafff and self.action in ["retrieve", "list"]:
+            # only show holidays with open registrations or holidays already past
+            now = datetime.datetime.now()
+            filters = Q(registration_open=True) | Q(start_date__ge=now.date())
+        return qs.filter(filters)
 
     @action(detail=True, methods=['get'])
     def get_section_for_child(self, request, pk=None):

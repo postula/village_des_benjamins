@@ -48,7 +48,8 @@ class OutingSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "date",
+            "start_date",
+            "end_date",
             "departure_time",
             "arrival_time",
             "price",
@@ -65,7 +66,7 @@ class HolidaySectionSerializer(serializers.ModelSerializer):
 
     def get_outings_list(self, instance):
         outings = instance.outings.order_by(
-            "date"
+            "start_date"
         )
         return OutingSerializer(
             outings,

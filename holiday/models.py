@@ -191,7 +191,16 @@ class Registration(models.Model):
         outing_cost = Decimal(0.0)
         dates = self.dates
         for outing in section_holiday.outings.all():
-            if outing.date in dates:
+            booked = False
+            if not outing.end_date:
+                if outing.start_date in dates:
+                    booked = True
+            else:
+                for reservation_date in dates:
+                    if outing.start_date <= reservation_date <= outing.end_date:
+                        booked = True
+                        break
+            if booked:
                 outing_cost += outing.price
         return round(self.number_of_days * self.holiday.price + outing_cost, 2)
 
@@ -257,7 +266,9 @@ class Outing(models.Model):
         on_delete=models.CASCADE,
         related_name="outings",
     )
-    date = models.DateField(_("date"))
+    # date = models.DateField(_("date"))
+    start_date = models.DateField(_("start date"))
+    end_date = models.DateField(_("end date"), blank=True, null=True)
     name = models.CharField(_("name"), max_length=255)
     description = HTMLField(verbose_name=_("description"))
     price = models.DecimalField(
@@ -275,11 +286,23 @@ class Outing(models.Model):
         end_date = self.section_holiday.holiday.end_date
         has_errors = False
         errors = {}
-        if self.date < start_date or self.date > end_date:
+        if self.end_date and self.end_date < self.start_date:
             has_errors = True
             errors[
                 "date"
-            ] = "La sortie doit être organisée entre le {} et le {}".format(
+            ] = "Le début de la sortie doit être avant la fin de la sortie"
+        if self.start_date < start_date or self.start_date > end_date:
+            has_errors = True
+            errors[
+                "date"
+            ] = "La sortie doit commencée entre le {} et le {}".format(
+                start_date, end_date
+            )
+        if self.end_date and (self.end_date < start_date or self.end_date > end_date):
+            has_errors = True
+            errors[
+                "date"
+            ] = "La sortie doit finir entre le {} et le {}".format(
                 start_date, end_date
             )
         if self.departure_time and self.arrival_time and self.departure_time > self.arrival_time:
@@ -294,7 +317,7 @@ class Outing(models.Model):
     class Meta:
         verbose_name = _("outing")
         verbose_name_plural = _("outings")
-        ordering = ["date"]
+        ordering = ["start_date"]
 
 
 html_template = """

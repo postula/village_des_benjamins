@@ -83,7 +83,8 @@
                                 v-for="outing in section.outings"
                                 :key="outing.id"
                                 :name="outing.name"
-                                :date="outing.date"
+                                :start_date="outing.start_date"
+                                :end_date="outing.end_date"
                                 :arrival_time="outing.arrival_time"
                                 :departure_time="outing.departure_time"
                                 :price="outing.price"
@@ -315,7 +316,7 @@
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 
-import {DateTime, Settings} from "luxon";
+import {DateTime, Interval, Settings} from "luxon";
 
 import Modal from "@/components/Modal.vue";
 import BaseButton from "@/components/BaseButton";
@@ -476,8 +477,21 @@ export default {
         const outings = this.currentSection.outings;
         if (outings && outings.length != 0) {
           for (const outing of outings) {
-            const c_d = DateTime.fromISO(outing.date);
-            if (c_d.hasSame(d, "day")) {
+            let out = false;
+            const s_o_d = DateTime.fromISO(outing.start_date);
+            if (!!outing.end_date) {
+              // interval
+              const e_o_d = DateTime.fromISO(outing.end_date).plus({days: 1});
+              let interval = Interval.fromDateTimes(s_o_d, e_o_d);
+              if (interval.contains(d)) {
+                out = true;
+              }
+            } else {
+              if (s_o_d.hasSame(d, "day")) {
+                out = true;
+              }
+            }
+            if (out) {
               dayElem.innerHTML +=
                 "<span class='badge badge-warning'><i class='fa fa-star' /></span>";
             }
@@ -517,7 +531,7 @@ export default {
       while(loop <= end){
         let loop_str = `${loop.getFullYear()}-${String(loop.getMonth() + 1).padStart(2, "0")}-${String(loop.getDate()).padStart(2, "0")}`;
         let newDate = loop.setDate(loop.getDate() + 1);
-        const capacity = this.reservationModalSection.capacities[loop_str];
+        const capacity = this.reservationModalSection.capacities && this.reservationModalSection.capacities[loop_str];
         if (!capacity) {
           dates.push(loop_str);
         }
@@ -601,13 +615,33 @@ export default {
       const out = {};
       const section = this.currentSection;
       if (!section.outings) return out;
-      const dayChoosen = this.dayChoosen.map((d) => DateTime.fromISO(d));
+      console.log(this.dayChoosen);
       for (const outing of section.outings) {
-        if (this.dayChoosen.includes(outing.date)) {
-          out[outing.id] = true;
+        let booked = false;
+        const s_o_d = DateTime.fromISO(outing.start_date);
+        if (!!outing.end_date) {
+          // interval
+          const e_o_d = DateTime.fromISO(outing.end_date).plus({days: 1});
+          let interval = Interval.fromDateTimes(s_o_d, e_o_d);
+          console.log(interval);
+          for (const d_s of this.dayChoosen) {
+            const d = DateTime.fromFormat(d_s, "yyyy-MM-dd");
+            console.log(d);
+            if (interval.contains(d)) {
+              booked = true;
+              break;
+            }
+          }
         } else {
-          out[outing.id] = false;
+          for (const d_s of this.dayChoosen) {
+            const d = DateTime.fromFormat(d_s, "yyyy-MM-dd");
+            if (s_o_d.hasSame(d, "day")) {
+              booked = true;
+              break;
+            }
+          }
         }
+        out[outing.id] = booked;
       }
       return out;
     },

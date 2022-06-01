@@ -646,6 +646,7 @@ export default {
       const section = this.currentSection;
       if (!section.outings) return 0;
       let outings_booked = this.outingsBooked;
+      if (!outings_booked) return 0;
       let out = 0;
       out += this.dayChoosen.length * this.reservation_modal.holiday.price;
       for (const outing of section.outings) {

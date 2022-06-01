@@ -96,7 +96,7 @@
                         </card>
                       </tabs>
                     </div>
-                    <div class="mt-1" v-if="holiday.registration_open">
+                    <div class="mt-1" v-if="holiday.registration_open || is_staff">
                       <base-button
                           type="success"
                           icon="fa fa-plus"
@@ -623,10 +623,8 @@ export default {
           // interval
           const e_o_d = DateTime.fromISO(outing.end_date).plus({days: 1});
           let interval = Interval.fromDateTimes(s_o_d, e_o_d);
-          console.log(interval);
           for (const d_s of this.dayChoosen) {
             const d = DateTime.fromFormat(d_s, "yyyy-MM-dd");
-            console.log(d);
             if (interval.contains(d)) {
               booked = true;
               break;
@@ -669,6 +667,9 @@ export default {
     capacityLoading() {
       return this.$store.getters.getCapacityLoading;
     },
+    is_staff() {
+      return this.$store.getters.IsStaff;
+    }
   },
 };
 </script>

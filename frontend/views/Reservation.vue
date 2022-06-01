@@ -650,7 +650,7 @@ export default {
       let out = 0;
       out += this.dayChoosen.length * this.reservation_modal.holiday.price;
       for (const outing of section.outings) {
-        if (outings_booked(outing.id)) {
+        if (outings_booked[outing.id]) {
           out += Number(outing.price);
         }
       }

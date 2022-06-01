@@ -615,7 +615,6 @@ export default {
       const out = {};
       const section = this.currentSection;
       if (!section.outings) return out;
-      console.log(this.dayChoosen);
       for (const outing of section.outings) {
         let booked = false;
         const s_o_d = DateTime.fromISO(outing.start_date);
@@ -646,10 +645,11 @@ export default {
     bookingPrice() {
       const section = this.currentSection;
       if (!section.outings) return 0;
+      let outings_booked = this.outingsBooked;
       let out = 0;
       out += this.dayChoosen.length * this.reservation_modal.holiday.price;
       for (const outing of section.outings) {
-        if (this.dayChoosen.includes(outing.date)) {
+        if (outings_booked(outing.id)) {
           out += Number(outing.price);
         }
       }

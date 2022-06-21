@@ -27,6 +27,7 @@
     "vue-cookie-law": "^1.13.3",
     "vue-flatpickr-component": "^8.1.6",
     "vue-gtag": "^1.16.1",
+    "vue-html-to-paper": "^1.4.4",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
     "vue2-transitions": "^0.2.3",

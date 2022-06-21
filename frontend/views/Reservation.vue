@@ -127,18 +127,55 @@
                         v-for="registration in registrations"
                         :key="registration.id"
                         class="list-group-item list-group-item-action flex-column align-items-start"
+                        :set_holiday="holiday = holidays.find((h) => h.id == registration.holiday) || {}"
+                        :set_child="child = children.find((c) => c.id == registration.child) || {}"
                     >
+                      <div v-show="false" :id="`reservation_schedule_${ registration.id }`">
+                        <h2>Programme des vacances: {{ holiday.name }}</h2>
+                        <h5>Réservation</h5>
+                        <ul>
+                          <li><u><b>Enfant</b></u>: {{getChildName(child)}}</li>
+                          <li><u><b>Groupe</b></u>: {{child.section}}</li>
+                          <li><u><b>Dates</b></u>:
+                            <ul>
+                              <li v-for="d in registration.dates" :key="d" >{{formatDate(d)}}</li>
+                            </ul>
+                          </li>
+                        </ul>
+                        <h5>Information Générales</h5>
+                        <span v-html="holiday.description"></span>
+                        <h5>Sorties et Activités</h5>
+                          <table
+                              class="table table-striped"
+                              :set="outings = ((holiday.sections || []).find(s => s.section_name === child.section) || {}).outings || []"
+                          >
+                            <thead>
+                              <tr>
+                                <th scope="col">Début</th>
+                                <th scope="col">Fin</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Transport</th>
+                                <th scope="col">Prix</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="outing in outings" :key="outing.id">
+                                <th scope="row">{{ `${formatDate(outing.start_date)}${outing.departure_time ? " " : ""}${outing.departure_time ? formatTime(outing.departure_time) : ""}` }}</th>
+                                <td>{{ outing.end_date ? `${formatDate(outing.end_date)}${outing.arrival_time ? " " : ""}${outing.arrival_time ? formatTime(outing.arrival_time) : ""}` : "-"}}</td>
+                                <td>{{ outing.name }}</td>
+                                <td v-html="outing.description"></td>
+                                <td>{{ outing.transport || "-"}}</td>
+                                <td>{{ outing.price || "-"}} €</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
                       <div
                           class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                       >
                         <h5 class="mb-1">
-                          {{
-                            (
-                                holidays.find(
-                                    (h) => h.id == registration.holiday
-                                ) || {}
-                            ).name
-                          }}
+                          {{holiday.name}}
                         </h5>
                         <div
                             class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
@@ -170,6 +207,9 @@
                                 )
                                 .join(", ")
                           }}
+                        </div>
+                        <div>
+                          <base-button type="primary" @click="printSchedule(registration.id)">Imprimer le programme</base-button>
                         </div>
                       </div>
                     </div>
@@ -330,9 +370,11 @@ import Skew from "@/components/Skew";
 
 import * as types from "@/store/mutation-types";
 import {getChildSection} from "../store";
+import Modals from "@/views/components/JavascriptComponents/Modals";
 
 export default {
   components: {
+    Modals,
     Modal,
     BaseButton,
     BaseInput,
@@ -548,6 +590,9 @@ export default {
         this.reservation_modal.holiday.end_date
       );
       this.$set(this.reservation_modal.dp_config, "disable", dates);
+    },
+    async printSchedule(reservation_id) {
+      await this.$htmlToPaper(`reservation_schedule_${reservation_id}`);
     },
     makeReservation(holiday_id) {
       this.$store.dispatch(types.GET_HOLIDAYS_SECTION_CAPACITY, {

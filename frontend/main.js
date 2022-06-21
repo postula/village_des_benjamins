@@ -1,5 +1,6 @@
 import Vue from "vue";
 import * as Sentry from "@sentry/vue";
+import VueHtmlToPaper from 'vue-html-to-paper';
 import App from "./App.vue";
 import router from "./router";
 import store from './store'
@@ -11,6 +12,21 @@ import Argon from "./plugins/argon-kit";
 import * as backendAPI from './common/backendAPI'
 import titleMixin from './mixins/titleMixin';
 
+const print_options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ],
+  timeout: 1000, // default timeout before the print window appears
+  autoClose: true, // if false, the window will not close after printing
+  windowTitle: window.document.title, // override the window title
+};
 
 Vue.config.productionTip = false;
 Vue.prototype.$api = backendAPI;
@@ -22,6 +38,7 @@ Vue.use(VueGtag, {
   config: {id: 'G-LF0NFE38PY'},
   bootstrap: false,
 }, router);
+Vue.use(VueHtmlToPaper, print_options);
 // Sentry.init({
 //   Vue: Vue,
 //   dsn: "https://d5d4f8ab79e44e238be6d6e0253e8144@o207892.ingest.sentry.io/5583101",

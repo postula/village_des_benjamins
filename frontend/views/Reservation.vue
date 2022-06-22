@@ -209,7 +209,7 @@
                           }}
                         </div>
                         <div>
-                          <base-button type="primary" @click="printSchedule(registration.id)">Imprimer le programme</base-button>
+                          <base-button type="primary" @click="printSchedule(registration.id)">Imprimer le programme des sorties</base-button>
                         </div>
                       </div>
                     </div>

@@ -136,6 +136,11 @@
                         <ul>
                           <li><u><b>Enfant</b></u>: {{getChildName(child)}}</li>
                           <li><u><b>Groupe</b></u>: {{child.section}}</li>
+                          <li><u><b>Animateurs</b></u>:
+                            <ul>
+                              <li v-for="animateur in holiday.section_animateurs" :key="animateur.id" >{{animateur.first_name}} {{animateur.last_name}}</li>
+                            </ul>
+                          </li>
                           <li><u><b>Dates</b></u>:
                             <ul>
                               <li v-for="d in registration.dates" :key="d" >{{formatDate(d)}}</li>
@@ -155,7 +160,6 @@
                                 <th scope="col">Fin</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Animateurs</th>
                                 <th scope="col">Transport</th>
                                 <th scope="col">Prix</th>
                               </tr>
@@ -166,13 +170,6 @@
                                 <td>{{ outing.end_date ? `${formatDate(outing.end_date)}${outing.arrival_time ? " " : ""}${outing.arrival_time ? formatTime(outing.arrival_time) : ""}` : "-"}}</td>
                                 <td>{{ outing.name }}</td>
                                 <td v-html="outing.description"></td>
-                                <td>
-                                  <ul>
-                                    <li v-for="animateur in outing.animateur" :key="animateur.id">
-                                      {{animateur.first_name}} {{animateur.last_name}}
-                                    </li>
-                                  </ul>
-                                </td>
                                 <td>{{ outing.transport || "-"}}</td>
                                 <td>{{ outing.price || "-"}} €</td>
                               </tr>

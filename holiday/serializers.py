@@ -61,6 +61,7 @@ class OutingSerializer(serializers.ModelSerializer):
 class HolidaySectionSerializer(serializers.ModelSerializer):
     section_id = serializers.ReadOnlyField(source="section.id")
     section_name = serializers.ReadOnlyField(source="section.name")
+    section_animateurs = AnimateurSerializer(many=True, source="section.educators", read_only=True)
     outings = serializers.SerializerMethodField('get_outings_list')
     activities = serializers.SerializerMethodField('get_activities_list')
 
@@ -86,7 +87,7 @@ class HolidaySectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HolidaySection
-        fields = ["activities", "section_id", "section_name", "outings", "description"]
+        fields = ["activities", "section_id", "section_name", "section_animateurs", "outings", "description"]
 
 
 class HolidaySerializer(serializers.ModelSerializer):

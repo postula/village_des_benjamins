@@ -128,6 +128,7 @@
                         :key="registration.id"
                         class="list-group-item list-group-item-action flex-column align-items-start"
                         :set_holiday="holiday = holidays.find((h) => h.id == registration.holiday) || {}"
+                        :set_section="section = ((holiday.sections || []).find(s => s.section_name === child.section) || {})"
                         :set_child="child = children.find((c) => c.id == registration.child) || {}"
                     >
                       <div v-show="false" :id="`reservation_schedule_${ registration.id }`">
@@ -138,7 +139,7 @@
                           <li><u><b>Groupe</b></u>: {{child.section}}</li>
                           <li><u><b>Animateurs</b></u>:
                             <ul>
-                              <li v-for="animateur in holiday.section_animateurs" :key="animateur.id" >{{animateur.first_name}} {{animateur.last_name}}</li>
+                              <li v-for="animateur in section.section_animateurs" :key="animateur.id" >{{animateur.first_name}} {{animateur.last_name}}</li>
                             </ul>
                           </li>
                           <li><u><b>Dates</b></u>:
@@ -152,7 +153,7 @@
                         <h5>Sorties et Activités</h5>
                           <table
                               class="table table-striped"
-                              :set="outings = ((holiday.sections || []).find(s => s.section_name === child.section) || {}).outings || []"
+                              :set="outings = section.outings || []"
                           >
                             <thead>
                               <tr>

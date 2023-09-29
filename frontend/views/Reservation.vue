@@ -573,12 +573,16 @@ export default {
         ) || {};
       const dates = [];
       const start = new Date(this.reservation_modal.holiday.start_date);
+      start.setHours(0, 0, 0, 0);
       const end = new Date(this.reservation_modal.holiday.end_date);
+      end.setHours(0, 0, 0, 0);
       let loop = new Date(start);
       while(loop <= end){
+        loop.setHours(0, 0, 0, 0);
         let loop_str = `${loop.getFullYear()}-${String(loop.getMonth() + 1).padStart(2, "0")}-${String(loop.getDate()).padStart(2, "0")}`;
         let newDate = loop.setDate(loop.getDate() + 1);
         const capacity = this.reservationModalSection.capacities && this.reservationModalSection.capacities[loop_str];
+
         if (!capacity || capacity <= 0) {
           dates.push(loop_str);
         }

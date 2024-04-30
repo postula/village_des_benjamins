@@ -373,7 +373,7 @@ def _send_registration_notification(obj):
     payment_communication = (
         f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
     )
-    child_gender_accord = "e" if obj.child.gender == "female" else "male"
+    child_gender_accord = "e" if obj.child.gender == "female" else ""
     date_li = (
             "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
     )

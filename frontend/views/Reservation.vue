@@ -155,7 +155,7 @@
                           </li>
                           <li>
                             <u><b>Groupe</b></u
-                            >: {{ this.currentChildSection }}
+                            >: {{ currentChildSection }}
                           </li>
                           <li>
                             <u><b>Animateurs</b></u
@@ -166,7 +166,7 @@
                                   (holiday.sections || []).find(
                                     (s) =>
                                       s.section_name ===
-                                      this.currentChildSection,
+                                      currentChildSection,
                                   ) || {}
                                 ).section_animateurs || []"
                                 :key="animateur.id"
@@ -196,7 +196,7 @@
                               (
                                 (holiday.sections || []).find(
                                   (s) =>
-                                    s.section_name === this.currentChildSection,
+                                    s.section_name === currentChildSection,
                                 ) || {}
                               ).outings || [])
                           "

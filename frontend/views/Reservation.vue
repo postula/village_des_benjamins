@@ -10,31 +10,33 @@
               <div class="col-lg-12">
                 <div class="list-group">
                   <div
-                      v-for="holiday in holidays"
-                      :key="holiday.id"
-                      class="list-group-item list-group-item-action flex-column align-items-start px-1"
+                    v-for="holiday in holidays"
+                    :key="holiday.id"
+                    class="list-group-item list-group-item-action flex-column align-items-start px-1"
                   >
                     <div
-                        class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
+                      class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                     >
                       <h5 class="mb-1">
                         {{ holiday.name }}
                       </h5>
                       <div
-                          class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
+                        class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
                       >
-                        <span v-if="holiday.registration_open">{{ holiday.price }}€ / jour</span>
+                        <span v-if="holiday.registration_open"
+                          >{{ holiday.price }}€ / jour</span
+                        >
                         <div class="">
-                          <i class="fa fa-calendar"/>
+                          <i class="fa fa-calendar" />
                           {{
                             new Date(holiday.start_date).toLocaleDateString(
-                                "fr-BE"
+                              "fr-BE",
                             )
                           }}
                           -
                           {{
                             new Date(holiday.end_date).toLocaleDateString(
-                                "fr-BE"
+                              "fr-BE",
                             )
                           }}
                         </div>
@@ -42,10 +44,10 @@
                     </div>
                     <div class="mt-2">
                       <tabs
-                          type="info"
-                          fill
-                          centered
-                          class="flex-column flex-md-row text-left"
+                        type="info"
+                        fill
+                        centered
+                        class="flex-column flex-md-row text-left"
                       >
                         <card shadow>
                           <tab-pane>
@@ -53,31 +55,31 @@
                             <span v-html="holiday.description"></span>
                           </tab-pane>
                           <tab-pane
-                              v-for="section in holiday.sections"
-                              :key="section.id"
+                            v-for="section in holiday.sections"
+                            :key="section.id"
                           >
-                              <span slot="title">
-                                {{ section.section_name }}
-                              </span>
+                            <span slot="title">
+                              {{ section.section_name }}
+                            </span>
                             <div class="mt-1" v-html="section.description" />
                             <HolidaySection title="Programme">
                               <ProgramCard
-                                    v-for="activity in section.activities"
-                                    :key="activity.id"
-                                    :start_date="activity.start_date"
-                                    :end_date="activity.end_date"
-                                    :educators="activity.educators"
-                                    :theme="activity.theme"
-                                    :description="activity.description"
-                                    :bricolage="activity.bricolage"
-                                    :food="activity.food"
-                                    :game="activity.game"
-                                    :other="activity.other"
-                                />
+                                v-for="activity in section.activities"
+                                :key="activity.id"
+                                :start_date="activity.start_date"
+                                :end_date="activity.end_date"
+                                :educators="activity.educators"
+                                :theme="activity.theme"
+                                :description="activity.description"
+                                :bricolage="activity.bricolage"
+                                :food="activity.food"
+                                :game="activity.game"
+                                :other="activity.other"
+                              />
                             </HolidaySection>
                             <HolidaySection
-                                v-if="section.outings.length > 0"
-                                title="Sorties et Activités Payantes"
+                              v-if="section.outings.length > 0"
+                              title="Sorties et Activités Payantes"
                             >
                               <Outing
                                 v-for="outing in section.outings"
@@ -96,19 +98,21 @@
                         </card>
                       </tabs>
                     </div>
-                    <div class="mt-1" v-if="holiday.registration_open || is_staff">
+                    <div
+                      class="mt-1"
+                      v-if="holiday.registration_open || is_staff"
+                    >
                       <base-button
-                          type="success"
-                          icon="fa fa-plus"
-                          @click="makeReservation(holiday.id)"
-                          :disabled="
-                            children.filter(
-                              (c) => !c.holidays_booked.includes(holiday.id)
-                            ).length == 0
-                          "
-                      >Réserver
-                      </base-button
-                      >
+                        type="success"
+                        icon="fa fa-plus"
+                        @click="makeReservation(holiday.id)"
+                        :disabled="
+                          children.filter(
+                            (c) => !c.holidays_booked.includes(holiday.id),
+                          ).length == 0
+                        "
+                        >Réserver
+                      </base-button>
                     </div>
                   </div>
                 </div>
@@ -124,97 +128,154 @@
                 <div class="col-lg-12">
                   <div class="list-group">
                     <div
-                        v-for="registration in registrations"
-                        :key="registration.id"
-                        class="list-group-item list-group-item-action flex-column align-items-start"
-                        :set_holiday="holiday = holidays.find((h) => h.id == registration.holiday) || {}"
-                        :set_child="child = children.find((c) => c.id == registration.child) || {}"
+                      v-for="registration in registrations"
+                      :key="registration.id"
+                      class="list-group-item list-group-item-action flex-column align-items-start"
+                      :set_holiday="
+                        (holiday =
+                          holidays.find((h) => h.id == registration.holiday) ||
+                          {})
+                      "
+                      :set_child="
+                        (child =
+                          children.find((c) => c.id == registration.child) ||
+                          {})
+                      "
                     >
-                      <div v-show="false" :id="`reservation_schedule_${ registration.id }`">
+                      <div
+                        v-show="false"
+                        :id="`reservation_schedule_${registration.id}`"
+                      >
                         <h2>Programme des vacances: {{ holiday.name }}</h2>
                         <h5>Réservation</h5>
                         <ul>
-                          <li><u><b>Enfant</b></u>: {{getChildName(child)}}</li>
-                          <li><u><b>Groupe</b></u>: {{child.section}}</li>
-                          <li><u><b>Animateurs</b></u>:
+                          <li>
+                            <u><b>Enfant</b></u
+                            >: {{ getChildName(child) }}
+                          </li>
+                          <li>
+                            <u><b>Groupe</b></u
+                            >: {{ this.currentChildSection }}
+                          </li>
+                          <li>
+                            <u><b>Animateurs</b></u
+                            >:
                             <ul>
-                              <li v-for="animateur in ((holiday.sections || []).find(s => s.section_name === child.section) || {}).section_animateurs || []" :key="animateur.id" >{{animateur.first_name}} {{animateur.last_name}}</li>
+                              <li
+                                v-for="animateur in (
+                                  (holiday.sections || []).find(
+                                    (s) =>
+                                      s.section_name ===
+                                      this.currentChildSection,
+                                  ) || {}
+                                ).section_animateurs || []"
+                                :key="animateur.id"
+                              >
+                                {{ animateur.first_name }}
+                                {{ animateur.last_name }}
+                              </li>
                             </ul>
                           </li>
-                          <li><u><b>Dates</b></u>:
+                          <li>
+                            <u><b>Dates</b></u
+                            >:
                             <ul>
-                              <li v-for="d in registration.dates" :key="d" >{{formatDate(d)}}</li>
+                              <li v-for="d in registration.dates" :key="d">
+                                {{ formatDate(d) }}
+                              </li>
                             </ul>
                           </li>
                         </ul>
                         <h5>Information Générales</h5>
                         <span v-html="holiday.description"></span>
                         <h5>Sorties et Activités</h5>
-                          <table
-                              class="table table-striped"
-                              :set="outings = ((holiday.sections || []).find(s => s.section_name === child.section) || {}).outings || []"
-                          >
-                            <thead>
-                              <tr>
-                                <th scope="col">Début</th>
-                                <th scope="col">Fin</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Transport</th>
-                                <th scope="col">Prix</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="outing in outings" :key="outing.id">
-                                <th scope="row">{{ `${formatDate(outing.start_date)}${outing.departure_time ? " " : ""}${outing.departure_time ? formatTime(outing.departure_time) : ""}` }}</th>
-                                <td>{{ outing.end_date ? `${formatDate(outing.end_date)}${outing.arrival_time ? " " : ""}${outing.arrival_time ? formatTime(outing.arrival_time) : ""}` : "-"}}</td>
-                                <td>{{ outing.name }}</td>
-                                <td v-html="outing.description"></td>
-                                <td>{{ outing.transport || "-"}}</td>
-                                <td>{{ outing.price || "-"}} €</td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <table
+                          class="table table-striped"
+                          :set="
+                            (outings =
+                              (
+                                (holiday.sections || []).find(
+                                  (s) =>
+                                    s.section_name === this.currentChildSection,
+                                ) || {}
+                              ).outings || [])
+                          "
+                        >
+                          <thead>
+                            <tr>
+                              <th scope="col">Début</th>
+                              <th scope="col">Fin</th>
+                              <th scope="col">Nom</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">Transport</th>
+                              <th scope="col">Prix</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="outing in outings" :key="outing.id">
+                              <th scope="row">
+                                {{
+                                  `${formatDate(outing.start_date)}${outing.departure_time ? " " : ""}${outing.departure_time ? formatTime(outing.departure_time) : ""}`
+                                }}
+                              </th>
+                              <td>
+                                {{
+                                  outing.end_date
+                                    ? `${formatDate(outing.end_date)}${outing.arrival_time ? " " : ""}${outing.arrival_time ? formatTime(outing.arrival_time) : ""}`
+                                    : "-"
+                                }}
+                              </td>
+                              <td>{{ outing.name }}</td>
+                              <td v-html="outing.description"></td>
+                              <td>{{ outing.transport || "-" }}</td>
+                              <td>{{ outing.price || "-" }} €</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div
-                          class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
+                        class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                       >
                         <h5 class="mb-1">
-                          {{holiday.name}}
+                          {{ holiday.name }}
                         </h5>
                         <div
-                            class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
+                          class="d-flex justify-content-between flex-column align-items-center align-items-md-end"
                         >
                           <span>{{ registration.cost }}€</span>
                           <div>
                             {{ registration_statuses[registration.status] }}
                             <i
-                                :class="`fa fa-circle text-${registration.status_type}`"
+                              :class="`fa fa-circle text-${registration.status_type}`"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                          class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
+                        class="d-flex w-100 justify-content-center justify-content-md-between flex-wrap"
                       >
                         <h6 class="mb-1">
                           {{
                             getChildName(
-                                children.find((c) => c.id == registration.child)
+                              children.find((c) => c.id == registration.child),
                             )
                           }}
                         </h6>
                         <div>
                           {{
                             registration.dates
-                                .map((d) =>
-                                    new Date(d).toLocaleDateString("fr-BE")
-                                )
-                                .join(", ")
+                              .map((d) =>
+                                new Date(d).toLocaleDateString("fr-BE"),
+                              )
+                              .join(", ")
                           }}
                         </div>
                         <div>
-                          <base-button type="primary" @click="printSchedule(registration.id)">Imprimer le programme des sorties</base-button>
+                          <base-button
+                            type="primary"
+                            @click="printSchedule(registration.id)"
+                            >Imprimer le programme des sorties</base-button
+                          >
                         </div>
                       </div>
                     </div>
@@ -228,63 +289,63 @@
           :show.sync="reservation_modal.show"
           modal-classes="modal-dialog-centered modal-lg"
         >
-          <h5 slot="header"> Ajouter une réservation pour {{ reservation_modal.holiday.name }}</h5>
+          <h5 slot="header">
+            Ajouter une réservation pour {{ reservation_modal.holiday.name }}
+          </h5>
           <div>
             <div v-if="capacityLoading">
-              <div id="loading"/>
+              <div id="loading" />
             </div>
             <div class="row justify-content-center text-left" v-else>
               <div class="col-lg-9">
                 <base-input
-                    label="Enfant"
-                    required
-                    :error="reservation_modal.errors.child_id"
-                ><select
+                  label="Enfant"
+                  required
+                  :error="reservation_modal.errors.child_id"
+                  ><select
                     v-model="reservation_modal.child_id"
                     @change="setChildId"
                     class="form-control"
-                >
-                  <option
+                  >
+                    <option
                       v-for="child in reservation_modal.children"
                       :key="child.id"
                       :value="child.id"
-                  >
-                    {{ child.first_name }} {{ child.last_name }}
-                  </option>
-                </select></base-input
+                    >
+                      {{ child.first_name }} {{ child.last_name }}
+                    </option>
+                  </select></base-input
                 >
                 <base-input
-                    label="Groupe"
-                    readonly
-                    :value="reservationModalSection.section_name"
+                  label="Groupe"
+                  readonly
+                  :value="reservationModalSection.section_name"
                 ></base-input>
                 <base-input
-                    label="Dates"
-                    required
-                    :error="reservation_modal.errors.dates"
+                  label="Dates"
+                  required
+                  :error="reservation_modal.errors.dates"
                 >
                   <flat-picker
-                      slot-scope="{ focus, blur }"
-                      @on-open="onOpen"
-                      @on-close="blur"
-                      :disabled="!reservation_modal.child_id"
-                      :config="reservation_modal.dp_config"
-                      @on-day-create="onDayCreate"
-                      :events="['onChange', 'onDayCreate', 'onOpen']"
-                      class="form-control datepicker"
-                      :value="reservation_modal.dates"
-                      @on-change="dateChanged"
+                    slot-scope="{ focus, blur }"
+                    @on-open="onOpen"
+                    @on-close="blur"
+                    :disabled="!reservation_modal.child_id"
+                    :config="reservation_modal.dp_config"
+                    @on-day-create="onDayCreate"
+                    :events="['onChange', 'onDayCreate', 'onOpen']"
+                    class="form-control datepicker"
+                    :value="reservation_modal.dates"
+                    @on-change="dateChanged"
                   >
                   </flat-picker>
                 </base-input>
-                <base-input
-                    label="Problème de santé / Allergies"
-                >
+                <base-input label="Problème de santé / Allergies">
                   <textarea
-                      class="form-control"
-                      rows="4"
-                      placeholder="Si votre enfant souffre d'allergies ou d'un problème santé, veuillez le noter ici"
-                      v-model="reservation_modal.notes"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Si votre enfant souffre d'allergies ou d'un problème santé, veuillez le noter ici"
+                    v-model="reservation_modal.notes"
                   ></textarea>
                 </base-input>
                 <base-input label="Prix" readonly>
@@ -298,14 +359,12 @@
                       <td>{{ reservation_modal.holiday.price }}</td>
                       <td>=</td>
                       <td>
-                        {{
-                          numDayChoosen * reservation_modal.holiday.price
-                        }}
+                        {{ numDayChoosen * reservation_modal.holiday.price }}
                       </td>
                     </tr>
                     <tr
-                        v-for="outing in currentSection.outings"
-                        :key="outing.id"
+                      v-for="outing in currentSection.outings"
+                      :key="outing.id"
                     >
                       <td>
                         <div class="d-flex flex-column">
@@ -319,10 +378,7 @@
                       <td>{{ outing.price }}</td>
                       <td>=</td>
                       <td>
-                        {{
-                          (outingsBooked[outing.id] ? 1 : 0) *
-                          outing.price
-                        }}
+                        {{ (outingsBooked[outing.id] ? 1 : 0) * outing.price }}
                       </td>
                     </tr>
                     <tr>
@@ -342,14 +398,12 @@
           </div>
           <template slot="footer">
             <base-button
-                type="secondary"
-                @click="reservation_modal.show = false"
-            >Annuler
-            </base-button
-            >
-            <base-button type="primary" @click="submitReservationModal">{{
-                reservation_modal.action == "add" ? "Réserver" : "Modifier"
-              }}
+              type="secondary"
+              @click="reservation_modal.show = false"
+              >Annuler
+            </base-button>
+            <base-button type="primary" @click="submitReservationModal"
+              >{{ reservation_modal.action == "add" ? "Réserver" : "Modifier" }}
             </base-button>
           </template>
         </modal>
@@ -361,7 +415,7 @@
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 
-import {DateTime, Interval, Settings} from "luxon";
+import { DateTime, Interval, Settings } from "luxon";
 
 import Modal from "@/components/Modal.vue";
 import BaseButton from "@/components/BaseButton";
@@ -374,7 +428,7 @@ import Outing from "@/components/Outing";
 import Skew from "@/components/Skew";
 
 import * as types from "@/store/mutation-types";
-import {getChildSection} from "../store";
+import { getChildSection } from "../store";
 import Modals from "@/views/components/JavascriptComponents/Modals";
 
 export default {
@@ -443,25 +497,33 @@ export default {
         if (current_dates.length === 1) {
           date = current_dates[0];
         } else {
-          date = current_dates.filter(f => !new_dates.includes(f))[0];
+          date = current_dates.filter((f) => !new_dates.includes(f))[0];
         }
         action = "remove";
       } else {
-        date = new_dates.filter(f => !current_dates.includes(f))[0];
+        date = new_dates.filter((f) => !current_dates.includes(f))[0];
         action = "add";
       }
       if (!date) {
         return;
       }
-      const min_date = instance.parseDate(this.reservation_modal.holiday.start_date, "Y-m-d");
-      const max_date = instance.parseDate(this.reservation_modal.holiday.end_date, "Y-m-d");
+      const min_date = instance.parseDate(
+        this.reservation_modal.holiday.start_date,
+        "Y-m-d",
+      );
+      const max_date = instance.parseDate(
+        this.reservation_modal.holiday.end_date,
+        "Y-m-d",
+      );
       const additional_dates = [date];
       if (!this.reservation_modal.holiday.book_by_day) {
         const parsed_date = instance.parseDate(date, "Y-m-d");
         let weekday = parsed_date.getDay();
         while (weekday > 1) {
           const cand_date = new Date(parsed_date);
-          cand_date.setDate(cand_date.getDate() - (parsed_date.getDay() - weekday + 1));
+          cand_date.setDate(
+            cand_date.getDate() - (parsed_date.getDay() - weekday + 1),
+          );
           if (cand_date >= min_date) {
             const date_str = instance.formatDate(cand_date, "Y-m-d");
             if (!this.reservation_modal.dp_config.disable.includes(date_str)) {
@@ -475,7 +537,9 @@ export default {
         weekday = parsed_date.getDay();
         while (weekday < 5) {
           const cand_date = new Date(parsed_date);
-          cand_date.setDate(cand_date.getDate() + (weekday - parsed_date.getDay() + 1));
+          cand_date.setDate(
+            cand_date.getDate() + (weekday - parsed_date.getDay() + 1),
+          );
           if (cand_date <= max_date) {
             const date_str = instance.formatDate(cand_date, "Y-m-d");
             if (!this.reservation_modal.dp_config.disable.includes(date_str)) {
@@ -490,7 +554,9 @@ export default {
       if (action === "add") {
         current_dates = current_dates.concat(additional_dates);
       } else {
-        current_dates = current_dates.filter(d => !additional_dates.includes(d));
+        current_dates = current_dates.filter(
+          (d) => !additional_dates.includes(d),
+        );
       }
       if (current_dates.length > 0) {
         this.reservation_modal.dates = current_dates.join(", ");
@@ -528,7 +594,7 @@ export default {
             const s_o_d = DateTime.fromISO(outing.start_date);
             if (!!outing.end_date) {
               // interval
-              const e_o_d = DateTime.fromISO(outing.end_date).plus({days: 1});
+              const e_o_d = DateTime.fromISO(outing.end_date).plus({ days: 1 });
               let interval = Interval.fromDateTimes(s_o_d, e_o_d);
               if (interval.contains(d)) {
                 out = true;
@@ -554,22 +620,18 @@ export default {
       const child_id = this.reservation_modal.child_id;
       const child = this.children.find((c) => c.id === child_id);
       if (!child) {
-        this.$set(
-          this.reservation_modal.dp_config,
-          "inline",
-          false
-        );
+        this.$set(this.reservation_modal.dp_config, "inline", false);
         return;
       }
       const { section_name } = await getChildSection({
         holiday_id: this.reservation_modal.holiday.id,
-        child_id
+        child_id,
       });
       this.reservation_modal.child_id = child_id;
       this.currentChildSection = section_name;
       this.reservationModalSection =
         this.reservation_modal.holiday.sections.find(
-          (s) => s.section_name === this.currentChildSection
+          (s) => s.section_name === this.currentChildSection,
         ) || {};
       const dates = [];
       const start = new Date(this.reservation_modal.holiday.start_date);
@@ -577,11 +639,13 @@ export default {
       const end = new Date(this.reservation_modal.holiday.end_date);
       end.setHours(0, 0, 0, 0);
       let loop = new Date(start);
-      while(loop <= end){
+      while (loop <= end) {
         loop.setHours(0, 0, 0, 0);
         let loop_str = `${loop.getFullYear()}-${String(loop.getMonth() + 1).padStart(2, "0")}-${String(loop.getDate()).padStart(2, "0")}`;
         let newDate = loop.setDate(loop.getDate() + 1);
-        const capacity = this.reservationModalSection.capacities && this.reservationModalSection.capacities[loop_str];
+        const capacity =
+          this.reservationModalSection.capacities &&
+          this.reservationModalSection.capacities[loop_str];
 
         if (!capacity || capacity <= 0) {
           dates.push(loop_str);
@@ -591,12 +655,12 @@ export default {
       this.$set(
         this.reservation_modal.dp_config,
         "minDate",
-        this.reservation_modal.holiday.start_date
+        this.reservation_modal.holiday.start_date,
       );
       this.$set(
         this.reservation_modal.dp_config,
         "maxDate",
-        this.reservation_modal.holiday.end_date
+        this.reservation_modal.holiday.end_date,
       );
       this.$set(this.reservation_modal.dp_config, "disable", dates);
     },
@@ -605,8 +669,8 @@ export default {
     },
     makeReservation(holiday_id) {
       this.$store.dispatch(types.GET_HOLIDAYS_SECTION_CAPACITY, {
-        holiday_id: holiday_id
-      })
+        holiday_id: holiday_id,
+      });
       this.reservation_modal = Object.assign(this.reservation_modal, {
         show: true,
         dates: "",
@@ -614,7 +678,7 @@ export default {
         child_id: undefined,
         errors: {},
         children: this.children.filter(
-          (c) => !c.holidays_booked.includes(holiday_id)
+          (c) => !c.holidays_booked.includes(holiday_id),
         ),
         action: "add",
       });
@@ -654,7 +718,7 @@ export default {
       if (!this.reservation_modal.child_id) return {};
       if (!this.currentChildSection) return {};
       return this.reservation_modal.holiday.sections.find(
-        (c) => c.section_name === this.currentChildSection
+        (c) => c.section_name === this.currentChildSection,
       );
     },
     dayChoosen() {
@@ -674,7 +738,7 @@ export default {
         const s_o_d = DateTime.fromISO(outing.start_date);
         if (!!outing.end_date) {
           // interval
-          const e_o_d = DateTime.fromISO(outing.end_date).plus({days: 1});
+          const e_o_d = DateTime.fromISO(outing.end_date).plus({ days: 1 });
           let interval = Interval.fromDateTimes(s_o_d, e_o_d);
           for (const d_s of this.dayChoosen) {
             const d = DateTime.fromFormat(d_s, "yyyy-MM-dd");
@@ -714,7 +778,9 @@ export default {
       return this.$store.getters.getHolidays;
     },
     children() {
-      return this.$store.getters.getChildren.filter(c => c.status === "registered");
+      return this.$store.getters.getChildren.filter(
+        (c) => c.status === "registered",
+      );
     },
     registrations() {
       return this.$store.getters.getRegistrations;
@@ -724,17 +790,16 @@ export default {
     },
     is_staff() {
       return this.$store.getters.IsStaff;
-    }
+    },
   },
 };
 </script>
 <style scoped>
-
 #loading {
   display: inline-block;
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(255,255,255,.3);
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: black;
   animation: spin 1s ease-in-out infinite;
@@ -742,9 +807,13 @@ export default {
 }
 
 @keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @-webkit-keyframes spin {
-  to { -webkit-transform: rotate(360deg); }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 </style>

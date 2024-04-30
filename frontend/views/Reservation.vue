@@ -100,7 +100,7 @@
                     </div>
                     <div
                       class="mt-1"
-                      v-if="holiday.registration_open || is_staff"
+                      v-if="holiday.registration_open"
                     >
                       <base-button
                         type="success"
@@ -273,7 +273,7 @@
                         <div>
                           <base-button
                             type="primary"
-                            @click="printSchedule(registration.id)"
+                            @click="printSchedule(registration.id, registration.child, registration.holiday)"
                             >Imprimer le programme des sorties</base-button
                           >
                         </div>
@@ -616,6 +616,14 @@ export default {
       if (!c) return;
       return `${c.first_name} ${c.last_name}`;
     },
+    async setCurrentChildSection(child_id, holiday_id) {
+      const { section_name } = await getChildSection({
+        holiday_id,
+        child_id,
+      });
+      this.reservation_modal.child_id = child_id;
+      this.currentChildSection = section_name;
+    },
     async setChildId() {
       const child_id = this.reservation_modal.child_id;
       const child = this.children.find((c) => c.id === child_id);
@@ -623,12 +631,7 @@ export default {
         this.$set(this.reservation_modal.dp_config, "inline", false);
         return;
       }
-      const { section_name } = await getChildSection({
-        holiday_id: this.reservation_modal.holiday.id,
-        child_id,
-      });
-      this.reservation_modal.child_id = child_id;
-      this.currentChildSection = section_name;
+      await this.setCurrentChildSection(child_id, this.reservation_modal.holiday.id);
       this.reservationModalSection =
         this.reservation_modal.holiday.sections.find(
           (s) => s.section_name === this.currentChildSection,
@@ -664,7 +667,8 @@ export default {
       );
       this.$set(this.reservation_modal.dp_config, "disable", dates);
     },
-    async printSchedule(reservation_id) {
+    async printSchedule(reservation_id, child_id, holiday_id) {
+      await this.setCurrentChildSection(child_id, holiday_id);
       await this.$htmlToPaper(`reservation_schedule_${reservation_id}`);
     },
     makeReservation(holiday_id) {

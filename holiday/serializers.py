@@ -138,6 +138,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         elif obj.status == "cancelled":
             return "danger"
 
+    def create(self, validated_data):
+        holiday_registration_open = validated_data.get("registration_open")
+        if  not holiday_registration_open:
+            return serializers.ValidationError("Cannot create registration on close registration")
+        return super().create(validated_data)
+
     class Meta:
         model = Registration
         fields = [

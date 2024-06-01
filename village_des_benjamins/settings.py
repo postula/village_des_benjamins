@@ -204,6 +204,7 @@ JWT_AUTH = {
     "JWT_ALLOW_REFRESH": True,
     "JWT_EXPIRATION_DELTA": datetime.timedelta(hours=1),
     "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
+    "JWT_PAYLOAD_HANDLER": 'village_des_benjamins.auth.jwt_payload_handler',
 }
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")

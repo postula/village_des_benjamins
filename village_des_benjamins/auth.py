@@ -2,12 +2,22 @@ from logging import getLogger
 
 from django.utils.encoding import smart_text
 from jwt import exceptions
-from rest_framework.authentication import get_authorization_header
+from rest_framework_jwt.utils import jwt_payload_handler as base_jwt_payload_handler
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
 from django.utils.translation import ugettext_lazy as _
 
 logger = getLogger(__name__)
+
+
+def jwt_payload_handler(user):
+    """ Custom payload handler
+    Token encrypts the dictionary returned by this function, and can be decoded by rest_framework_jwt.utils.jwt_decode_handler
+    """
+    payload = base_jwt_payload_handler(user)
+    # Add is_staff to it
+    payload['is_staff'] = user.is_staff
+    return payload
 
 
 def get_jwt_value(request):

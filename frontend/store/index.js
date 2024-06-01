@@ -368,7 +368,7 @@ export const getChildSection = (payload) =>
 const getters = {
     getCurrentUserId: state => state.currentUser.user_id,
     IsAuthenticated: state => state.currentUser.authenticated,
-    IsStaff: state => state.currentUser.authenticated,
+    IsStaff: state => state.currentUser.is_staff,
     getUser: state => id => state.users[id] || {},
     getChildren: state => state.children,
     getHolidays: state => state.holidays,

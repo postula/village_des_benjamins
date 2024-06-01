@@ -140,7 +140,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         holiday_registration_open = validated_data.get("registration_open")
-        if not holiday_registration_open:
+        request = self.context.get("request")
+        is_staff = False
+        if request and hasattr(request, "user"):
+            user = request.user
+            is_staff = user.is_staff
+        if not holiday_registration_open and not is_staff:
             raise serializers.ValidationError("Cannot create registration on close registration")
         return super().create(validated_data)
 

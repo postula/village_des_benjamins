@@ -100,7 +100,7 @@
                     </div>
                     <div
                       class="mt-1"
-                      v-if="holiday.registration_open"
+                      v-if="holiday.registration_open || is_staff"
                     >
                       <base-button
                         type="success"

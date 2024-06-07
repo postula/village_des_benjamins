@@ -370,7 +370,8 @@
                         <div class="d-flex flex-column">
                           <span>Sortie / Activité spéciale</span>
                           <span class="text-bold">{{ outing.name }}</span>
-                          <span>{{ formatDate(outing.date) }}</span>
+                          <span>{{ formatDate(outing.start_date) }}</span>
+                          <span v-if="!!outing.end_date"> - {{formatDate(outing.end_date)}}</span>
                         </div>
                       </td>
                       <td>{{ outingsBooked[outing.id] ? 1 : 0 }}</td>

@@ -1,3 +1,6 @@
+import json
+from pprint import pprint
+
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 import datetime
@@ -139,14 +142,14 @@ class RegistrationSerializer(serializers.ModelSerializer):
             return "danger"
 
     def create(self, validated_data):
-        holiday_registration_open = validated_data.get("registration_open")
+        holiday = validated_data.get("holiday")
         request = self.context.get("request")
         is_staff = False
         if request and hasattr(request, "user"):
             user = request.user
             is_staff = user.is_staff
-        if not holiday_registration_open and not is_staff:
-            raise serializers.ValidationError("Cannot create registration on close registration")
+        if not holiday.registration_open and not is_staff:
+            raise serializers.ValidationError(f"Cannot create registration on close registration")
         return super().create(validated_data)
 
     class Meta:

@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.db.models import F, ExpressionWrapper, DurationField, DateField, Value, DecimalField, Subquery, OuterRef
 from django.db.models.functions import Extract, Now, ExtractMonth
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from ordered_model.admin import OrderedModelAdmin
@@ -14,6 +14,7 @@ from members.models import User, Child, StaffFunction
 from section.models import Section
 
 
+@admin.register(StaffFunction)
 class StaffFunctionAdmin(OrderedModelAdmin):
     model = StaffFunction
     list_display = ["name", "order", "move_up_down_links"]
@@ -50,6 +51,7 @@ class SectionFilter(admin.SimpleListFilter):
         return queryset
 
 
+@admin.register(Child)
 class ChildAdmin(admin.ModelAdmin):
     model = Child
     list_display = ["parent", "first_name", "last_name", "status", "section"]
@@ -62,6 +64,7 @@ class ChildAdmin(admin.ModelAdmin):
 
 
 # Define a new User admin
+@admin.register(User)
 class UserAdmin(BaseUserAdmin):
     inlines = [ChildInline]
     fieldsets = [
@@ -86,17 +89,16 @@ class UserAdmin(BaseUserAdmin):
     ordering = ("email",)
     list_filter = ["accept_newsletter", "is_staff"]
 
+    @admin.display(
+        description="Photo"
+    )
     def photo_list_preview(self, obj):
         if obj.photo:
             return mark_safe(
                 '<img src="{}" width="50" height="50" />'.format(obj.photo.url)
             )
         return ""
-    photo_list_preview.short_description = "Photo"
 
 
 # Re-register UserAdmin
 #admin.site.unregister(Group)
-admin.site.register(User, UserAdmin)
-admin.site.register(Child, ChildAdmin)
-admin.site.register(StaffFunction, StaffFunctionAdmin)

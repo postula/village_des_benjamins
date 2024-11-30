@@ -24,12 +24,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "true") == "true"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "village-des-benjamins.be").split(',')
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS", "village-des-benjamins.be,localhost,localhost:8000,localhost:8081"
+).split(",")
 
 # Application definition
 
@@ -53,7 +57,7 @@ INSTALLED_APPS = [
     "holiday",
     "site_content",
     "parent_messages",
-    'reset_password',
+    "django_rest_passwordreset",
 ]
 
 AUTH_USER_MODEL = "members.User"
@@ -82,8 +86,15 @@ FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "dist"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 TEMPLATES = [
     {
@@ -110,7 +121,13 @@ WSGI_APPLICATION = "village_des_benjamins.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = { 'default': dj_database_url.config() }
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgresql://postgres:postgres@localhost/postgres"
+    )
+}
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -140,7 +157,6 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_L10N = True
 
 USE_TZ = True
 
@@ -167,7 +183,7 @@ JAZZMIN_SETTINGS = {
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "village_des_benjamins.auth.JSONWebTokenAuthenticationNewHeader",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
@@ -176,72 +192,77 @@ SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
 CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
 CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'authorizationfb',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "authorizationfb",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 ]
 
+# Reset Email
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 24
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = 200
+
 DRF_RESET_EMAIL = {
-    "RESET_PASSWORD_EMAIL_TITLE": "Village des Benjamins -- Oubli de mot de passe",
-    'RESET_PASSWORD_EMAIL_TEMPLATE': 'reset_email.html',
-    'EMAIL_EXPIRATION_TIME': 24,
-    'REDIRECT_LINK': f'{CORS_ALLOWED_ORIGINS[0]}/#/forgot_finalize',
-    'APP_NAME': 'test',
-    'EMAIL_PROVIDER': 'village_des_benjamins.providers.SendgridEmailProvider',
-    'CONTENT_PROVIDER': 'reset_password.models.DefaultContentProvider',
-    'EMAIL_FIELD': 'email',
-    'CUSTOM_PASSWORD_SET': False,
+    "EMAIL_EXPIRATION_TIME": 24,
+    "REDIRECT_LINK": f"{CORS_ALLOWED_ORIGINS[0]}/#/forgot_finalize",
+    "EMAIL_PROVIDER": "village_des_benjamins.providers.SendgridEmailProvider",
+    "CONTENT_PROVIDER": "reset_password.models.DefaultContentProvider",
 }
 
-JWT_AUTH = {
-    "JWT_ALLOW_REFRESH": True,
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(hours=1),
-    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
-    "JWT_PAYLOAD_HANDLER": 'village_des_benjamins.auth.jwt_payload_handler',
+SIMPLE_JWT = {
+    "TOKEN_OBTAIN_SERIALIZER": "village_des_benjamins.auth.TokenObtainPairSerializer",
+    "ROTATE_REFRESH_TOKENS": True,
+    # ...
 }
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_STORAGE_BUCKET_NAME = "village-des-benjamins.be"
 AWS_S3_REGION_NAME = "eu-central-1"
 AWS_LOCATION = "website_uploads/"
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
-SENDGRID_FROM_MAIL = os.getenv("MAIL_FROM_ADDRESS", )
+
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"  # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+SENDGRID_FROM_MAIL = os.getenv(
+    "MAIL_FROM_ADDRESS",
+)
 
 if not DEBUG:
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN", None),
         integrations=[DjangoIntegration()],
         traces_sample_rate=0.05,
-
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
+        send_default_pii=True,
     )
 
 TINYMCE_DEFAULT_CONFIG = {
     "menubar": "file edit view insert format tools table help",
     "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
-               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
-               "code,help,wordcount",
+    "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
+    "code,help,wordcount",
     "toolbar": "undo redo | formatselect | "
-               "bold italic backcolor | alignleft aligncenter alignright alignjustify |"
-               "table tabledelete |"
-               "tableprops tablerowprops tablecellprops |"
-               "tableinsertrowbefore tableinsertrowafter tabledeleterow |"
-               "tableinsertcolbefore tableinsertcolafter tabledeletecol"
-               "bullist numlist outdent indent | "
-               "removeformat | help",
+    "bold italic backcolor | alignleft aligncenter alignright alignjustify |"
+    "table tabledelete |"
+    "tableprops tablerowprops tablecellprops |"
+    "tableinsertrowbefore tableinsertrowafter tabledeleterow |"
+    "tableinsertcolbefore tableinsertcolafter tabledeletecol"
+    "bullist numlist outdent indent | "
+    "removeformat | help",
 }
 
 if DEBUG:

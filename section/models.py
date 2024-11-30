@@ -1,6 +1,7 @@
 from django.db import models
 from ordered_model.models import OrderedModel
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+
 
 # Create your models here.
 class Section(OrderedModel):
@@ -17,6 +18,6 @@ class Section(OrderedModel):
     def __str__(self):
         return self.name
 
-    class Meta:
+    class Meta(OrderedModel.Meta):
         verbose_name = _("section")
         verbose_name_plural = _("sections")

@@ -7,7 +7,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.db import models
 from django_better_admin_arrayfield.models.fields import ArrayField
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.core.validators import MinValueValidator

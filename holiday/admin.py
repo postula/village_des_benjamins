@@ -4,7 +4,7 @@ from tempfile import NamedTemporaryFile
 from django.contrib import admin, messages
 from django.http import HttpResponse
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_better_admin_arrayfield.forms.fields import DynamicArrayField
 from django_better_admin_arrayfield.forms.widgets import DynamicArrayWidget
 from openpyxl import Workbook
@@ -38,6 +38,7 @@ class SectionProgramInline(admin.StackedInline):
     extra = 0
 
 
+@admin.register(HolidaySection)
 class HolidaySectionAdmin(admin.ModelAdmin):
     model = HolidaySection
     extra = 0
@@ -54,6 +55,7 @@ class HolidaySectionAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
+@admin.register(Holiday)
 class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
     model = Holiday
     list_display = ["name", "start_date", "end_date", "price", "registration_open"]
@@ -70,6 +72,9 @@ class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
         DynamicArrayField: {'widget': DynamicArrayDateInputWidget}
     }
 
+    @admin.action(
+        description=_("export_registration_desc")
+    )
     def export_registration(self, request, queryset):
         if queryset.count() > 1:
             self.message_user(
@@ -156,16 +161,18 @@ class HolidayAdmin(admin.ModelAdmin, DynamicArrayMixin):
             response['Content-Disposition'] = 'attachment; filename=inscriptions.xlsx'
             return response
 
-    export_registration.short_description = _("export_registration_desc")
 
 
+@admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin, DynamicArrayMixin):
     model = Registration
     list_display = ["holiday", "_child", "number_of_days", "section", "status", "cost"]
 
+    @admin.display(
+        description=_("child")
+    )
     def _child(self, obj):
         return f"{obj.child.first_name} {obj.child.last_name}"
-    _child.short_description = _("child")
 
     list_filter = [
         "holiday",
@@ -177,12 +184,11 @@ class RegistrationAdmin(admin.ModelAdmin, DynamicArrayMixin):
 
     list_per_page = 20
 
+    @admin.action(
+        description=_("resend_email")
+    )
     def resend_email(self, request, queryset):
         for registration in queryset.all():
             _send_registration_notification(registration)
-    resend_email.short_description = _("resend_email")
 
 
-admin.site.register(Holiday, HolidayAdmin)
-admin.site.register(HolidaySection, HolidaySectionAdmin)
-admin.site.register(Registration, RegistrationAdmin)

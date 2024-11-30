@@ -12,30 +12,31 @@ class ContentAdminInline(OrderedStackedInline):
     extra = 0
 
 
+@admin.register(SiteSection)
 class SiteSectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
     inlines = [ContentAdminInline]
     model = SiteSection
     list_display = ["key", "name", "photo_list_preview", "_description", "move_up_down_links"]
     ordering = ["order"]
 
+    @admin.display(
+        description="Photo"
+    )
     def photo_list_preview(self, obj):
         if obj.photo:
             return mark_safe(
                 '<img src="{}" width="50" height="50" />'.format(obj.photo.url)
             )
         return ""
-    photo_list_preview.short_description = "Photo"
 
     def _description(self, obj):
         return mark_safe(obj.description)
-    _description.allow_tags = True
 
 
+@admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     model = News
     list_display = ["date", "description"]
 
 
-admin.site.register(SiteSection, SiteSectionAdmin)
-admin.site.register(News, NewsAdmin)
 # Register your models here.

@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "15.x"
+    "node": "20.x"
   },
   "optionalDependencies": {
     "fsevents": "2.1.2"
@@ -40,7 +40,7 @@
     "@vue/cli-plugin-pwa": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
     "eslint-plugin-vue": "^4.7.1",
-    "node-sass": "^4.11.0",
+    "sass": "^1.81.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.6"
   },

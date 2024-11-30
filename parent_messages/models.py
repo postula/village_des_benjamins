@@ -3,7 +3,7 @@ from sendgrid.helpers.mail import Mail
 from django.conf import settings
 from logging import getLogger
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 logger = getLogger(__name__)

@@ -1,12 +1,24 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from ordered_model.admin import OrderedModelAdmin, OrderedInlineModelAdminMixin, OrderedStackedInline
+from ordered_model.admin import (
+    OrderedModelAdmin,
+    OrderedInlineModelAdminMixin,
+    OrderedStackedInline,
+)
 from site_content.models import Content, SiteSection, News
 
 
 class ContentAdminInline(OrderedStackedInline):
     model = Content
-    fields = ["name", "description", "icon", 'order',"show_more_button", "show_more_content", 'move_up_down_links']
+    fields = [
+        "name",
+        "description",
+        "icon",
+        "order",
+        "show_more_button",
+        "show_more_content",
+        "move_up_down_links",
+    ]
     readonly_fields = ["order", "move_up_down_links"]
     ordering = ["order"]
     extra = 0
@@ -16,12 +28,16 @@ class ContentAdminInline(OrderedStackedInline):
 class SiteSectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
     inlines = [ContentAdminInline]
     model = SiteSection
-    list_display = ["key", "name", "photo_list_preview", "_description", "move_up_down_links"]
+    list_display = [
+        "key",
+        "name",
+        "photo_list_preview",
+        "_description",
+        "move_up_down_links",
+    ]
     ordering = ["order"]
 
-    @admin.display(
-        description="Photo"
-    )
+    @admin.display(description="Photo")
     def photo_list_preview(self, obj):
         if obj.photo:
             return mark_safe(

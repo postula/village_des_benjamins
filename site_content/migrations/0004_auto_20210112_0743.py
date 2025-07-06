@@ -6,18 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0003_auto_20210111_0801'),
+        ("site_content", "0003_auto_20210111_0801"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='content',
-            options={'ordering': ('order',), 'verbose_name': 'content', 'verbose_name_plural': 'content'},
+            name="content",
+            options={
+                "ordering": ("order",),
+                "verbose_name": "content",
+                "verbose_name_plural": "content",
+            },
         ),
         migrations.AddField(
-            model_name='content',
-            name='order',
-            field=models.PositiveIntegerField(db_index=True, default=1, editable=False, verbose_name='order'),
+            model_name="content",
+            name="order",
+            field=models.PositiveIntegerField(
+                db_index=True, default=1, editable=False, verbose_name="order"
+            ),
             preserve_default=False,
         ),
     ]

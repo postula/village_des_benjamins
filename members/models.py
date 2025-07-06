@@ -3,7 +3,16 @@ from logging import getLogger
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-from django.db.models import ExpressionWrapper, Value, DateField, F, DurationField, DecimalField, OuterRef, Subquery
+from django.db.models import (
+    ExpressionWrapper,
+    Value,
+    DateField,
+    F,
+    DurationField,
+    DecimalField,
+    OuterRef,
+    Subquery,
+)
 from django.db.models.functions import Extract
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import mark_safe
@@ -58,9 +67,19 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
     photo = models.ImageField(null=True, blank=True, upload_to="members/")
-    role = models.ForeignKey(verbose_name=_("role"), to="members.StaffFunction", null=True, blank=True, on_delete=models.SET_NULL)
-    visible_on_site = models.BooleanField(verbose_name=_("visible_on_site"), default=False)
-    accept_newsletter = models.BooleanField(verbose_name=_("accept_newsletter"), default=False)
+    role = models.ForeignKey(
+        verbose_name=_("role"),
+        to="members.StaffFunction",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    visible_on_site = models.BooleanField(
+        verbose_name=_("visible_on_site"), default=False
+    )
+    accept_newsletter = models.BooleanField(
+        verbose_name=_("accept_newsletter"), default=False
+    )
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
@@ -100,20 +119,22 @@ def monthdelta(d1, d2):
 class ChildManager(models.Manager):
     def get_date_queryset(self, check_date):
         qs = super().get_queryset()
-        age_expr = ExpressionWrapper(Value(check_date, DateField()) - F('birth_date'), output_field=DurationField())
+        age_expr = ExpressionWrapper(
+            Value(check_date, DateField()) - F("birth_date"),
+            output_field=DurationField(),
+        )
         qs = qs.annotate(
             _age_inter=age_expr,
-            _age_epoch=Extract('_age_inter', 'epoch'),
+            _age_epoch=Extract("_age_inter", "epoch"),
             _age=ExpressionWrapper(
-                F('_age_epoch') / Value(31556952, output_field=DecimalField()),
-                output_field=DecimalField(decimal_places=1)
+                F("_age_epoch") / Value(31556952, output_field=DecimalField()),
+                output_field=DecimalField(decimal_places=1),
             ),
             _section=Subquery(
                 Section.objects.filter(
-                    min_age__lte=OuterRef('_age'),
-                    max_age__gt=OuterRef('_age')
-                ).values('name')
-            )
+                    min_age__lte=OuterRef("_age"), max_age__gt=OuterRef("_age")
+                ).values("name")
+            ),
         )
         return qs
 
@@ -139,9 +160,12 @@ class Child(models.Model):
     )
     status = models.CharField(
         _("status"),
-        choices=[("in_validation", _("in_validation")), ("registered", _("registered"))],
+        choices=[
+            ("in_validation", _("in_validation")),
+            ("registered", _("registered")),
+        ],
         max_length=50,
-        default="in_validation"
+        default="in_validation",
     )
 
     @property
@@ -151,7 +175,7 @@ class Child(models.Model):
 
     @property
     def section(self):
-        section = getattr(self, '_section', None)
+        section = getattr(self, "_section", None)
         if section:
             return section
         age = self.age
@@ -225,7 +249,7 @@ def send_registration_notification(sender, created, **kwargs):
         from_email=settings.SENDGRID_FROM_MAIL,
         to_emails=obj.email,
         subject=f"Inscription sur le site du Village des Benjamins",
-        html_content=html_content
+        html_content=html_content,
     )
     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     try:

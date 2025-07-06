@@ -6,13 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0009_auto_20210111_0735'),
+        ("members", "0009_auto_20210111_0735"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='child',
-            name='status',
-            field=models.CharField(choices=[('in_validation', 'in_validation'), ('registered', 'registered')], default='in_validation', max_length=50, verbose_name='gender'),
+            model_name="child",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("in_validation", "in_validation"),
+                    ("registered", "registered"),
+                ],
+                default="in_validation",
+                max_length=50,
+                verbose_name="gender",
+            ),
         ),
     ]

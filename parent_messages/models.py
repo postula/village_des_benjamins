@@ -98,13 +98,9 @@ def send_message_notification(sender, created, **kwargs):
     contactName = obj.name
     contactMail = obj.email
     contactMessage = obj.message
-    html_thanks_content = html_thanks_template.format(
-        contactName=contactName
-    )
+    html_thanks_content = html_thanks_template.format(contactName=contactName)
     html_contact_content = html_contact_template.format(
-        contactName=contactName,
-        contactMail=contactMail,
-        contactMessage=contactMessage
+        contactName=contactName, contactMail=contactMail, contactMessage=contactMessage
     )
     thanks_message = Mail(
         from_email=settings.SENDGRID_FROM_MAIL,
@@ -114,7 +110,9 @@ def send_message_notification(sender, created, **kwargs):
     )
     contact_message = Mail(
         from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=list(Config.objects.first().recipients.values_list("email", flat=True)),
+        to_emails=list(
+            Config.objects.first().recipients.values_list("email", flat=True)
+        ),
         subject=Config.objects.first().subject,
         html_content=html_contact_content,
     )

@@ -10,5 +10,4 @@ class SectionAdmin(OrderedModelAdmin):
     ordering = ["order"]
 
 
-
 # Register your models here.

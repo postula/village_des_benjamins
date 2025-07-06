@@ -6,20 +6,28 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0024_registration_notes'),
+        ("holiday", "0024_registration_notes"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='outing',
-            options={'ordering': ['date'], 'verbose_name': 'outing', 'verbose_name_plural': 'outings'},
+            name="outing",
+            options={
+                "ordering": ["date"],
+                "verbose_name": "outing",
+                "verbose_name_plural": "outings",
+            },
         ),
         migrations.AlterModelOptions(
-            name='sectionprogram',
-            options={'ordering': ['start_date'], 'verbose_name': 'section_program', 'verbose_name_plural': 'section_programs'},
+            name="sectionprogram",
+            options={
+                "ordering": ["start_date"],
+                "verbose_name": "section_program",
+                "verbose_name_plural": "section_programs",
+            },
         ),
         migrations.RemoveField(
-            model_name='sectionprogram',
-            name='order',
+            model_name="sectionprogram",
+            name="order",
         ),
     ]

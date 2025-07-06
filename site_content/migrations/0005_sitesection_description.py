@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0004_auto_20210112_0743'),
+        ("site_content", "0004_auto_20210112_0743"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='description',
-            field=models.TextField(blank=True, null=True, verbose_name='description'),
+            model_name="sitesection",
+            name="description",
+            field=models.TextField(blank=True, null=True, verbose_name="description"),
         ),
     ]

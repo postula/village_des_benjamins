@@ -77,8 +77,10 @@ class HolidaySection(models.Model):
         verbose_name=_("section"), to="section.Section", on_delete=models.CASCADE
     )
     holiday = models.ForeignKey(
-        verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE,
-        related_name="holiday_sections"
+        verbose_name=_("holiday"),
+        to="holiday.Holiday",
+        on_delete=models.CASCADE,
+        related_name="holiday_sections",
     )
     capacity = models.IntegerField(_("capacity"))
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
@@ -98,13 +100,14 @@ class HolidaySection(models.Model):
         max_capacity = num_days * self.capacity
         # Taken capacity is the sum of unique date registered
         taken_capacity = 0
-        registrations = self.holiday.registration_set.filter(
-            section=self.section
-        )
+        registrations = self.holiday.registration_set.filter(section=self.section)
         for registration in registrations:
             taken_capacity += len(registration.dates)
-        remaining_capacity = 100 - (round(Decimal(taken_capacity / max_capacity), 2) * 100)
+        remaining_capacity = 100 - (
+            round(Decimal(taken_capacity / max_capacity), 2) * 100
+        )
         return f"{remaining_capacity}%"
+
     _remaining_capacity.short_description = _("remaining capacity")
     remaining_capacity = property(_remaining_capacity)
 
@@ -121,7 +124,12 @@ class HolidaySection(models.Model):
         dates.append(current_date)
         capacities = {}
         for date in dates:
-            capacities[date] = self.capacity - Registration.objects.filter(section=self.section, dates__contains=[date]).count()
+            capacities[date] = (
+                self.capacity
+                - Registration.objects.filter(
+                    section=self.section, dates__contains=[date]
+                ).count()
+            )
         table_raw = """
             <table class="table">
                 <thead>
@@ -145,6 +153,7 @@ class HolidaySection(models.Model):
             </table>
         """
         return mark_safe(table_raw)
+
     _remaining_capacity_table.short_description = ""
     remaining_capacity_table = property(_remaining_capacity_table)
 
@@ -225,29 +234,22 @@ class SectionProgram(models.Model):
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
     animateur = models.ManyToManyField(
-        to="members.User",
-        verbose_name=_('animateur'),
-        related_name="holiday_weeks"
+        to="members.User", verbose_name=_("animateur"), related_name="holiday_weeks"
     )
     theme = models.CharField(
-        max_length=255,
-        verbose_name=_('theme'), blank=True, null=True
+        max_length=255, verbose_name=_("theme"), blank=True, null=True
     )
     bricolage = models.CharField(
-        max_length=255,
-        verbose_name=_('bricolage'), blank=True, null=True
+        max_length=255, verbose_name=_("bricolage"), blank=True, null=True
     )
     food = models.CharField(
-        max_length=255,
-        verbose_name=_('food'), blank=True, null=True
+        max_length=255, verbose_name=_("food"), blank=True, null=True
     )
     game = models.CharField(
-        max_length=255,
-        verbose_name=_('game'), blank=True, null=True
+        max_length=255, verbose_name=_("game"), blank=True, null=True
     )
     other = models.CharField(
-        max_length=255,
-        verbose_name=_('other'), blank=True, null=True
+        max_length=255, verbose_name=_("other"), blank=True, null=True
     )
 
     def __str__(self):
@@ -288,24 +290,22 @@ class Outing(models.Model):
         errors = {}
         if self.end_date and self.end_date < self.start_date:
             has_errors = True
-            errors[
-                "date"
-            ] = "Le début de la sortie doit être avant la fin de la sortie"
+            errors["date"] = "Le début de la sortie doit être avant la fin de la sortie"
         if self.start_date < start_date or self.start_date > end_date:
             has_errors = True
-            errors[
-                "date"
-            ] = "La sortie doit commencée entre le {} et le {}".format(
+            errors["date"] = "La sortie doit commencée entre le {} et le {}".format(
                 start_date, end_date
             )
         if self.end_date and (self.end_date < start_date or self.end_date > end_date):
             has_errors = True
-            errors[
-                "date"
-            ] = "La sortie doit finir entre le {} et le {}".format(
+            errors["date"] = "La sortie doit finir entre le {} et le {}".format(
                 start_date, end_date
             )
-        if self.departure_time and self.arrival_time and self.departure_time > self.arrival_time:
+        if (
+            self.departure_time
+            and self.arrival_time
+            and self.departure_time > self.arrival_time
+        ):
             has_errors = True
             error = "L'heure de départ doit-être avant l'heure d'arrivée"
             errors[NON_FIELD_ERRORS] = error
@@ -370,12 +370,10 @@ html_template = """
 def _send_registration_notification(obj):
     child_name = f"{obj.child.first_name} {obj.child.last_name}"
     parent_name = f"{obj.child.parent.first_name} {obj.child.parent.last_name}"
-    payment_communication = (
-        f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
-    )
+    payment_communication = f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
     child_gender_accord = "e" if obj.child.gender == "female" else ""
     date_li = (
-            "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
+        "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
     )
     html_content = html_template.format(
         holiday_name=obj.holiday.name,
@@ -443,7 +441,7 @@ def create_section_holiday(sender, created, **kwargs):
         )
         hs.save()
         i = 0
-        for (start_date, end_date) in weeks:
+        for start_date, end_date in weeks:
             p = SectionProgram.objects.create(
                 section_holiday=hs,
                 start_date=start_date,

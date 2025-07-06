@@ -9,13 +9,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [
-            "id",
-            "first_name",
-            "last_name",
-            "photo",
-            "role"
-        ]
+        fields = ["id", "first_name", "last_name", "photo", "role"]
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -71,5 +65,5 @@ class ChildSerializer(serializers.ModelSerializer):
             "section",
             "parent",
             "holidays_booked",
-            "status"
+            "status",
         ]

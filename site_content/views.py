@@ -2,7 +2,11 @@ from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny
 
 from site_content.models import Content, SiteSection, News
-from site_content.serializers import ContentSerializer, SiteSectionSerializer, NewsSerializer
+from site_content.serializers import (
+    ContentSerializer,
+    SiteSectionSerializer,
+    NewsSerializer,
+)
 
 
 class NewsViewSet(

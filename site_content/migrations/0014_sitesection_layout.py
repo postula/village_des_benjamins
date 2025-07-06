@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0013_sitesection_photo'),
+        ("site_content", "0013_sitesection_photo"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='layout',
-            field=models.CharField(choices=[('introduction', 'introduction'), ('contact', 'contact'), ('team', 'team'), ('list_left', 'list_left'), ('list_right', 'list_right')], default='list_left', max_length=50, verbose_name='layout'),
+            model_name="sitesection",
+            name="layout",
+            field=models.CharField(
+                choices=[
+                    ("introduction", "introduction"),
+                    ("contact", "contact"),
+                    ("team", "team"),
+                    ("list_left", "list_left"),
+                    ("list_right", "list_right"),
+                ],
+                default="list_left",
+                max_length=50,
+                verbose_name="layout",
+            ),
         ),
     ]

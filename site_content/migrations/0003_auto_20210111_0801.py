@@ -7,40 +7,69 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0002_auto_20210111_0720'),
+        ("site_content", "0002_auto_20210111_0720"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Content',
+            name="Content",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('icon', models.CharField(blank=True, help_text='https://fontawesome.com/v4.7.0/icons/', max_length=255, null=True, verbose_name='icon')),
-                ('description', models.TextField(verbose_name='description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "icon",
+                    models.CharField(
+                        blank=True,
+                        help_text="https://fontawesome.com/v4.7.0/icons/",
+                        max_length=255,
+                        null=True,
+                        verbose_name="icon",
+                    ),
+                ),
+                ("description", models.TextField(verbose_name="description")),
             ],
             options={
-                'verbose_name': 'content',
-                'verbose_name_plural': 'content',
+                "verbose_name": "content",
+                "verbose_name_plural": "content",
             },
         ),
         migrations.CreateModel(
-            name='SiteSection',
+            name="SiteSection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
             ],
             options={
-                'verbose_name': 'site_section',
-                'verbose_name_plural': 'site_sections',
+                "verbose_name": "site_section",
+                "verbose_name_plural": "site_sections",
             },
         ),
         migrations.DeleteModel(
-            name='Service',
+            name="Service",
         ),
         migrations.AddField(
-            model_name='content',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='site_content.sitesection', verbose_name='site_section'),
+            model_name="content",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="site_content.sitesection",
+                verbose_name="site_section",
+            ),
         ),
     ]

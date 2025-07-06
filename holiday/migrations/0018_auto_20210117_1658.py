@@ -7,23 +7,27 @@ import tinymce.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0017_holidaysection_description'),
+        ("holiday", "0017_holidaysection_description"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='holiday',
-            name='description',
-            field=tinymce.models.HTMLField(blank=True, null=True, verbose_name='description'),
+            model_name="holiday",
+            name="description",
+            field=tinymce.models.HTMLField(
+                blank=True, null=True, verbose_name="description"
+            ),
         ),
         migrations.AlterField(
-            model_name='holidaysection',
-            name='description',
-            field=tinymce.models.HTMLField(blank=True, null=True, verbose_name='description'),
+            model_name="holidaysection",
+            name="description",
+            field=tinymce.models.HTMLField(
+                blank=True, null=True, verbose_name="description"
+            ),
         ),
         migrations.AlterField(
-            model_name='outing',
-            name='description',
-            field=tinymce.models.HTMLField(verbose_name='description'),
+            model_name="outing",
+            name="description",
+            field=tinymce.models.HTMLField(verbose_name="description"),
         ),
     ]

@@ -1,5 +1,6 @@
 # from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
+
 # import datetime
 # from django.core.exceptions import ObjectDoesNotExist
 
@@ -14,11 +15,7 @@ class NewsSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField(format="%d/%m/%y", read_only=True)
 
     class Meta:
-        fields = [
-            "id",
-            "date",
-            "description"
-        ]
+        fields = ["id", "date", "description"]
         model = News
 
 
@@ -53,5 +50,3 @@ class ContentSerializer(serializers.ModelSerializer):
             "show_more_content",
         ]
         model = Content
-
-

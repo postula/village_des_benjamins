@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from pathlib import Path
 import datetime
 from django.utils.translation import gettext_lazy as _
 import dj_database_url
@@ -18,7 +19,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -38,8 +39,8 @@ ALLOWED_HOSTS = os.getenv(
 # Application definition
 
 INSTALLED_APPS = [
-    "jazzmin",
     "silk",
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -63,7 +64,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
-    # "silk.middleware.SilkyMiddleware",
+    "silk.middleware.SilkyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -81,12 +82,12 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, "dist")
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+TEMPLATES_DIR = BASE_DIR / "dist"
+FRONTEND_DIR = BASE_DIR / "frontend"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "dist"),
+    (BASE_DIR / "dist"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -268,3 +269,7 @@ TINYMCE_DEFAULT_CONFIG = {
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+
+# Read additional configuration from hc/local_settings.py if it exists
+if (BASE_DIR / "village_des_benjamins/local_settings.py").exists():
+    from .local_settings import *  # noqa: F403

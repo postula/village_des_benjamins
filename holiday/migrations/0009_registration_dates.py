@@ -7,13 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0008_delete_registrationdate'),
+        ("holiday", "0008_delete_registrationdate"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='registration',
-            name='dates',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.DateField(), default=[], size=None, verbose_name='dates'),
+            model_name="registration",
+            name="dates",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=models.DateField(),
+                default=[],
+                size=None,
+                verbose_name="dates",
+            ),
         ),
     ]

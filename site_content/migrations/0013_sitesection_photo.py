@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0012_sitesection_order'),
+        ("site_content", "0012_sitesection_order"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='photo',
-            field=models.ImageField(blank=True, null=True, upload_to='site_sections/'),
+            model_name="sitesection",
+            name="photo",
+            field=models.ImageField(blank=True, null=True, upload_to="site_sections/"),
         ),
     ]

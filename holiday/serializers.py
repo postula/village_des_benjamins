@@ -11,18 +11,15 @@ from holiday.models import (
     HolidaySection,
     Registration,
     registration_statuses,
-    Outing, SectionProgram,
+    Outing,
+    SectionProgram,
 )
 from members.models import User
 
 
 class AnimateurSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = [
-            "id",
-            "first_name",
-            "last_name"
-        ]
+        fields = ["id", "first_name", "last_name"]
         model = User
 
 
@@ -40,7 +37,7 @@ class SectionProgramSerializer(serializers.ModelSerializer):
             "bricolage",
             "food",
             "game",
-            "other"
+            "other",
         ]
         model = SectionProgram
 
@@ -64,53 +61,46 @@ class OutingSerializer(serializers.ModelSerializer):
 class HolidaySectionSerializer(serializers.ModelSerializer):
     section_id = serializers.ReadOnlyField(source="section.id")
     section_name = serializers.ReadOnlyField(source="section.name")
-    section_animateurs = AnimateurSerializer(many=True, source="section.educators", read_only=True)
-    outings = serializers.SerializerMethodField('get_outings_list')
-    activities = serializers.SerializerMethodField('get_activities_list')
+    section_animateurs = AnimateurSerializer(
+        many=True, source="section.educators", read_only=True
+    )
+    outings = serializers.SerializerMethodField("get_outings_list")
+    activities = serializers.SerializerMethodField("get_activities_list")
 
     def get_outings_list(self, instance):
-        outings = instance.outings.order_by(
-            "start_date"
-        )
-        return OutingSerializer(
-            outings,
-            many=True,
-            context=self.context
-        ).data
+        outings = instance.outings.order_by("start_date")
+        return OutingSerializer(outings, many=True, context=self.context).data
 
     def get_activities_list(self, instance):
         activities = instance.activities.order_by(
             "start_date",
-        ).prefetch_related('animateur')
+        ).prefetch_related("animateur")
         return SectionProgramSerializer(
-            activities,
-            many=True,
-            context=self.context
+            activities, many=True, context=self.context
         ).data
 
     class Meta:
         model = HolidaySection
-        fields = ["activities", "section_id", "section_name", "section_animateurs", "outings", "description"]
+        fields = [
+            "activities",
+            "section_id",
+            "section_name",
+            "section_animateurs",
+            "outings",
+            "description",
+        ]
 
 
 class HolidaySerializer(serializers.ModelSerializer):
-    sections = serializers.SerializerMethodField('get_sections_list')
+    sections = serializers.SerializerMethodField("get_sections_list")
 
     def get_sections_list(self, instance):
-        hs = HolidaySection.objects.filter(
-            holiday_id=instance.id
-        ).order_by(
-            "section__order"
-        ).prefetch_related(
-            "outings",
-            "activities",
-            "activities__animateur"
+        hs = (
+            HolidaySection.objects.filter(holiday_id=instance.id)
+            .order_by("section__order")
+            .prefetch_related("outings", "activities", "activities__animateur")
         )
-        return HolidaySectionSerializer(
-            hs,
-            many=True,
-            context=self.context
-        ).data
+        return HolidaySectionSerializer(hs, many=True, context=self.context).data
 
     class Meta:
         model = Holiday
@@ -149,7 +139,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
             user = request.user
             is_staff = user.is_staff
         if not holiday.registration_open and not is_staff:
-            raise serializers.ValidationError(f"Cannot create registration on close registration")
+            raise serializers.ValidationError(
+                f"Cannot create registration on close registration"
+            )
         return super().create(validated_data)
 
     class Meta:

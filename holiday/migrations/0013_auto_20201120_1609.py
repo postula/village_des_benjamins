@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0012_auto_20201120_1512'),
+        ("holiday", "0012_auto_20201120_1512"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='registration',
-            name='status',
-            field=models.CharField(choices=[['pending', 'en attente de payment'], ['paid', 'payée'], ['cancelled', 'annulée']], default='pending', max_length=10, verbose_name='status'),
+            model_name="registration",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ["pending", "en attente de payment"],
+                    ["paid", "payée"],
+                    ["cancelled", "annulée"],
+                ],
+                default="pending",
+                max_length=10,
+                verbose_name="status",
+            ),
         ),
     ]

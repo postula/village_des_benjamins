@@ -6,18 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0008_user_visible_on_site'),
+        ("members", "0008_user_visible_on_site"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='stafffunction',
-            options={'ordering': ('order',), 'verbose_name': 'staff_function', 'verbose_name_plural': 'staff_functions'},
+            name="stafffunction",
+            options={
+                "ordering": ("order",),
+                "verbose_name": "staff_function",
+                "verbose_name_plural": "staff_functions",
+            },
         ),
         migrations.AddField(
-            model_name='stafffunction',
-            name='order',
-            field=models.PositiveIntegerField(db_index=True, default=1, editable=False, verbose_name='order'),
+            model_name="stafffunction",
+            name="order",
+            field=models.PositiveIntegerField(
+                db_index=True, default=1, editable=False, verbose_name="order"
+            ),
             preserve_default=False,
         ),
     ]

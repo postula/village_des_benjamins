@@ -24,21 +24,21 @@ class HolidayViewSet(
     def get_queryset(self):
         qs = super().get_queryset().order_by("-start_date")
         now = datetime.datetime.now().date()
-        filters = Q(end_date__gt=now)
+        filters = Q(start_date__gt=now)
         if not self.request.user.is_staff and self.action in ["retrieve", "list"]:
             # only show holidays with open registrations or holidays already past
             now = datetime.datetime.now()
             filters &= Q(registration_open=True) | Q(end_date__lte=now)
         return qs.filter(filters)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def get_section_for_child(self, request, pk=None):
         holiday = self.get_object()
         child_id = request.query_params.get("child_id")
         child = Child.objects.get_date_queryset(holiday.start_date).get(id=child_id)
         return Response({"section_name": child.section})
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=["get"])
     def get_capacity(self, request, pk=None):
         holiday = self.get_object()
         dates = []
@@ -57,8 +57,12 @@ class HolidayViewSet(
             for date in dates:
                 if date in holiday.blacklisted_dates:
                     continue
-                sections[holiday_section.section.id][date.isoformat()] = holiday_section.capacity - Registration.objects.filter(section=holiday_section.section,
-                                                                           dates__contains=[date]).count()
+                sections[holiday_section.section.id][date.isoformat()] = (
+                    holiday_section.capacity
+                    - Registration.objects.filter(
+                        section=holiday_section.section, dates__contains=[date]
+                    ).count()
+                )
         return Response(sections)
 
 

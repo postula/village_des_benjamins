@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0016_auto_20210502_1619'),
+        ("site_content", "0016_auto_20210502_1619"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='sitesection',
-            old_name='gradient_start',
-            new_name='background',
+            model_name="sitesection",
+            old_name="gradient_start",
+            new_name="background",
         ),
     ]

@@ -9,4 +9,3 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.user:
             return request.user.is_superuser or request.user == obj
         return False
-

@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0007_auto_20210116_1849'),
+        ("site_content", "0007_auto_20210116_1849"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='News',
+            name="News",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(auto_now=True)),
-                ('description', models.TextField(verbose_name='description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(auto_now=True)),
+                ("description", models.TextField(verbose_name="description")),
             ],
             options={
-                'verbose_name': 'news',
-                'verbose_name_plural': 'news',
+                "verbose_name": "news",
+                "verbose_name_plural": "news",
             },
         ),
     ]

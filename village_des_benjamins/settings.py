@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from pathlib import Path
 import datetime
 from django.utils.translation import gettext_lazy as _
 import dj_database_url
@@ -18,7 +19,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -32,14 +33,13 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv("DEBUG", "true") == "true"
 
 ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS", "village-des-benjamins.be,localhost,localhost:8000,localhost:8081"
+    "ALLOWED_HOSTS", "village-des-benjamins.be,localhost,localhost:8000,localhost:8080"
 ).split(",")
 
 # Application definition
 
 INSTALLED_APPS = [
     "jazzmin",
-    "silk",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "django_better_admin_arrayfield",
     "ordered_model",
     "tinymce",
@@ -63,7 +65,6 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "members.User"
 
 MIDDLEWARE = [
-    # "silk.middleware.SilkyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -81,12 +82,12 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, "dist")
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+TEMPLATES_DIR = BASE_DIR / "dist"
+FRONTEND_DIR = BASE_DIR / "frontend"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "dist"),
+    (BASE_DIR / "dist"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -182,9 +183,13 @@ JAZZMIN_SETTINGS = {
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-    "DEFAULT_AUTHENTICATION_CLASSES": (
+    "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
 }
 
 
@@ -218,15 +223,23 @@ DRF_RESET_EMAIL = {
 SIMPLE_JWT = {
     "TOKEN_OBTAIN_SERIALIZER": "village_des_benjamins.auth.TokenObtainPairSerializer",
     "ROTATE_REFRESH_TOKENS": True,
-    # ...
 }
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
 
-AWS_STORAGE_BUCKET_NAME = "village-des-benjamins.be"
-AWS_S3_REGION_NAME = "eu-central-1"
-AWS_LOCATION = "website_uploads/"
+AWS_STORAGE_BUCKET_NAME = os.getenv(
+    "AWS_STORAGE_BUCKET_NAME", "village-des-benjamins.be"
+)
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "eu-central-1")
+AWS_LOCATION = os.getenv("AWS_LOCATION", "website_uploads/")
+
+AWS_S3_MINIO = os.getenv("AWS_S3_MINIO", "false") == "true"
+if AWS_S3_MINIO:
+    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = True
+    AWS_S3_FILE_OVERWRITE = False
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
 
@@ -268,3 +281,12 @@ TINYMCE_DEFAULT_CONFIG = {
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    INSTALLED_APPS.append("silk")
+    MIDDLEWARE.insert(0, "silk.middleware.SilkyMiddleware")
+    REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] += [
+        "rest_framework.authentication.SessionAuthentication",
+    ]
+
+# Read additional configuration from hc/local_settings.py if it exists
+if (BASE_DIR / "village_des_benjamins/local_settings.py").exists():
+    from .local_settings import *  # noqa: F403

@@ -7,13 +7,18 @@ import django_better_admin_arrayfield.models.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0010_auto_20201120_1025'),
+        ("holiday", "0010_auto_20201120_1025"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='registration',
-            name='dates',
-            field=django_better_admin_arrayfield.models.fields.ArrayField(base_field=models.DateField(), default=list, size=None, verbose_name='dates'),
+            model_name="registration",
+            name="dates",
+            field=django_better_admin_arrayfield.models.fields.ArrayField(
+                base_field=models.DateField(),
+                default=list,
+                size=None,
+                verbose_name="dates",
+            ),
         ),
     ]

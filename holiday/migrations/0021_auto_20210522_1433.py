@@ -6,33 +6,43 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0020_auto_20210522_1406'),
+        ("holiday", "0020_auto_20210522_1406"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sectionprogram',
-            name='bricolage',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='bricolage'),
+            model_name="sectionprogram",
+            name="bricolage",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="bricolage"
+            ),
         ),
         migrations.AlterField(
-            model_name='sectionprogram',
-            name='food',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='food'),
+            model_name="sectionprogram",
+            name="food",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="food"
+            ),
         ),
         migrations.AlterField(
-            model_name='sectionprogram',
-            name='game',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='game'),
+            model_name="sectionprogram",
+            name="game",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="game"
+            ),
         ),
         migrations.AlterField(
-            model_name='sectionprogram',
-            name='other',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='other'),
+            model_name="sectionprogram",
+            name="other",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="other"
+            ),
         ),
         migrations.AlterField(
-            model_name='sectionprogram',
-            name='theme',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='theme'),
+            model_name="sectionprogram",
+            name="theme",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="theme"
+            ),
         ),
     ]

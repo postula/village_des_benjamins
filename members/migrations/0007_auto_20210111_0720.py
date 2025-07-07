@@ -7,24 +7,38 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0006_auto_20201119_1606'),
+        ("members", "0006_auto_20201119_1606"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StaffFunction',
+            name="StaffFunction",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
             ],
             options={
-                'verbose_name': 'staff_function',
-                'verbose_name_plural': 'staff_functions',
+                "verbose_name": "staff_function",
+                "verbose_name_plural": "staff_functions",
             },
         ),
         migrations.AddField(
-            model_name='user',
-            name='role',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='members.stafffunction', verbose_name='role'),
+            model_name="user",
+            name="role",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="members.stafffunction",
+                verbose_name="role",
+            ),
         ),
     ]

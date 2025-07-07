@@ -9,35 +9,73 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('section', '0001_initial'),
+        ("section", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Holiday',
+            name="Holiday",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('price', models.DecimalField(decimal_places=2, help_text='price per day', max_digits=10, verbose_name='price')),
-                ('start_date', models.DateField(verbose_name='start date')),
-                ('end_date', models.DateField(verbose_name='end date')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2,
+                        help_text="price per day",
+                        max_digits=10,
+                        verbose_name="price",
+                    ),
+                ),
+                ("start_date", models.DateField(verbose_name="start date")),
+                ("end_date", models.DateField(verbose_name="end date")),
             ],
             options={
-                'verbose_name': 'holiday',
-                'verbose_name_plural': 'holidays',
+                "verbose_name": "holiday",
+                "verbose_name_plural": "holidays",
             },
         ),
         migrations.CreateModel(
-            name='HolidaySection',
+            name="HolidaySection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('capacity', models.IntegerField(verbose_name='capacity')),
-                ('holiday', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='holiday.holiday', verbose_name='holiday')),
-                ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='section.section', verbose_name='section')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("capacity", models.IntegerField(verbose_name="capacity")),
+                (
+                    "holiday",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="holiday.holiday",
+                        verbose_name="holiday",
+                    ),
+                ),
+                (
+                    "section",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="section.section",
+                        verbose_name="section",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'section holiday',
-                'verbose_name_plural': 'section holidays',
+                "verbose_name": "section holiday",
+                "verbose_name_plural": "section holidays",
             },
         ),
     ]

@@ -7,40 +7,88 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0002_auto_20201118_1508'),
-        ('section', '0001_initial'),
-        ('holiday', '0001_initial'),
+        ("members", "0002_auto_20201118_1508"),
+        ("section", "0001_initial"),
+        ("holiday", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='holiday',
-            name='sections',
-            field=models.ManyToManyField(related_name='holidays', through='holiday.HolidaySection', to='section.Section', verbose_name='sections'),
+            model_name="holiday",
+            name="sections",
+            field=models.ManyToManyField(
+                related_name="holidays",
+                through="holiday.HolidaySection",
+                to="section.Section",
+                verbose_name="sections",
+            ),
         ),
         migrations.CreateModel(
-            name='Registration',
+            name="Registration",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('child', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='members.child', verbose_name='child')),
-                ('holiday', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='holiday.holiday', verbose_name='holiday')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "child",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="members.child",
+                        verbose_name="child",
+                    ),
+                ),
+                (
+                    "holiday",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="holiday.holiday",
+                        verbose_name="holiday",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'registration',
-                'verbose_name_plural': 'registrations',
+                "verbose_name": "registration",
+                "verbose_name_plural": "registrations",
             },
         ),
         migrations.CreateModel(
-            name='HolidayRegistrationDate',
+            name="HolidayRegistrationDate",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(verbose_name='date')),
-                ('registration', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dates', to='holiday.registration', verbose_name='registration')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(verbose_name="date")),
+                (
+                    "registration",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="dates",
+                        to="holiday.registration",
+                        verbose_name="registration",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='holiday',
-            name='registrations',
-            field=models.ManyToManyField(related_name='holidays', through='holiday.Registration', to='members.Child', verbose_name='registrations'),
+            model_name="holiday",
+            name="registrations",
+            field=models.ManyToManyField(
+                related_name="holidays",
+                through="holiday.Registration",
+                to="members.Child",
+                verbose_name="registrations",
+            ),
         ),
     ]

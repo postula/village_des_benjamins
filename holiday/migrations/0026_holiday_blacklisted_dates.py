@@ -7,13 +7,18 @@ import django_better_admin_arrayfield.models.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0025_auto_20210601_0530'),
+        ("holiday", "0025_auto_20210601_0530"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='holiday',
-            name='blacklisted_dates',
-            field=django_better_admin_arrayfield.models.fields.ArrayField(base_field=models.DateField(), default=list, size=None, verbose_name='blacklisted_dates'),
+            model_name="holiday",
+            name="blacklisted_dates",
+            field=django_better_admin_arrayfield.models.fields.ArrayField(
+                base_field=models.DateField(),
+                default=list,
+                size=None,
+                verbose_name="blacklisted_dates",
+            ),
         ),
     ]

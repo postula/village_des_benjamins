@@ -6,10 +6,5 @@ from parent_messages.models import Message
 class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = [
-            "id",
-            "name",
-            "email",
-            "message"
-        ]
+        fields = ["id", "name", "email", "message"]
         model = Message

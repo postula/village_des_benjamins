@@ -6,17 +6,21 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0028_holiday_book_by_day'),
+        ("holiday", "0028_holiday_book_by_day"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='outing',
-            options={'ordering': ['start_date'], 'verbose_name': 'outing', 'verbose_name_plural': 'outings'},
+            name="outing",
+            options={
+                "ordering": ["start_date"],
+                "verbose_name": "outing",
+                "verbose_name_plural": "outings",
+            },
         ),
         migrations.RenameField(
-            model_name='outing',
-            old_name='date',
-            new_name='start_date',
+            model_name="outing",
+            old_name="date",
+            new_name="start_date",
         ),
     ]

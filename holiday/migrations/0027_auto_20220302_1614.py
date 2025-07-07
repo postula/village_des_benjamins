@@ -8,18 +8,30 @@ import django_better_admin_arrayfield.models.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0026_holiday_blacklisted_dates'),
+        ("holiday", "0026_holiday_blacklisted_dates"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='holiday',
-            name='blacklisted_dates',
-            field=django_better_admin_arrayfield.models.fields.ArrayField(base_field=models.DateField(), blank=True, default=list, null=True, size=None, verbose_name='blacklisted_dates'),
+            model_name="holiday",
+            name="blacklisted_dates",
+            field=django_better_admin_arrayfield.models.fields.ArrayField(
+                base_field=models.DateField(),
+                blank=True,
+                default=list,
+                null=True,
+                size=None,
+                verbose_name="blacklisted_dates",
+            ),
         ),
         migrations.AlterField(
-            model_name='holidaysection',
-            name='holiday',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='holiday_sections', to='holiday.holiday', verbose_name='holiday'),
+            model_name="holidaysection",
+            name="holiday",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="holiday_sections",
+                to="holiday.holiday",
+                verbose_name="holiday",
+            ),
         ),
     ]

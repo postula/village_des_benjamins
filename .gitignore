@@ -160,3 +160,9 @@ node_modules/
 # End of https://www.toptal.com/developers/gitignore/api/wordpress,django
 dist/
 .idea
+
+.devenv/
+result/
+result
+
+.pre-commit-config.yaml

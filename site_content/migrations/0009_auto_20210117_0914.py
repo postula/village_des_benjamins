@@ -7,23 +7,27 @@ import tinymce.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0008_news'),
+        ("site_content", "0008_news"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='content',
-            name='show_more_button',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='show_more_button'),
+            model_name="content",
+            name="show_more_button",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="show_more_button"
+            ),
         ),
         migrations.AddField(
-            model_name='content',
-            name='show_more_content',
-            field=tinymce.models.HTMLField(blank=True, null=True, verbose_name='show_more_content'),
+            model_name="content",
+            name="show_more_content",
+            field=tinymce.models.HTMLField(
+                blank=True, null=True, verbose_name="show_more_content"
+            ),
         ),
         migrations.AlterField(
-            model_name='news',
-            name='date',
+            model_name="news",
+            name="date",
             field=models.DateField(auto_now_add=True),
         ),
     ]

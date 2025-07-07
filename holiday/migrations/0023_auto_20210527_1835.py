@@ -6,23 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0022_auto_20210522_1520'),
+        ("holiday", "0022_auto_20210522_1520"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='outing',
-            name='arrival_time',
-            field=models.TimeField(blank=True, null=True, verbose_name='arrival_time'),
+            model_name="outing",
+            name="arrival_time",
+            field=models.TimeField(blank=True, null=True, verbose_name="arrival_time"),
         ),
         migrations.AlterField(
-            model_name='outing',
-            name='departure_time',
-            field=models.TimeField(blank=True, null=True, verbose_name='departure_time'),
+            model_name="outing",
+            name="departure_time",
+            field=models.TimeField(
+                blank=True, null=True, verbose_name="departure_time"
+            ),
         ),
         migrations.AlterField(
-            model_name='outing',
-            name='transport',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='transport'),
+            model_name="outing",
+            name="transport",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="transport"
+            ),
         ),
     ]

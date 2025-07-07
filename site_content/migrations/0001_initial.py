@@ -7,21 +7,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Service',
+            name="Service",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('icon', models.CharField(max_length=255, verbose_name='icon')),
-                ('description', models.TextField(verbose_name='description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                ("icon", models.CharField(max_length=255, verbose_name="icon")),
+                ("description", models.TextField(verbose_name="description")),
             ],
             options={
-                'verbose_name': 'service',
-                'verbose_name_plural': 'services',
+                "verbose_name": "service",
+                "verbose_name_plural": "services",
             },
         ),
     ]

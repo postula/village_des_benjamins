@@ -1,7 +1,7 @@
 import datetime
 from pprint import pprint
 
-from django.db.models import Count
+from django.db.models import Count, F
 from django.utils.safestring import mark_safe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -77,74 +77,82 @@ class HolidaySection(models.Model):
         verbose_name=_("section"), to="section.Section", on_delete=models.CASCADE
     )
     holiday = models.ForeignKey(
-        verbose_name=_("holiday"), to="holiday.Holiday", on_delete=models.CASCADE,
-        related_name="holiday_sections"
+        verbose_name=_("holiday"),
+        to="holiday.Holiday",
+        on_delete=models.CASCADE,
+        related_name="holiday_sections",
     )
     capacity = models.IntegerField(_("capacity"))
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
 
     def _remaining_capacity(self):
-        # Num days is number of non weekend days in the holiday
+        # 1) count weekdays
         num_days = 0
-        current_date = self.holiday.start_date
-        while current_date < self.holiday.end_date:
-            if current_date.weekday() > 4:
-                # weekend
-                current_date += datetime.timedelta(days=1)
-                continue
-            current_date += datetime.timedelta(days=1)
-            num_days += 1
-        # Total capacity is the numof days time the capacity
+        d = self.holiday.start_date
+        while d < self.holiday.end_date:
+            if d.weekday() < 5:
+                num_days += 1
+            d += datetime.timedelta(days=1)
         max_capacity = num_days * self.capacity
-        # Taken capacity is the sum of unique date registered
-        taken_capacity = 0
-        registrations = self.holiday.registration_set.filter(
-            section=self.section
-        )
-        for registration in registrations:
-            taken_capacity += len(registration.dates)
-        remaining_capacity = 100 - (round(Decimal(taken_capacity / max_capacity), 2) * 100)
-        return f"{remaining_capacity}%"
+
+        # 2) pull registrations from the cache instead of querying again
+        regs = getattr(self.holiday, "all_regs_for_holiday", [])
+        regs = [r for r in regs if r.section_id == self.section_id]
+
+        taken = sum(len(r.dates) for r in regs)
+
+        # 3) compute %
+        if max_capacity == 0:
+            return "0%"
+        pct_taken = round(Decimal(taken) / Decimal(max_capacity), 2) * 100
+        return f"{100 - pct_taken:.0f}%"
+
     _remaining_capacity.short_description = _("remaining capacity")
     remaining_capacity = property(_remaining_capacity)
 
     def _remaining_capacity_table(self):
+        # 1) build your list of working dates
         dates = []
-        current_date = self.holiday.start_date
-        while current_date < self.holiday.end_date:
-            if current_date.weekday() > 4:
-                # weekend
-                current_date += datetime.timedelta(days=1)
-                continue
-            dates.append(current_date)
-            current_date += datetime.timedelta(days=1)
-        dates.append(current_date)
-        capacities = {}
+        d = self.holiday.start_date
+        while d < self.holiday.end_date:
+            if d.weekday() < 5:
+                dates.append(d)
+            d += datetime.timedelta(days=1)
+
+        # 2) grab the cached regs and filter by this section
+        regs = getattr(self.holiday, "all_regs_for_holiday", [])
+        regs = [r for r in regs if r.section_id == self.section_id]
+
+        # 3) count per date in Python
+        counts_map = {}
+        for r in regs:
+            for date in r.dates:
+                counts_map[date] = counts_map.get(date, 0) + 1
+
+        # 4) render the table
+        rows = []
         for date in dates:
-            capacities[date] = self.capacity - Registration.objects.filter(section=self.section, dates__contains=[date]).count()
-        table_raw = """
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Capacité Restante</th>
-                    </tr>
-                </thead>
-                <tbody>
+            taken = counts_map.get(date, 0)
+            remaining = self.capacity - taken
+            rows.append(
+                f"""
+            <tr>
+                <td>{date.strftime("%d/%m/%Y")}</td>
+                <td style="text-align: right">{remaining}</td>
+            </tr>"""
+            )
+        html = f"""
+        <table class="table">
+        <thead>
+            <tr><th>Date</th><th>Capacité Restante</th></tr>
+        </thead>
+        <tbody>
+            {''.join(rows)}
+        </tbody>
+        </table>
         """
-        for date in capacities:
-            capacity = capacities[date]
-            table_raw += f"""
-                    <tr>
-                        <td>{date.strftime("%d/%m/%Y")}</td/>
-                        <td style="text-align: right">{capacity}</td/>
-                    </tr>
-                    """
-        table_raw += """
-                </tbody>
-            </table>
-        """
-        return mark_safe(table_raw)
+        return mark_safe(html)
+
     _remaining_capacity_table.short_description = ""
     remaining_capacity_table = property(_remaining_capacity_table)
 
@@ -225,29 +233,22 @@ class SectionProgram(models.Model):
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
     animateur = models.ManyToManyField(
-        to="members.User",
-        verbose_name=_('animateur'),
-        related_name="holiday_weeks"
+        to="members.User", verbose_name=_("animateur"), related_name="holiday_weeks"
     )
     theme = models.CharField(
-        max_length=255,
-        verbose_name=_('theme'), blank=True, null=True
+        max_length=255, verbose_name=_("theme"), blank=True, null=True
     )
     bricolage = models.CharField(
-        max_length=255,
-        verbose_name=_('bricolage'), blank=True, null=True
+        max_length=255, verbose_name=_("bricolage"), blank=True, null=True
     )
     food = models.CharField(
-        max_length=255,
-        verbose_name=_('food'), blank=True, null=True
+        max_length=255, verbose_name=_("food"), blank=True, null=True
     )
     game = models.CharField(
-        max_length=255,
-        verbose_name=_('game'), blank=True, null=True
+        max_length=255, verbose_name=_("game"), blank=True, null=True
     )
     other = models.CharField(
-        max_length=255,
-        verbose_name=_('other'), blank=True, null=True
+        max_length=255, verbose_name=_("other"), blank=True, null=True
     )
 
     def __str__(self):
@@ -288,24 +289,22 @@ class Outing(models.Model):
         errors = {}
         if self.end_date and self.end_date < self.start_date:
             has_errors = True
-            errors[
-                "date"
-            ] = "Le début de la sortie doit être avant la fin de la sortie"
+            errors["date"] = "Le début de la sortie doit être avant la fin de la sortie"
         if self.start_date < start_date or self.start_date > end_date:
             has_errors = True
-            errors[
-                "date"
-            ] = "La sortie doit commencée entre le {} et le {}".format(
+            errors["date"] = "La sortie doit commencée entre le {} et le {}".format(
                 start_date, end_date
             )
         if self.end_date and (self.end_date < start_date or self.end_date > end_date):
             has_errors = True
-            errors[
-                "date"
-            ] = "La sortie doit finir entre le {} et le {}".format(
+            errors["date"] = "La sortie doit finir entre le {} et le {}".format(
                 start_date, end_date
             )
-        if self.departure_time and self.arrival_time and self.departure_time > self.arrival_time:
+        if (
+            self.departure_time
+            and self.arrival_time
+            and self.departure_time > self.arrival_time
+        ):
             has_errors = True
             error = "L'heure de départ doit-être avant l'heure d'arrivée"
             errors[NON_FIELD_ERRORS] = error
@@ -370,12 +369,10 @@ html_template = """
 def _send_registration_notification(obj):
     child_name = f"{obj.child.first_name} {obj.child.last_name}"
     parent_name = f"{obj.child.parent.first_name} {obj.child.parent.last_name}"
-    payment_communication = (
-        f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
-    )
+    payment_communication = f"{child_name.lower()} vacances {obj.holiday.name.lower()}"
     child_gender_accord = "e" if obj.child.gender == "female" else ""
     date_li = (
-            "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
+        "<li>" + "</li><li>".join([d.strftime("%d-%m-%Y") for d in obj.dates]) + "</li>"
     )
     html_content = html_template.format(
         holiday_name=obj.holiday.name,
@@ -443,7 +440,7 @@ def create_section_holiday(sender, created, **kwargs):
         )
         hs.save()
         i = 0
-        for (start_date, end_date) in weeks:
+        for start_date, end_date in weeks:
             p = SectionProgram.objects.create(
                 section_holiday=hs,
                 start_date=start_date,

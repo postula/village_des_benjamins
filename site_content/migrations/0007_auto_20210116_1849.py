@@ -6,19 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0006_auto_20210116_1849'),
+        ("site_content", "0006_auto_20210116_1849"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='name',
-            field=models.CharField(default='', max_length=255, verbose_name='name'),
+            model_name="sitesection",
+            name="name",
+            field=models.CharField(default="", max_length=255, verbose_name="name"),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='sitesection',
-            name='key',
-            field=models.CharField(max_length=255, verbose_name='key'),
+            model_name="sitesection",
+            name="key",
+            field=models.CharField(max_length=255, verbose_name="key"),
         ),
     ]

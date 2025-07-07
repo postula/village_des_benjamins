@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0017_auto_20210502_1628'),
+        ("site_content", "0017_auto_20210502_1628"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='sitesection',
-            name='gradient_middle',
+            model_name="sitesection",
+            name="gradient_middle",
         ),
         migrations.RemoveField(
-            model_name='sitesection',
-            name='gradient_stop',
+            model_name="sitesection",
+            name="gradient_stop",
         ),
     ]

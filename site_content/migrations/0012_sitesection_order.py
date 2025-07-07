@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0011_auto_20210117_1741'),
+        ("site_content", "0011_auto_20210117_1741"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='order',
-            field=models.PositiveIntegerField(db_index=True, default=1, editable=False, verbose_name='order'),
+            model_name="sitesection",
+            name="order",
+            field=models.PositiveIntegerField(
+                db_index=True, default=1, editable=False, verbose_name="order"
+            ),
             preserve_default=False,
         ),
     ]

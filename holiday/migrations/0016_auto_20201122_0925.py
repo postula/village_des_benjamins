@@ -8,18 +8,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0015_auto_20201122_0901'),
+        ("holiday", "0015_auto_20201122_0901"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='holiday',
-            name='price',
-            field=models.DecimalField(decimal_places=2, help_text='price per day', max_digits=10, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='price'),
+            model_name="holiday",
+            name="price",
+            field=models.DecimalField(
+                decimal_places=2,
+                help_text="price per day",
+                max_digits=10,
+                validators=[django.core.validators.MinValueValidator(Decimal("0"))],
+                verbose_name="price",
+            ),
         ),
         migrations.AlterField(
-            model_name='outing',
-            name='price',
-            field=models.DecimalField(decimal_places=2, max_digits=10, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='price'),
+            model_name="outing",
+            name="price",
+            field=models.DecimalField(
+                decimal_places=2,
+                max_digits=10,
+                validators=[django.core.validators.MinValueValidator(Decimal("0"))],
+                verbose_name="price",
+            ),
         ),
     ]

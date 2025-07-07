@@ -7,23 +7,23 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('site_content', '0015_auto_20210502_1543'),
+        ("site_content", "0015_auto_20210502_1543"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sitesection',
-            name='gradient_middle',
-            field=colorfield.fields.ColorField(default='#FFFFFFFF', max_length=18),
+            model_name="sitesection",
+            name="gradient_middle",
+            field=colorfield.fields.ColorField(default="#FFFFFFFF", max_length=18),
         ),
         migrations.AddField(
-            model_name='sitesection',
-            name='gradient_start',
-            field=colorfield.fields.ColorField(default='#FFFFFFFF', max_length=18),
+            model_name="sitesection",
+            name="gradient_start",
+            field=colorfield.fields.ColorField(default="#FFFFFFFF", max_length=18),
         ),
         migrations.AddField(
-            model_name='sitesection',
-            name='gradient_stop',
-            field=colorfield.fields.ColorField(default='#FFFFFFFF', max_length=18),
+            model_name="sitesection",
+            name="gradient_stop",
+            field=colorfield.fields.ColorField(default="#FFFFFFFF", max_length=18),
         ),
     ]

@@ -6,12 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0021_auto_20210522_1433'),
+        ("holiday", "0021_auto_20210522_1433"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='sectionprogram',
-            options={'ordering': ['order'], 'verbose_name': 'section_program', 'verbose_name_plural': 'section_programs'},
+            name="sectionprogram",
+            options={
+                "ordering": ["order"],
+                "verbose_name": "section_program",
+                "verbose_name_plural": "section_programs",
+            },
         ),
     ]

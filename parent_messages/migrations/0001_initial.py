@@ -7,21 +7,31 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Message',
+            name="Message",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('email', models.EmailField(max_length=255, verbose_name='email')),
-                ('message', models.TextField(blank=True, null=True, verbose_name='message')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                ("email", models.EmailField(max_length=255, verbose_name="email")),
+                (
+                    "message",
+                    models.TextField(blank=True, null=True, verbose_name="message"),
+                ),
             ],
             options={
-                'verbose_name': 'message',
-                'verbose_name_plural': 'messages',
+                "verbose_name": "message",
+                "verbose_name_plural": "messages",
             },
         ),
     ]

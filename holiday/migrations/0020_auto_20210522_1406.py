@@ -6,20 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('holiday', '0019_sectionprogramm'),
+        ("holiday", "0019_sectionprogramm"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sectionprogram',
-            name='end_date',
-            field=models.DateField(default="2021-11-11", verbose_name='end date'),
+            model_name="sectionprogram",
+            name="end_date",
+            field=models.DateField(default="2021-11-11", verbose_name="end date"),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='sectionprogram',
-            name='start_date',
-            field=models.DateField(default="2021-11-11", verbose_name='start date'),
+            model_name="sectionprogram",
+            name="start_date",
+            field=models.DateField(default="2021-11-11", verbose_name="start date"),
             preserve_default=False,
         ),
     ]

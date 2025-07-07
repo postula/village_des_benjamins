@@ -175,13 +175,21 @@ class Child(models.Model):
 
     @property
     def section(self):
-        section = getattr(self, "_section", None)
-        if section:
-            return section
+        # if already set (e.g. by view), skip DB
+        if hasattr(self, "_section"):
+            return self._section
+
+        # one‐time load per process/request
+        cls = self.__class__
+        if not hasattr(cls, "_sections_cache"):
+            cls._sections_cache = list(Section.objects.all())
+
         age = self.age
-        section = Section.objects.filter(min_age__lte=age, max_age__gt=age)
-        if section.exists():
-            return section.first()
+        for sec in cls._sections_cache:
+            if sec.min_age <= age < sec.max_age:
+                self._section = sec
+                return sec
+
         return None
 
     def __str__(self):

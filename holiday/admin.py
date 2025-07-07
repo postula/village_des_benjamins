@@ -2,6 +2,7 @@ import datetime
 from tempfile import NamedTemporaryFile
 
 from django.contrib import admin, messages
+from django.db.models import Prefetch
 from django.http import HttpResponse
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 from django.utils.translation import gettext_lazy as _
@@ -38,11 +39,67 @@ class OutingInline(admin.StackedInline):
     extra = 0
 
 
+class SectionProgramForm(forms.ModelForm):
+    animateur = forms.ModelMultipleChoiceField(
+        queryset=User.objects.none(),  # will set both qs & choices in __init__
+        required=False,
+    )
+
+    class Meta:
+        model = SectionProgram
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # on first init (per process), pull & cache all staff
+        cls = self.__class__
+        if not hasattr(cls, "_staff_cache"):
+            cls._staff_cache = list(User.objects.filter(is_staff=True))
+
+        staff_list = cls._staff_cache
+        staff_ids = [u.pk for u in staff_list]
+
+        # set queryset (for validation) and choices (for rendering)
+        qs = User.objects.filter(pk__in=staff_ids)
+        self.fields["animateur"].queryset = qs
+        # override the choices so Django doesn’t re-evaluate the qs on .choices
+        self.fields["animateur"].choices = [(u.pk, str(u)) for u in staff_list]
+
+
 class SectionProgramInline(admin.StackedInline):
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "animateur":
-            kwargs["queryset"] = User.objects.filter(is_staff=True)
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     # this will pull all animateurs for *all* inline rows in one query
+    #     return qs.prefetch_related("animateur")
+
+    def get_formset(self, request, obj=None, **kwargs):
+        # 1) build your formset class
+        FormSet = super().get_formset(request, obj, **kwargs)
+
+        # 2) load all staff ONCE and cache it on the class
+        if not hasattr(self, "_staff_cache"):
+            staff = list(User.objects.filter(is_staff=True))  # ← 1 DB hit
+            pks = [u.pk for u in staff]
+            choices = [(u.pk, str(u)) for u in staff]
+            self._staff_cache = (pks, choices)
+
+        pks, choices = self._staff_cache
+
+        # 3) override the base_fields of the form
+        bf = FormSet.form.base_fields["animateur"]
+        # validation will still work off a pk__in lookup, but we never __evaluate__ again
+        bf.queryset = User.objects.filter(pk__in=pks)
+        bf.choices = choices
+
+        return FormSet
+
+    # autocomplete_fields = ("animateur",)
+    # form = SectionProgramForm
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Pull every animateur for all inline rows in one shot:
+        return qs.prefetch_related("animateur")
 
     model = SectionProgram
     extra = 0
@@ -62,6 +119,22 @@ class HolidaySectionAdmin(admin.ModelAdmin):
         [None, {"fields": ["section", "holiday", "capacity", "description"]}],
         [_("remaining capacity"), {"fields": ["remaining_capacity_table"]}],
     ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return (
+            qs
+            # so .section and .holiday don’t hit the DB
+            .select_related("section", "holiday")
+            # pull in every Registration for each holiday…
+            .prefetch_related(
+                Prefetch(
+                    "holiday__registration_set",
+                    queryset=Registration.objects.all(),
+                    to_attr="all_regs_for_holiday",
+                )
+            )
+        )
 
 
 # Register your models here.

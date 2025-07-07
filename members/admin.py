@@ -128,7 +128,7 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
-    search_fields = ("email",)
+    search_fields = ("username", "first_name", "last_name", "email")
     ordering = ("email",)
     list_filter = ["accept_newsletter", "is_staff"]
 

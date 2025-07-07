@@ -61,10 +61,12 @@ urlpatterns = [
         TemplateView.as_view(template_name="index.html"),
         name="app",
     ),
-    path("silk/", include("silk.urls", namespace="silk")),
 ]
 
 if settings.DEBUG:
     urlpatterns.append(
         path("__debug__/", include(debug_toolbar.urls)),
+    )
+    urlpatterns.append(
+        path("silk", include("silk.urls", namespace="silk")),
     )

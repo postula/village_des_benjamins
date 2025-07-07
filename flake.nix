@@ -48,7 +48,21 @@
                 ];
                 languages = {
                   nix.enable = true;
-                  python.enable = true;
+                  python = {
+                    enable = true;
+                    poetry = {
+                      enable = true;
+                      install.enable = true;
+                      activate.enable = true;
+                    };
+                  };
+                  javascript = {
+                    enable = true;
+                    npm = {
+                      enable = true;
+                      install.enable = true;
+                    };
+                  };
                 };
                 git-hooks.hooks = {
                   # Github Actions
@@ -72,6 +86,32 @@
                     enable = true;
                     packageOverrides.treefmt = myTreefmt;
                   };
+                };
+
+                services = {
+                  postgres = {
+                    enable = true;
+                    initialDatabases = [
+                      {
+                        name = "vdb";
+                      }
+                    ];
+                    initialScript = "CREATE USER vdb SUPERUSER;";
+                  };
+                  minio = {
+                    enable = true;
+                    buckets = ["testbucket"];
+                  };
+                };
+
+                env = {
+                  DATABASE_URL = "postgres://vdb@/vdb?host=${config.env.PGHOST}";
+                  AWS_ACCESS_KEY_ID = "minioadmin";
+                  AWS_SECRET_ACCESS_KEY = "minioadmin";
+                  AWS_S3_REGION_NAME = "us-east-1";
+                  AWS_S3_MINIO = "true";
+                  AWS_STORAGE_BUCKET_NAME = "testbucket";
+                  AWS_S3_ENDPOINT_URL = "http://127.0.0.1:9001";
                 };
 
                 enterShell = ''

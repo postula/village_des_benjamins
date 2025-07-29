@@ -16,6 +16,7 @@ from django.db.models import (
 from django.db.models.functions import Extract
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import mark_safe
+from django_rest_passwordreset.models import ResetPasswordToken
 from calendar import monthrange
 from datetime import date, datetime, timedelta
 
@@ -98,6 +99,10 @@ class User(AbstractUser):
                 '<img src="{}" width="300" height="300" />'.format(self.photo.url)
             )
         return ""
+
+    def delete(self, **kwargs):
+        ResetPasswordToken.objects.filter(user_pk=self).delete()
+        super().delete(**kwargs)
 
     class Meta:
         verbose_name = _("member")

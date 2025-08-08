@@ -89,7 +89,7 @@ class HolidaySection(models.Model):
         # 1) count weekdays
         num_days = 0
         d = self.holiday.start_date
-        while d < self.holiday.end_date:
+        while d <= self.holiday.end_date:
             if d.weekday() < 5:
                 num_days += 1
             d += datetime.timedelta(days=1)
@@ -114,7 +114,7 @@ class HolidaySection(models.Model):
         # 1) build your list of working dates
         dates = []
         d = self.holiday.start_date
-        while d < self.holiday.end_date:
+        while d <= self.holiday.end_date:
             if d.weekday() < 5:
                 dates.append(d)
             d += datetime.timedelta(days=1)

@@ -102,7 +102,7 @@ class User(AbstractUser):
     def delete(self, **kwargs):
         from django_rest_passwordreset.models import ResetPasswordToken
 
-        ResetPasswordToken.objects.filter(user_pk=self).delete()
+        ResetPasswordToken.objects.filter(user=self).delete()
         super().delete(**kwargs)
 
     class Meta:

@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+from django.db.models.signals import pre_delete
 from django_rest_passwordreset.signals import reset_password_token_created
 
 
@@ -48,3 +49,10 @@ def password_reset_token_created(
     )
     msg.attach_alternative(email_html_message, "text/html")
     msg.send()
+
+
+@receiver(pre_delete, sender="members.User")
+def delete_reset_tokens(sender, instance, **kwargs):
+    from django_rest_passwordreset.models import ResetPasswordToken
+
+    ResetPasswordToken.objects.filter(user=instance).delete()

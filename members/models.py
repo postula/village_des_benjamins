@@ -62,6 +62,15 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("Superuser must have is_superuser=True."))
         return self.create_user(email, password, **extra_fields)
 
+    def delete(self):
+        from django_rest_passwordreset.models import ResetPasswordToken
+
+        # Get all user IDs before deletion
+        user_ids = list(self.values_list("id", flat=True))
+        # Delete related tokens
+        ResetPasswordToken.objects.filter(user_id__in=user_ids).delete()
+        super().delete()
+
 
 class User(AbstractUser):
     username = None
@@ -98,12 +107,6 @@ class User(AbstractUser):
                 '<img src="{}" width="300" height="300" />'.format(self.photo.url)
             )
         return ""
-
-    def delete(self, **kwargs):
-        from django_rest_passwordreset.models import ResetPasswordToken
-
-        ResetPasswordToken.objects.filter(user=self).delete()
-        super().delete(**kwargs)
 
     class Meta:
         verbose_name = _("member")

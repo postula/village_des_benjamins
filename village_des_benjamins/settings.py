@@ -103,7 +103,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             TEMPLATES_DIR,
-            "village_des_benjamins/templates",
+            BASE_DIR / "village_des_benjamins" / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {

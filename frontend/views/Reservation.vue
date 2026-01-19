@@ -7,7 +7,7 @@
           <h5 slot="header">Programme des vacances</h5>
           <div class="alert alert-info mx-3 mt-3" role="alert">
             <i class="fa fa-calendar"></i>
-            <strong>Information importante: </strong> Les réservations des vacances s'ouvrent toujours un mois date à date avant le début des vacances et toujours le vendredi en fin de journée.
+            <strong> Information importante: </strong> Les réservations des vacances s'ouvrent toujours un mois date à date avant le début des vacances et toujours le vendredi en fin de journée.
           </div>
           <div class="text-center">
             <div class="row justify-content-center">
@@ -126,6 +126,11 @@
         </card>
         <card shadow class="mt-5" body-classes="px-1 px-md-4">
           <h5 slot="header">Mes Réservations</h5>
+          <div class="alert alert-success mx-3 mb-3" role="alert">
+            <i class="fa fa-check-circle"></i>
+            <strong> Confirmation de réservation: </strong> Vous trouverez la confirmation de votre réservation ici, en bas de page de l'onglet "réservation".
+          </div>
+
           <div class="px-4">
             <div class="text-center">
               <div class="row justify-content-center">
@@ -287,10 +292,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="alert alert-success mx-3 mb-3" role="alert">
-            <i class="fa fa-check-circle"></i>
-            <strong>Confirmation de réservation: </strong> Vous trouverez la confirmation de votre réservation ici, en bas de page de l'onglet "réservation".
           </div>
         </card>
         <modal

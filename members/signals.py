@@ -32,7 +32,7 @@ def password_reset_token_created(
         "current_user": reset_password_token.user,
         "username": reset_password_token.user.username,
         "email": reset_password_token.user.email,
-        "reset_password_url": "{}/#/forgot_finalize?token={}".format(
+        "reset_password_url": "{}#/forgot_finalize?token={}".format(
             instance.request.build_absolute_uri(reverse("app")),
             reset_password_token.key,
         ),

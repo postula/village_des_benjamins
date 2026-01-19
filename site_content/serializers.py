@@ -40,8 +40,11 @@ class ContentPlanningSerializer(serializers.ModelSerializer):
     """Nested serializer for planning entries."""
 
     date = serializers.DateField(format="%d/%m/%Y")
-    educator_name = serializers.CharField(source="educator.__str__", read_only=True)
+    educator_name = serializers.SerializerMethodField()
     section_name = serializers.CharField(source="get_section_display", read_only=True)
+
+    def get_educator_name(self, obj):
+        return str(obj.educator) if obj.educator else None
 
     class Meta:
         model = ContentPlanning

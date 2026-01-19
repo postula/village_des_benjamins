@@ -131,6 +131,9 @@ DATABASES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
+# Increase field limit for Wednesday planning with 165+ entries
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

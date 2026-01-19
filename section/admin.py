@@ -8,6 +8,7 @@ class SectionAdmin(OrderedModelAdmin):
     model = Section
     list_display = ["name", "min_age", "max_age", "move_up_down_links"]
     ordering = ["order"]
+    search_fields = ["name"]
 
 
 # Register your models here.

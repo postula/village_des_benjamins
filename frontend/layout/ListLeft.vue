@@ -39,12 +39,41 @@
               <h5 class="title text-success">{{ item.name }}</h5>
               <p v-html="item.description"></p>
               <base-button v-if="item.show_more_button" type="primary" @click="showMore(item.id, $event)">{{item.show_more_button}}</base-button>
-              <modal v-if="item.show_more_button && item.show_more_content" @close="hideMore" :show="show_more_item === item.id">
+              <modal v-if="item.show_more_button && (item.show_more_content || item.planning_entries)"
+                     @close="hideMore"
+                     :show="show_more_item === item.id"
+                     modal-classes="modal-lg">
                 <template slot="header">
                   <h5 class="modal-title" >{{item.show_more_button}}</h5>
                 </template>
                 <div>
-                  <div v-html="item.show_more_content"></div>
+                  <!-- Show introduction/description text if present -->
+                  <div v-if="item.show_more_content" v-html="item.show_more_content" class="mb-4"></div>
+
+                  <!-- Show planning table if entries exist -->
+                  <div v-if="item.planning_entries && item.planning_entries.length > 0" class="planning-container">
+                    <h5 class="mb-3">Planning des activités</h5>
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover">
+                        <thead class="thead-light">
+                          <tr>
+                            <th class="planning-date">Date</th>
+                            <th class="planning-educator">Animateur</th>
+                            <th class="planning-section">Groupe</th>
+                            <th class="planning-activity">Activité</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="entry in item.planning_entries" :key="entry.id">
+                            <td data-label="Date" class="planning-date">{{ entry.date }}</td>
+                            <td data-label="Animateur" class="planning-educator">{{ entry.educator_name }}</td>
+                            <td data-label="Groupe" class="planning-section">{{ entry.section_name }}</td>
+                            <td data-label="Activité" class="planning-activity">{{ entry.description }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </modal>
             </div>
@@ -110,5 +139,72 @@ export default {
     width: 100%;
     height: 100%;
   background: var(--background);
+}
+/* Planning table styles */
+.planning-container {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.planning-container .table {
+  margin-bottom: 0;
+}
+
+.planning-date {
+  width: 15%;
+  white-space: nowrap;
+}
+
+.planning-educator {
+  width: 20%;
+}
+
+.planning-section {
+  width: 20%;
+}
+
+.planning-activity {
+  width: 45%;
+}
+
+/* Mobile responsive - stack table as cards */
+@media (max-width: 768px) {
+  .planning-container .table thead {
+    display: none;
+  }
+
+  .planning-container .table,
+  .planning-container .table tbody,
+  .planning-container .table tr,
+  .planning-container .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .planning-container .table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    background: #fff;
+  }
+
+  .planning-container .table td {
+    text-align: right;
+    padding: 0.5rem 0;
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .planning-container .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-right: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
 }
 </style>

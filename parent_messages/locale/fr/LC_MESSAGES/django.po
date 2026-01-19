@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 13:16+0000\n"
+"POT-Creation-Date: 2026-01-19 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,22 +22,22 @@ msgstr ""
 msgid "parent_messages"
 msgstr "Message de parent"
 
-#: parent_messages/models.py:14
+#: parent_messages/models.py:13
 msgid "name"
 msgstr "nom"
 
-#: parent_messages/models.py:15
+#: parent_messages/models.py:14
 msgid "email"
 msgstr "email"
 
-#: parent_messages/models.py:16 parent_messages/models.py:22
+#: parent_messages/models.py:15 parent_messages/models.py:21
 msgid "message"
 msgstr "message"
 
-#: parent_messages/models.py:23
+#: parent_messages/models.py:22
 msgid "messages"
 msgstr "messages"
 
-#: parent_messages/models.py:27
+#: parent_messages/models.py:26
 msgid "subject"
 msgstr "sujet"

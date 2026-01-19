@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 13:16+0000\n"
+"POT-Creation-Date: 2026-01-19 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: holiday/admin.py:120 holiday/models.py:111
+#: holiday/admin.py:120 holiday/models.py:110
 msgid "remaining capacity"
 msgstr "capacité restante"
 
@@ -26,7 +26,7 @@ msgstr "capacité restante"
 msgid "export_registration_desc"
 msgstr "Extraire listing"
 
-#: holiday/admin.py:279 holiday/models.py:170
+#: holiday/admin.py:279 holiday/models.py:169
 msgid "child"
 msgstr "enfant"
 
@@ -34,154 +34,158 @@ msgstr "enfant"
 msgid "resend_email"
 msgstr "Renvoyer email"
 
-#: holiday/apps.py:7 holiday/models.py:72 holiday/models.py:81
-#: holiday/models.py:167
+#: holiday/apps.py:7 holiday/models.py:71 holiday/models.py:80
+#: holiday/models.py:166
 msgid "holiday"
 msgstr "vacances"
 
-#: holiday/models.py:34 holiday/models.py:274
+#: holiday/models.py:33 holiday/models.py:286
 msgid "name"
 msgstr "nom"
 
-#: holiday/models.py:36 holiday/models.py:216 holiday/models.py:277
+#: holiday/models.py:35 holiday/models.py:215 holiday/models.py:289
 msgid "price"
 msgstr "prix"
 
-#: holiday/models.py:39
+#: holiday/models.py:38
 msgid "price per day"
 msgstr "prix par jour"
 
-#: holiday/models.py:43 holiday/models.py:234 holiday/models.py:272
+#: holiday/models.py:42 holiday/models.py:246 holiday/models.py:284
 msgid "start date"
 msgstr "date de début"
 
-#: holiday/models.py:44 holiday/models.py:235 holiday/models.py:273
+#: holiday/models.py:43 holiday/models.py:247 holiday/models.py:285
 msgid "end date"
 msgstr "date de fin"
 
-#: holiday/models.py:47
+#: holiday/models.py:46
 msgid "blacklisted_dates"
 msgstr "Date de fermeture"
 
-#: holiday/models.py:52
+#: holiday/models.py:51
 msgid "book_by_day"
 msgstr "inscription par jour"
 
-#: holiday/models.py:53 holiday/models.py:275
+#: holiday/models.py:52 holiday/models.py:287
 msgid "description"
 msgstr "description"
 
-#: holiday/models.py:54
+#: holiday/models.py:53
 msgid "registration open"
 msgstr "inscription ouverte"
 
-#: holiday/models.py:56
+#: holiday/models.py:55
 msgid "sections"
 msgstr "groupes"
 
-#: holiday/models.py:62 holiday/models.py:221
+#: holiday/models.py:61 holiday/models.py:233
 msgid "registrations"
 msgstr "inscriptions"
 
-#: holiday/models.py:73
+#: holiday/models.py:72
 msgid "holidays"
 msgstr "vacances"
 
-#: holiday/models.py:78 holiday/models.py:177
+#: holiday/models.py:77 holiday/models.py:176
 msgid "section"
 msgstr "groupe"
 
-#: holiday/models.py:86
+#: holiday/models.py:85
 msgid "capacity"
 msgstr "capacité"
 
-#: holiday/models.py:161
+#: holiday/models.py:160
 msgid "section holiday"
 msgstr "vacances de groupe"
 
-#: holiday/models.py:162
+#: holiday/models.py:161
 msgid "section holidays"
 msgstr "vacances de groupes"
 
-#: holiday/models.py:184
+#: holiday/models.py:183
 msgid "status"
 msgstr "statut"
 
-#: holiday/models.py:189
+#: holiday/models.py:188
 msgid "dates"
 msgstr "dates"
 
-#: holiday/models.py:190
+#: holiday/models.py:189
 msgid "notes"
 msgstr ""
 
-#: holiday/models.py:195
+#: holiday/models.py:194
 msgid "number of days"
 msgstr "nombre de jour"
 
-#: holiday/models.py:220
+#: holiday/models.py:223
+msgid "Cannot create registrations for archived children"
+msgstr ""
+
+#: holiday/models.py:232
 msgid "registration"
 msgstr "inscription"
 
-#: holiday/models.py:228 holiday/models.py:267
+#: holiday/models.py:240 holiday/models.py:279
 #, fuzzy
 #| msgid "section holiday"
 msgid "section_holiday"
 msgstr "vacances de groupe"
 
-#: holiday/models.py:237
+#: holiday/models.py:249
 msgid "animateur"
 msgstr ""
 
-#: holiday/models.py:240
+#: holiday/models.py:252
 msgid "theme"
 msgstr ""
 
-#: holiday/models.py:243
+#: holiday/models.py:255
 msgid "bricolage"
 msgstr ""
 
-#: holiday/models.py:246
+#: holiday/models.py:258
 msgid "food"
 msgstr ""
 
-#: holiday/models.py:249
+#: holiday/models.py:261
 msgid "game"
 msgstr ""
 
-#: holiday/models.py:252
+#: holiday/models.py:264
 msgid "other"
 msgstr ""
 
-#: holiday/models.py:259
+#: holiday/models.py:271
 #, fuzzy
 #| msgid "section holiday"
 msgid "section_program"
 msgstr "vacances de groupe"
 
-#: holiday/models.py:260
+#: holiday/models.py:272
 #, fuzzy
 #| msgid "sections"
 msgid "section_programs"
 msgstr "groupes"
 
-#: holiday/models.py:282
+#: holiday/models.py:294
 msgid "departure_time"
 msgstr "heure de départ"
 
-#: holiday/models.py:283
+#: holiday/models.py:295
 msgid "arrival_time"
 msgstr "heure d'arrivée"
 
-#: holiday/models.py:284
+#: holiday/models.py:296
 msgid "transport"
 msgstr "transport"
 
-#: holiday/models.py:318
+#: holiday/models.py:330
 msgid "outing"
 msgstr "sortie"
 
-#: holiday/models.py:319
+#: holiday/models.py:331
 msgid "outings"
 msgstr "sorties"
 

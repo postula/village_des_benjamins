@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 13:16+0000\n"
+"POT-Creation-Date: 2026-01-19 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,23 +22,7 @@ msgstr ""
 msgid "section"
 msgstr ""
 
-#: members/admin.py:64
-msgid "archived status"
-msgstr "enfants archivés"
-
-#: members/admin.py:69
-msgid "Hide archived"
-msgstr "Masquer les archivés"
-
-#: members/admin.py:70
-msgid "Show archived only"
-msgstr "Afficher seulement les archivés"
-
-#: members/admin.py:71
-msgid "Show all"
-msgstr "Afficher tout"
-
-#: members/admin.py:127
+#: members/admin.py:106
 msgid "team"
 msgstr "équipe"
 
@@ -143,3 +127,15 @@ msgstr "Fonction"
 #: members/models.py:225
 msgid "staff_functions"
 msgstr "Fonctions"
+
+#~ msgid "archived status"
+#~ msgstr "enfants archivés"
+
+#~ msgid "Hide archived"
+#~ msgstr "Masquer les archivés"
+
+#~ msgid "Show archived only"
+#~ msgstr "Afficher seulement les archivés"
+
+#~ msgid "Show all"
+#~ msgstr "Afficher tout"

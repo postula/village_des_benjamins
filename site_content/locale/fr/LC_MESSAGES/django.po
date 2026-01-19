@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 13:16+0000\n"
+"POT-Creation-Date: 2026-01-19 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,8 @@ msgstr "clé"
 msgid "name"
 msgstr "Nom"
 
-#: site_content/models.py:22 site_content/models.py:79
+#: site_content/models.py:22 site_content/models.py:114
+#: site_content/models.py:144
 msgid "description"
 msgstr "description"
 
@@ -83,9 +84,38 @@ msgid "show_more_content"
 msgstr "Contenu voir plus"
 
 #: site_content/models.py:73 site_content/models.py:74
+#: site_content/models.py:89
 msgid "content"
 msgstr "contenu"
 
-#: site_content/models.py:85 site_content/models.py:86
+#: site_content/models.py:84
+msgid "Les maternelles"
+msgstr "Les maternelles"
+
+#: site_content/models.py:85
+msgid "Les primaires"
+msgstr "Les primaires"
+
+#: site_content/models.py:96
+msgid "section"
+msgstr "Section"
+
+#: site_content/models.py:102
+msgid "educator"
+msgstr "Animateur"
+
+#: site_content/models.py:109
+msgid "date"
+msgstr "Date"
+
+#: site_content/models.py:118
+msgid "Activity description (max 500 characters)"
+msgstr "Description de l'activité (max 500 caractères)"
+
+#: site_content/models.py:125 site_content/models.py:126
+msgid "content planning"
+msgstr "Planning du contenu"
+
+#: site_content/models.py:150 site_content/models.py:151
 msgid "news"
 msgstr "actualité"

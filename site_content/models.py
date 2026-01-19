@@ -74,6 +74,71 @@ class Content(OrderedModel):
         verbose_name_plural = _("content")
 
 
+class ContentPlanning(models.Model):
+    """
+    Activity planning entries for content sections.
+    Replaces HTML table storage with structured data.
+    """
+
+    SECTION_CHOICES = [
+        ("maternelle", _("Les maternelles")),
+        ("primaire", _("Les primaires")),
+    ]
+
+    content = models.ForeignKey(
+        verbose_name=_("content"),
+        to="site_content.Content",
+        on_delete=models.CASCADE,
+        related_name="planning_entries",
+    )
+
+    section = models.CharField(
+        verbose_name=_("section"),
+        max_length=20,
+        choices=SECTION_CHOICES,
+    )
+
+    educator = models.ForeignKey(
+        verbose_name=_("educator"),
+        to="members.User",
+        on_delete=models.PROTECT,
+        limit_choices_to={"is_staff": True, "visible_on_site": True},
+    )
+
+    date = models.DateField(
+        verbose_name=_("date"),
+        db_index=True,
+    )
+
+    description = models.TextField(
+        verbose_name=_("description"),
+        max_length=500,
+        blank=True,
+        null=True,
+        help_text=_("Activity description (max 500 characters)"),
+    )
+
+    def __str__(self):
+        return f"{self.date} - {self.get_section_display()} - {self.educator}"
+
+    class Meta:
+        verbose_name = _("content planning")
+        verbose_name_plural = _("content planning")
+        ordering = ["date", "section"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["content", "date", "section", "educator"],
+                name="unique_planning_entry",
+            )
+        ]
+
+        indexes = [
+            models.Index(fields=["content", "date"]),
+            models.Index(fields=["date", "section"]),
+        ]
+
+
 class News(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     description = HTMLField(verbose_name=_("description"))

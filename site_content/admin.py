@@ -1,32 +1,21 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from ordered_model.admin import (
-    OrderedModelAdmin,
-    OrderedInlineModelAdminMixin,
-    OrderedStackedInline,
-)
-from site_content.models import Content, SiteSection, News
+from ordered_model.admin import OrderedModelAdmin
+from site_content.models import Content, SiteSection, News, ContentPlanning
 
 
-class ContentAdminInline(OrderedStackedInline):
-    model = Content
-    fields = [
-        "name",
-        "description",
-        "icon",
-        "order",
-        "show_more_button",
-        "show_more_content",
-        "move_up_down_links",
-    ]
-    readonly_fields = ["order", "move_up_down_links"]
-    ordering = ["order"]
-    extra = 0
+class ContentPlanningInline(admin.StackedInline):
+    """Inline for editing planning entries within Content admin."""
+
+    model = ContentPlanning
+    extra = 1
+    fields = ["date", "section", "educator", "description"]
+    ordering = ["date", "section"]
+    autocomplete_fields = ["educator"]
 
 
 @admin.register(SiteSection)
-class SiteSectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
-    inlines = [ContentAdminInline]
+class SiteSectionAdmin(OrderedModelAdmin):
     model = SiteSection
     list_display = [
         "key",
@@ -47,6 +36,32 @@ class SiteSectionAdmin(OrderedInlineModelAdminMixin, OrderedModelAdmin):
 
     def _description(self, obj):
         return mark_safe(obj.description)
+
+
+@admin.register(Content)
+class ContentAdmin(admin.ModelAdmin):
+    """Standalone admin for Content with planning inline."""
+
+    model = Content
+    inlines = [ContentPlanningInline]
+    list_display = ["name", "section", "order", "has_show_more", "has_planning"]
+    list_filter = ["section"]
+    search_fields = ["name", "description"]
+    ordering = ["section__order", "order"]  # Group by section order, then content order
+
+    @admin.display(description="Show More")
+    def has_show_more(self, obj):
+        """Show checkmark if content has show_more_content."""
+        if obj.show_more_content and obj.show_more_content.strip():
+            return mark_safe('<span style="color: green;">✓</span>')
+        return ""
+
+    @admin.display(description="Planning")
+    def has_planning(self, obj):
+        """Show checkmark if content has planning entries."""
+        if obj.planning_entries.exists():
+            return mark_safe('<span style="color: green;">✓</span>')
+        return ""
 
 
 @admin.register(News)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 08:41+0000\n"
+"POT-Creation-Date: 2026-01-19 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,42 +50,42 @@ msgstr ""
 msgid "key"
 msgstr "clé"
 
-#: site_content/models.py:21 site_content/models.py:45
+#: site_content/models.py:21 site_content/models.py:47
 msgid "name"
 msgstr "Nom"
 
-#: site_content/models.py:22 site_content/models.py:67
+#: site_content/models.py:22 site_content/models.py:79
 msgid "description"
 msgstr "description"
 
-#: site_content/models.py:24
+#: site_content/models.py:25
 msgid "layout"
 msgstr ""
 
-#: site_content/models.py:39 site_content/models.py:51
+#: site_content/models.py:41 site_content/models.py:63
 msgid "site_section"
 msgstr "Rubrique du site"
 
-#: site_content/models.py:40
+#: site_content/models.py:42
 msgid "site_sections"
 msgstr "Rubriques du site"
 
-#: site_content/models.py:46
+#: site_content/models.py:49
 msgid "icon"
 msgstr "icône"
 
-#: site_content/models.py:48
+#: site_content/models.py:57
 msgid "show_more_button"
 msgstr "Titre bouton voir plus"
 
-#: site_content/models.py:49
+#: site_content/models.py:60
 msgid "show_more_content"
 msgstr "Contenu voir plus"
 
-#: site_content/models.py:61 site_content/models.py:62
+#: site_content/models.py:73 site_content/models.py:74
 msgid "content"
 msgstr "contenu"
 
-#: site_content/models.py:73 site_content/models.py:74
+#: site_content/models.py:85 site_content/models.py:86
 msgid "news"
 msgstr "actualité"

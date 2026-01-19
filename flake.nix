@@ -43,17 +43,16 @@
                 packages = with pkgs; [
                   updatecli
                   myTreefmt
-                  poetry
                   gitleaks
+                  mailpit
                 ];
                 languages = {
                   nix.enable = true;
                   python = {
                     enable = true;
-                    poetry = {
+                    uv = {
                       enable = true;
-                      install.enable = true;
-                      activate.enable = true;
+                      sync.enable = true;
                     };
                   };
                   javascript = {
@@ -100,18 +99,35 @@
                   };
                   minio = {
                     enable = true;
-                    buckets = ["testbucket"];
+                    buckets = ["village-des-benjamins"];
                   };
+                  mailpit.enable = true;
                 };
 
                 env = {
+                  # Django
+                  DEBUG = "true";
+                  SECRET_KEY = "local-dev-secret-key-change-in-production";
+                  ALLOWED_HOSTS = "localhost,127.0.0.1,localhost:8000";
+                  SSL = "false";
+
+                  # Database
                   DATABASE_URL = "postgres://vdb@/vdb?host=${config.env.PGHOST}";
+
+                  # Email (Mailpit)
+                  EMAIL_HOST = "localhost";
+                  EMAIL_PORT = "1025";
+                  EMAIL_USE_TLS = "false";
+                  MAIL_FROM_ADDRESS = "noreply@village-des-benjamins.local";
+
+                  # Storage (MinIO)
                   AWS_ACCESS_KEY_ID = "minioadmin";
                   AWS_SECRET_ACCESS_KEY = "minioadmin";
                   AWS_S3_REGION_NAME = "us-east-1";
                   AWS_S3_MINIO = "true";
-                  AWS_STORAGE_BUCKET_NAME = "testbucket";
-                  AWS_S3_ENDPOINT_URL = "http://127.0.0.1:9001";
+                  AWS_STORAGE_BUCKET_NAME = "village-des-benjamins";
+                  AWS_S3_ENDPOINT_URL = "http://127.0.0.1:9000";
+                  AWS_LOCATION = "website_uploads/";
                 };
 
                 enterShell = ''

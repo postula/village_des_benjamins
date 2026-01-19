@@ -3,9 +3,14 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
+from logging import getLogger
+import sentry_sdk
 
 from django.db.models.signals import pre_delete
 from django_rest_passwordreset.signals import reset_password_token_created
+
+
+logger = getLogger(__name__)
 
 
 @receiver(reset_password_token_created)
@@ -48,7 +53,11 @@ def password_reset_token_created(
         [reset_password_token.user.email],
     )
     msg.attach_alternative(email_html_message, "text/html")
-    msg.send()
+    try:
+        msg.send()
+    except Exception as e:
+        logger.exception(e)
+        sentry_sdk.capture_exception(e)
 
 
 @receiver(pre_delete, sender="members.User")

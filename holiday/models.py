@@ -15,6 +15,7 @@ from decimal import Decimal
 from logging import getLogger
 from tinymce.models import HTMLField
 from ordered_model.models import OrderedModel
+import sentry_sdk
 
 from section.models import Section
 
@@ -403,6 +404,7 @@ def _send_registration_notification(obj):
         response = sg.send(message)
     except Exception as e:
         logger.exception(e)
+        sentry_sdk.capture_exception(e)
 
 
 def send_registration_notification(sender, created, **kwargs):

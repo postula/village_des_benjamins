@@ -4,6 +4,7 @@ from django.conf import settings
 from logging import getLogger
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import sentry_sdk
 
 
 logger = getLogger(__name__)
@@ -122,6 +123,7 @@ def send_message_notification(sender, created, **kwargs):
         sg.send(contact_message)
     except Exception as e:
         logger.exception(e)
+        sentry_sdk.capture_exception(e)
 
 
 models.signals.post_save.connect(send_message_notification, sender=Message)

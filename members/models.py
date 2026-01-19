@@ -18,6 +18,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.html import mark_safe
 from calendar import monthrange
 from datetime import date, datetime, timedelta
+import sentry_sdk
 
 from sendgrid import SendGridAPIClient, Mail
 
@@ -273,6 +274,7 @@ def send_registration_notification(sender, created, **kwargs):
         response = sg.send(message)
     except Exception as e:
         logger.exception(e)
+        sentry_sdk.capture_exception(e)
 
 
 models.signals.post_save.connect(send_registration_notification, sender=User)

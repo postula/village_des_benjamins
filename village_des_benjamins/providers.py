@@ -2,6 +2,7 @@ from django.conf import settings
 from reset_password.models import EmailProvider
 from sendgrid import Mail, SendGridAPIClient
 from logging import getLogger
+import sentry_sdk
 
 
 logger = getLogger(__name__)
@@ -20,3 +21,4 @@ class SendgridEmailProvider(EmailProvider):
             sg.send(message)
         except Exception as e:
             logger.exception(e)
+            sentry_sdk.capture_exception(e)

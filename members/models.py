@@ -149,6 +149,9 @@ class ChildManager(models.Manager):
         return qs
 
     def get_queryset(self):
+        return self.get_date_queryset(datetime.today()).exclude(status="archived")
+
+    def with_archived(self):
         return self.get_date_queryset(datetime.today())
 
 
@@ -173,6 +176,7 @@ class Child(models.Model):
         choices=[
             ("in_validation", _("in_validation")),
             ("registered", _("registered")),
+            ("archived", _("archived")),
         ],
         max_length=50,
         default="in_validation",

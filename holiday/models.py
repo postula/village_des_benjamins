@@ -216,6 +216,19 @@ class Registration(models.Model):
     _cost.short_description = _("price")
     cost = property(_cost)
 
+    def clean(self):
+        super().clean()
+        # Prevent registrations for archived children
+        if self.child.status == "archived":
+            raise ValidationError(
+                {"child": _("Cannot create registrations for archived children")}
+            )
+
+    def save(self, *args, **kwargs):
+        # Run validation before saving
+        self.clean()
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("registration")
         verbose_name_plural = _("registrations")

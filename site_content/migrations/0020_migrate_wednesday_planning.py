@@ -3,6 +3,8 @@
 from django.db import migrations
 from bs4 import BeautifulSoup
 from datetime import datetime
+import json
+import os
 
 
 def migrate_wednesday_planning(apps, schema_editor):
@@ -10,6 +12,18 @@ def migrate_wednesday_planning(apps, schema_editor):
     Content = apps.get_model("site_content", "Content")
     ContentPlanning = apps.get_model("site_content", "ContentPlanning")
     User = apps.get_model("members", "User")
+
+    # Load educator mapping from JSON file
+    mapping_file = os.path.join(os.path.dirname(__file__), "wednesday_mapping.json")
+    try:
+        with open(mapping_file, "r", encoding="utf-8") as f:
+            educator_mapping = json.load(f)
+    except FileNotFoundError:
+        print(f"⚠ Mapping file not found: {mapping_file}, skipping migration")
+        return
+    except json.JSONDecodeError as e:
+        print(f"⚠ Invalid JSON in mapping file: {str(e)}, skipping migration")
+        return
 
     # Map HTML section names to choice values
     SECTION_MAP = {
@@ -42,57 +56,83 @@ def migrate_wednesday_planning(apps, schema_editor):
     created_count = 0
     skipped_count = 0
     errors = []
-    last_date = None  # Track last valid date for rows with empty date cells
+    last_date = None
 
-    # Process all rows (no header in this table)
     for row in rows:
         cols = row.find_all("td")
-        if len(cols) != 4:
+        if len(cols) < 2:
             continue
 
         date_str = cols[0].get_text(strip=True)
-        educator_name = cols[1].get_text(strip=True)
-        section_name = cols[2].get_text(strip=True)
-        description = cols[3].get_text(strip=True)
+        educator_name = cols[1].get_text(strip=True) if len(cols) > 1 else ""
+        section_name = cols[2].get_text(strip=True) if len(cols) > 2 else ""
+        description = cols[3].get_text(strip=True) if len(cols) > 3 else ""
+
+        # Handle "Renfort devoirs" entries
+        if "Renfort devoirs" in date_str or "renfort devoirs" in date_str.lower():
+            # This is a "renfort devoirs" placeholder, skip it for now
+            # You can create entries with null educator/section if needed
+            continue
 
         # Parse date (format: dd/mm/yyyy) or reuse last date if empty
-        if date_str and date_str != "\xa0":  # \xa0 is &nbsp;
+        if date_str and date_str != "\xa0":
             try:
                 last_date = datetime.strptime(date_str, "%d/%m/%Y").date()
                 date = last_date
             except ValueError:
-                errors.append(f"Invalid date format: {date_str}")
+                # Not a date, skip this row
                 skipped_count += 1
                 continue
         elif last_date:
-            # Empty date cell - reuse last valid date (multiple activities same day)
             date = last_date
         else:
-            # No valid date yet
             skipped_count += 1
             continue
 
-        # Find educator by first name (case-insensitive)
-        educator = User.objects.filter(
-            first_name__iexact=educator_name, is_staff=True, visible_on_site=True
-        ).first()
-
-        if not educator:
-            # Try matching by last name or full name
-            educator = User.objects.filter(
-                last_name__iexact=educator_name, is_staff=True, visible_on_site=True
-            ).first()
-
-        if not educator:
-            errors.append(f"Educator not found: {educator_name}")
-            skipped_count += 1
-            continue
+        # Get educator from mapping (can be None for renfort devoirs)
+        educator = None
+        if educator_name:
+            educator_id = educator_mapping.get(educator_name)
+            if educator_id:
+                try:
+                    educator = User.objects.get(id=educator_id)
+                except User.DoesNotExist:
+                    errors.append(
+                        f"User ID {educator_id} not found for {educator_name}"
+                    )
+                    skipped_count += 1
+                    continue
+            elif educator_id is False:
+                # Special case: Maxime - lookup by email if exists, otherwise skip
+                if educator_name == "Maxime":
+                    try:
+                        educator = User.objects.get(
+                            email="maxime@villagedebenjamins.be"
+                        )
+                    except User.DoesNotExist:
+                        # Maxime doesn't exist yet, skip for now (will be handled in later migration)
+                        skipped_count += 1
+                        continue
+                else:
+                    errors.append(f"Educator marked as not existing: {educator_name}")
+                    skipped_count += 1
+                    continue
+            else:
+                # Not in mapping
+                errors.append(f"Educator not in mapping: {educator_name}")
+                skipped_count += 1
+                continue
 
         # Map section name to choice value
-        section_choice = SECTION_MAP.get(section_name)
+        section_choice = SECTION_MAP.get(section_name) if section_name else None
 
-        if not section_choice:
+        if not section_choice and section_name:
             errors.append(f"Section not mapped: {section_name}")
+            skipped_count += 1
+            continue
+
+        # Skip entries without educator or section (shouldn't happen with valid data)
+        if not educator and not section_choice:
             skipped_count += 1
             continue
 
@@ -107,7 +147,7 @@ def migrate_wednesday_planning(apps, schema_editor):
             )
             created_count += 1
         except Exception as e:
-            errors.append(f"Error creating entry for {date_str}: {str(e)}")
+            errors.append(f"Error creating entry for {date}: {str(e)}")
             skipped_count += 1
 
     # Print summary
@@ -116,7 +156,7 @@ def migrate_wednesday_planning(apps, schema_editor):
         print(f"⚠ Skipped {skipped_count} entries")
     if errors:
         print("Errors encountered:")
-        for error in errors[:10]:  # Show first 10 errors
+        for error in errors[:10]:
             print(f"  - {error}")
         if len(errors) > 10:
             print(f"  ... and {len(errors) - 10} more errors")

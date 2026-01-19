@@ -96,6 +96,8 @@ class ContentPlanning(models.Model):
         verbose_name=_("section"),
         max_length=20,
         choices=SECTION_CHOICES,
+        null=True,
+        blank=True,
     )
 
     educator = models.ForeignKey(
@@ -103,6 +105,8 @@ class ContentPlanning(models.Model):
         to="members.User",
         on_delete=models.PROTECT,
         limit_choices_to={"is_staff": True, "visible_on_site": True},
+        null=True,
+        blank=True,
     )
 
     date = models.DateField(

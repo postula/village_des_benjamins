@@ -64,7 +64,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="entry in item.planning_entries" :key="entry.id">
+                          <tr v-for="entry in getFutureEntries(item.planning_entries)" :key="entry.id">
                             <td data-label="Date" class="planning-date">{{ entry.date }}</td>
                             <td data-label="Animateur" class="planning-educator">{{ entry.educator_name }}</td>
                             <td data-label="Groupe" class="planning-section">{{ entry.section_name }}</td>
@@ -109,6 +109,18 @@ export default {
     },
     hideMore: function (contentId, evt) {
       this.show_more_item = null;
+    },
+    getFutureEntries: function (entries) {
+      if (!entries) return [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return entries.filter(entry => {
+        // Parse date in dd/mm/yyyy format
+        const [day, month, year] = entry.date.split('/');
+        const entryDate = new Date(year, month - 1, day);
+        return entryDate >= today;
+      });
     },
   },
   computed: {

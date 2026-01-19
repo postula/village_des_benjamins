@@ -1,0 +1,292 @@
+{
+  "planning": [
+    {
+      "date": "2026-01-07",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Bricolage : Cadre ours"},
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "Atelier culinaire : Galette des rois"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet --> Bijoux : Saint-Valentin"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet --> Bijoux : Saint-Valentin"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Activité sportive : 60 secondes chronos (défis)"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Bricolage thématique : Nouvelle année"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-01-14",
+      "activities": [
+        {"animateur": "Elisabeth", "groupe": "Les maternelles", "activite": "PAQ --> Création d'outil pour apaiser ses émotions : Bac sensoriel"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "PAQ --> Zoothérapie : Création d'une mangeoire"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ --> Bien dans son corps : Séance de Brain Gym"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ --> Sortie : Bibliothèque de Grâce-Hollogne sur le thème des émotions (1ère, 2ème et 3ème années)"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "PAQ --> Sortie : Bibliothèque de Grâce-Hollogne sur le thème des émotions (1ère, 2ème et 3ème années)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Psychomotricité : Parcours du combattant (obstacles à franchir)"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-01-21",
+      "activities": [
+        {"animateur": "Elisabeth", "groupe": "Les maternelles", "activite": "PAQ --> Jeux de société sur les émotions : Le monstre des émotions"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "PAQ --> Zoothérapie : Création d'une mangeoire (suite et fin)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Activité sportive \"Paint Ball\" - Capture du drapeau (créer des cachettes + s'affronter en équipe)"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Bricolage : Oeil porte-bonheur avec rondin de bois"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet --> Macramé : Boucles d'oreilles"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet --> Macramé : Boucles d'oreilles"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-01-28",
+      "activities": [
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": "Projet --> Récup. boîtes à oeufs : Mon ours polaire 3D"},
+        {"animateur": "Elisabeth", "groupe": "Les maternelles", "activite": "Bricolage : Papillons"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Projet --> Création d'un jeu en bois"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ --> Séance de relaxation (étirements, respiration...)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Grand jeu géant : Bataille navale"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ --> Bien dans son assiette : Jeux de découvertes sur la pyramide alimentaire"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-02-04",
+      "activities": [
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "Activité sportive : Jeux Olympiques"},
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Activité culinaire :"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet --> Collation saine : BN"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Projet --> Création d'un jeu en bois (suite et fin)"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet --> Bricolage élaboré : Création d'un masque en plâtre"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ --> Bien dans son assiette : Jeux de découverte sur la pyramide alimentaire"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-02-11",
+      "activities": [
+        {"animateur": "Elisabeth", "groupe": "Les maternelles", "activite": "Création artistique : Savons"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique : Nouvel An Chinois"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ --> Improvisation théâtrale : échauffement corporel + jeux"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet --> Bricolage élaboré : Suspension \"Sens Bon\" pour les armoires"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Activité de construction et de logique : Lego Master"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ --> Rencontre d'un public différent : Ateliers intergénérationnels"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-03-04",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Bricolage : Thermomètre des 4 saisons"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Création artistique : Bracelet + porte-bijoux"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Création artistique : Lapin en laine"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Haute couture : Customisation de vieux T-shirt"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Jeu géant : Le jeu de l'oie (plateau et défis)"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> L'art dans tous ses états : Miroir en Mosaïque"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-03-11",
+      "activities": [
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": "Projet -> Les trésors de la mer : Musicothérapie et fresque géante"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Atelier culinaire : Brownies aux 3 chocolats"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ -> Impro. théâtrale : Sortie pièce de théâtre (musée de la vie Wallonne - Robin des bois, le seigneur au grand coeur (3.50 € par personne)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "PAQ -> Le sport dans tous ses états : Sport de raquette"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> L'art dans tous ses états : Miroir en Mosaïque"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet -> Collation saine : Twix maison"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-03-18",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "PAQ -> Musicothérapie : Peindre au son de la musique (le printemps)"},
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "PAQ -> Le Sport dans tous ses états : Sport de raquette"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "PAQ -> Rencontre et échange avec un public différent : Activité sur le printemps à la maison de repos Seneritas Palace (4ème, 5ème et 6ème)."},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "PAQ -> Rencontre et échange avec un public différent : Activité sur le printemps à la maison de repos Seneritas Palace (4ème, 5ème et 6ème)"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ -> Bien dans son assiette : \"Où trouver les bons aliments ?\""},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Bricolage thématique : Vase en fleurs du printemps"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-03-25",
+      "activities": [
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "PAQ -> Bien dans son corps : \"Brain Gym\""},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Technique artistique : Peinture sur aluminium"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "PAQ -> Jeux de société sur les émotions : vice-vers"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "PAQ -> Bien-être cosmétique : Création de boules de bain"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ -> Sport et relaxation : Sortie Kung-Fu (4ème, 5ème et 6ème)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "PAQ -> Sport et relaxation : Sortie Kung-Fu (4ème, 5ème et 6ème)"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-04-01",
+      "activities": [
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "Atelier culinaire : Banana Bread"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique : Poisson d'avril"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet -> Couture : Poule ou lapin"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Bricolage : Bouquet de fleurs dans un oeuf de Pâques"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Couture : Poule ou lapin"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Activité sportive : Olympiade mix"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-04-08",
+      "activities": [
+        {"animateur": "Elisabeth", "groupe": "Les maternelles", "activite": "Projet -> Collation saine : Mikado maison"},
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "Jeu de piste/Chasse au trésor"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ -> Zoothérapie : Visite chez un apiculteur"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Bricolage : Attrape soleil papillon"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "PAQ -> Zoothérapie : Visite chez un apiculteur"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Haute couture : Sac en tissu à décorer"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-04-15",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Atelier culinaire : Cake au chocolat"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique : Fête des mamans"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "PAQ -> Création d'outil pour apaiser ses émotions : Bouteille sensorielle"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des mamans (porte-plante)"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des mamans (porte-plante)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Jeu géant : Emission de télévision (vendredi tout est permis) - Défis ludiques"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-04-22",
+      "activities": [
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "Activité sportive : Parcours de vélos (circuit - signalisation)"},
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique : Fête des mamans (suite et fin)"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Bricolage -> Fête des mamans : Vitrail Coeur"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des mamans (porte-plante)"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des mamans (porte-plante)"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Bricolage thématique : Fête des mamans (Porte maquillage - Décopatch)"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-05-13",
+      "activities": [
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "Activité sportive : Parcours de vélos (circuit - signalisation) suite et fin"},
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "Projet -> L'art dans tous ses états : Cadre avec fleurs séchées"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "PAQ -> Jeux de société sur les émotions"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "PAQ -> Rencontre avec Lore Vandenclee (guerrière du bien-être) - 1ère, 2ème et 3ème"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "PAQ -> Rencontre avec Lore Vandenclee (guerrière du bien-être) - 1ère, 2ème et 3ème"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Projet -> Création d'un jeu en bois"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-05-20",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Projet -> Potager : Préparation de semis"},
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Bricolage : Tableau océan et voilier"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> L'art dans tous ses états : Cadre avec fleurs séchées"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Bricolage élaboré : Création d'un cadre en mosaïque (effet miroir)"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet -> Collation saine : Barquette à la fraise"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Sortie :"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-05-27",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Sortie : Balade et jeux au Terril de Montegnée + jeu de piste"},
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": "Sortie : Balade et jeux au Terril de Montegnée + jeu de piste"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Jeu de piste : Escape Game"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "PAQ -> Le sport dans tous ses états : Sport de ballon (football) découverte et entraînement"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> Potager : visite d'un potager pédagogique"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Projet -> Potager : visite d'un potager pédagogique"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-06-03",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique : Fête des papas -"},
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "Atelier culinaire :"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Bricolage à thème : Grande fresque en 3D sur le printemps"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Bricolage à thème : Grande fresque en 3D sur le printemps"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Bricolage thématique : Fête des papas (bijoux-porte-clés)"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "PAQ -> Le sport dans tous ses états : Sport de ballon (football) - Match/tournoi"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-06-10",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage thématique -> Fête des papas : Création d'une carte"},
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Bricolage à thème : Mémo (fête des papas)"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "PAQ -> Hippothérapie : Sortie : Découverte du cheval"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des papas"},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Projet -> Jeu de piste : Course d'orientation"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "Projet -> Macramé : Fête des papas"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-06-17",
+      "activities": [
+        {"animateur": "Natacha", "groupe": "Les maternelles", "activite": "Atelier culinaire : Salade de fruits"},
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "PAQ -> Le sport dans tous ses états : Découverte d'un sport collectif (1)"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "PAQ -> Visite d'une ferme"},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": "PAQ -> Visite d'une ferme"},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Jeux extérieurs : Ping-Pong + volley"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Trésors de la mer : Création d'une suspension"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-06-24",
+      "activities": [
+        {"animateur": "Maxime", "groupe": "Les maternelles", "activite": "PAQ -> Le sport dans tous ses états : Découverte d'un sport collectif (2)"},
+        {"animateur": "Frédérique", "groupe": "Les maternelles", "activite": "Jeux extérieurs : Parcours, courses..."},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": "Projet -> Couture : Rencontre avec une couturière"},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": "Projet -> Grand jeu : Kho-Lanta (épreuves entre 2 équipes)"},
+        {"animateur": "Gulistan", "groupe": "Les primaires", "activite": "Projet -> Couture : Rencontre avec une couturière"},
+        {"animateur": "Sabrina", "groupe": "Les primaires", "activite": "Projet -> Potager : Préparation du potager et plantation des semis"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-07-01",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": ""},
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": ""},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": ""}
+      ],
+      "renfort_devoirs": false
+    },
+    {
+      "date": "2026-08-26",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": "Bricolage : Porte-Crayons pour la rentrée"},
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": ""},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": "Parole aux enfants -> Choix et votes : Mon activité préférée"}
+      ],
+      "renfort_devoirs": true
+    },
+    {
+      "date": "2026-09-02",
+      "activities": [
+        {"animateur": "Sabrina", "groupe": "Les maternelles", "activite": ""},
+        {"animateur": "Gulistan", "groupe": "Les maternelles", "activite": ""},
+        {"animateur": "Natacha", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Elisabeth", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Frédérique", "groupe": "Les primaires", "activite": ""},
+        {"animateur": "Maxime", "groupe": "Les primaires", "activite": ""}
+      ],
+      "renfort_devoirs": true
+    }
+  ]
+}

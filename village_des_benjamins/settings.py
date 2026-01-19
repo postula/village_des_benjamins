@@ -198,9 +198,27 @@ SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
 CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
 
+# Proxy header configuration for nginx reverse proxy
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # Add Vue dev server to CORS allowed origins in development
 if DEBUG:
     CORS_ALLOWED_ORIGINS.extend(
+        [
+            "http://localhost:8080",
+            "http://127.0.0.1:8080",
+        ]
+    )
+
+# CSRF trusted origins for proxy setup
+CSRF_TRUSTED_ORIGINS = [
+    "https://vdb.postu.la",
+    "https://www.vdb.postu.la",
+]
+
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend(
         [
             "http://localhost:8080",
             "http://127.0.0.1:8080",

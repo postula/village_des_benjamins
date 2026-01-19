@@ -252,13 +252,13 @@ if AWS_S3_MINIO:
     AWS_QUERYSTRING_AUTH = True
     AWS_S3_FILE_OVERWRITE = False
 
-# Fastmail SMTP Configuration
+# SMTP Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.fastmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv("FASTMAIL_USERNAME", "lois@postu.la")
-EMAIL_HOST_PASSWORD = os.getenv("FASTMAIL_PASSWORD", "")
+EMAIL_HOST = os.getenv("SMTP_HOST", "smtp.fastmail.com")
+EMAIL_PORT = int(os.getenv("SMTP_PORT", "587"))
+EMAIL_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
+EMAIL_HOST_USER = os.getenv("SMTP_USERNAME", "")
+EMAIL_HOST_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("MAIL_FROM_ADDRESS", "info@village-des-benjamins.be")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL  # Django error emails sender
 

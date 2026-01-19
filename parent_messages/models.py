@@ -1,5 +1,4 @@
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from django.core.mail import EmailMessage
 from django.conf import settings
 from logging import getLogger
 from django.db import models
@@ -103,24 +102,24 @@ def send_message_notification(sender, created, **kwargs):
     html_contact_content = html_contact_template.format(
         contactName=contactName, contactMail=contactMail, contactMessage=contactMessage
     )
-    thanks_message = Mail(
-        from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=contactMail,
-        subject="Formulaire de contact",
-        html_content=html_thanks_content,
-    )
-    contact_message = Mail(
-        from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=list(
-            Config.objects.first().recipients.values_list("email", flat=True)
-        ),
-        subject=Config.objects.first().subject,
-        html_content=html_contact_content,
-    )
-    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     try:
-        sg.send(thanks_message)
-        sg.send(contact_message)
+        thanks_message = EmailMessage(
+            subject="Formulaire de contact",
+            body=html_thanks_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[contactMail],
+        )
+        thanks_message.content_subtype = "html"
+        thanks_message.send()
+
+        contact_message = EmailMessage(
+            subject=Config.objects.first().subject,
+            body=html_contact_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=list(Config.objects.first().recipients.values_list("email", flat=True)),
+        )
+        contact_message.content_subtype = "html"
+        contact_message.send()
     except Exception as e:
         logger.exception(e)
         sentry_sdk.capture_exception(e)

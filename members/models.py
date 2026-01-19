@@ -20,7 +20,7 @@ from calendar import monthrange
 from datetime import date, datetime, timedelta
 import sentry_sdk
 
-from sendgrid import SendGridAPIClient, Mail
+from django.core.mail import EmailMessage
 
 from section.models import Section
 from ordered_model.models import OrderedModel
@@ -267,15 +267,15 @@ def send_registration_notification(sender, created, **kwargs):
     html_content = html_template.format(
         name=name,
     )
-    message = Mail(
-        from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=obj.email,
-        subject=f"Inscription sur le site du Village des Benjamins",
-        html_content=html_content,
-    )
-    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     try:
-        response = sg.send(message)
+        message = EmailMessage(
+            subject=f"Inscription sur le site du Village des Benjamins",
+            body=html_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[obj.email],
+        )
+        message.content_subtype = "html"
+        message.send()
     except Exception as e:
         logger.exception(e)
         sentry_sdk.capture_exception(e)

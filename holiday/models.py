@@ -3,8 +3,7 @@ from pprint import pprint
 
 from django.db.models import Count, F
 from django.utils.safestring import mark_safe
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from django.core.mail import EmailMessage
 from django.db import models
 from django_better_admin_arrayfield.models.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
@@ -398,23 +397,15 @@ def _send_registration_notification(obj):
         date_li=date_li,
         child_first_name=obj.child.first_name,
     )
-    message = Mail(
-        from_email=settings.SENDGRID_FROM_MAIL,
-        to_emails=obj.child.parent.email,
-        subject=f"Réservation pour les vacances de {obj.holiday.name} pour {child_name}",
-        html_content=html_content.format(
-            holiday_name=obj.holiday.name,
-            child_name=child_name,
-            payment_communication=payment_communication,
-            cost=obj.cost,
-            child_gender_accord=child_gender_accord,
-            parent_name=parent_name,
-            date_li=date_li,
-        ),
-    )
-    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     try:
-        response = sg.send(message)
+        message = EmailMessage(
+            subject=f"Réservation pour les vacances de {obj.holiday.name} pour {child_name}",
+            body=html_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[obj.child.parent.email],
+        )
+        message.content_subtype = "html"
+        message.send()
     except Exception as e:
         logger.exception(e)
         sentry_sdk.capture_exception(e)

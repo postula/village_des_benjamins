@@ -48,7 +48,7 @@ def password_reset_token_created(
         # message:
         email_plaintext_message,
         # from:
-        settings.SENDGRID_FROM_MAIL,
+        settings.DEFAULT_FROM_EMAIL,
         # to:
         [reset_password_token.user.email],
     )

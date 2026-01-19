@@ -227,7 +227,7 @@ DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = 200
 DRF_RESET_EMAIL = {
     "EMAIL_EXPIRATION_TIME": 24,
     "REDIRECT_LINK": f"{CORS_ALLOWED_ORIGINS[0]}/#/forgot_finalize",
-    "EMAIL_PROVIDER": "village_des_benjamins.providers.SendgridEmailProvider",
+    "EMAIL_PROVIDER": "village_des_benjamins.providers.SMTPEmailProvider",
     "CONTENT_PROVIDER": "reset_password.models.DefaultContentProvider",
 }
 
@@ -252,17 +252,14 @@ if AWS_S3_MINIO:
     AWS_QUERYSTRING_AUTH = True
     AWS_S3_FILE_OVERWRITE = False
 
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
-
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = "apikey"  # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+# Fastmail SMTP Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.fastmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-SENDGRID_FROM_MAIL = os.getenv(
-    "MAIL_FROM_ADDRESS",
-)
+EMAIL_HOST_USER = os.getenv("FASTMAIL_USER", "info@village-des-benjamins.be")
+EMAIL_HOST_PASSWORD = os.getenv("FASTMAIL_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.getenv("MAIL_FROM_ADDRESS", "info@village-des-benjamins.be")
 
 if not DEBUG:
     sentry_sdk.init(

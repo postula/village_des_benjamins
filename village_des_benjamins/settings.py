@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
@@ -196,6 +197,16 @@ REST_FRAMEWORK = {
 SECURE_SSL_REDIRECT = os.getenv("SSL", "false") == "true"
 CORS_SCHEME = "https" if SECURE_SSL_REDIRECT else "http"
 CORS_ALLOWED_ORIGINS = list(map(lambda x: f"{CORS_SCHEME}://{x}", ALLOWED_HOSTS))
+
+# Add Vue dev server to CORS allowed origins in development
+if DEBUG:
+    CORS_ALLOWED_ORIGINS.extend(
+        [
+            "http://localhost:8080",
+            "http://127.0.0.1:8080",
+        ]
+    )
+
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -265,7 +276,7 @@ if not DEBUG:
 
 TINYMCE_DEFAULT_CONFIG = {
     "menubar": "file edit view insert format tools table help",
-    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
+    "plugins": "autoresize,advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
     "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
     "code,help,wordcount",
     "toolbar": "undo redo | formatselect | "
@@ -276,6 +287,10 @@ TINYMCE_DEFAULT_CONFIG = {
     "tableinsertcolbefore tableinsertcolafter tabledeletecol"
     "bullist numlist outdent indent | "
     "removeformat | help",
+    "resize": "both",
+    "min_height": 300,
+    "min_width": 400,
+    "autoresize_bottom_margin": 50,
 }
 
 if DEBUG:

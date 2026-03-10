@@ -274,13 +274,14 @@ if AWS_S3_MINIO:
     AWS_S3_FILE_OVERWRITE = False
 
 # SMTP Configuration
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "village_des_benjamins.backends.ReplyToEmailBackend"
 EMAIL_HOST = os.getenv("SMTP_HOST", "smtp.fastmail.com")
 EMAIL_PORT = int(os.getenv("SMTP_PORT", "587"))
 EMAIL_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
 EMAIL_HOST_USER = os.getenv("SMTP_USERNAME", "")
 EMAIL_HOST_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("MAIL_FROM_ADDRESS", "info@village-des-benjamins.be")
+DEFAULT_REPLY_TO = os.getenv("REPLY_TO_EMAIL", "village.des.benjamins@proximus.be")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL  # Django error emails sender
 
 if not DEBUG:

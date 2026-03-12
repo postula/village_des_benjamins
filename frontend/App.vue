@@ -7,26 +7,14 @@
       </fade-transition>
     </main>
     <router-view name="footer"></router-view>
-    <cookie-law
-      @accept="acceptCookie"
-      buttonText="J'ai compris!"
-      message="Ce site Web utilise des cookies pour vous garantir la meilleure expérience possible sur notre site."
-    >
-    </cookie-law>
   </div>
 </template>
 <script>
 import { FadeTransition } from "vue2-transitions";
-import CookieLaw from "vue-cookie-law";
 
 export default {
   components: {
     FadeTransition,
-    CookieLaw,
-  },
-  methods: {
-    acceptCookie() {},
-    refuseCookie() {},
   },
 };
 </script>

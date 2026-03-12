@@ -121,6 +121,7 @@
                   MAIL_FROM_ADDRESS = "noreply@village-des-benjamins.local";
 
                   # Storage (MinIO)
+                  # Local MinIO defaults (not real AWS credentials)
                   AWS_ACCESS_KEY_ID = "minioadmin";
                   AWS_SECRET_ACCESS_KEY = "minioadmin";
                   AWS_S3_REGION_NAME = "us-east-1";

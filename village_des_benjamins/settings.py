@@ -25,12 +25,10 @@ BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    "SECRET_KEY", "bk7%s=p+f5uez#u!2qir!mcpk0)x4(-0%vr#s9c(dx*&#q(-41"
-)
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "true") == "true"
+DEBUG = os.getenv("DEBUG", "false") == "true"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS", "village-des-benjamins.be,localhost,localhost:8000,localhost:8080"
@@ -80,7 +78,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "village_des_benjamins.urls"
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
 }
 
 TEMPLATES_DIR = BASE_DIR / "dist"
@@ -124,9 +122,7 @@ WSGI_APPLICATION = "village_des_benjamins.wsgi.application"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgresql://postgres:postgres@localhost/postgres"
-    )
+    "default": dj_database_url.parse(os.environ["DATABASE_URL"])
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
@@ -291,7 +287,7 @@ if not DEBUG:
         traces_sample_rate=0.05,
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True,
+        send_default_pii=False,
     )
 
 TINYMCE_DEFAULT_CONFIG = {

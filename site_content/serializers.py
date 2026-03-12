@@ -4,6 +4,8 @@ from rest_framework import serializers
 # import datetime
 # from django.core.exceptions import ObjectDoesNotExist
 
+from village_des_benjamins.sanitize import sanitize_html
+
 from site_content.models import (
     Content,
     SiteSection,
@@ -18,6 +20,11 @@ class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ["id", "date", "description"]
         model = News
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
 
 
 class SiteSectionSerializer(serializers.ModelSerializer):
@@ -34,6 +41,11 @@ class SiteSectionSerializer(serializers.ModelSerializer):
             "background",
         ]
         model = SiteSection
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
 
 
 class ContentPlanningSerializer(serializers.ModelSerializer):
@@ -68,3 +80,9 @@ class ContentSerializer(serializers.ModelSerializer):
             "planning_entries",
         ]
         model = Content
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        data["show_more_content"] = sanitize_html(data.get("show_more_content"))
+        return data

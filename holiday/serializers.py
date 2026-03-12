@@ -15,6 +15,7 @@ from holiday.models import (
     SectionProgram,
 )
 from members.models import User
+from village_des_benjamins.sanitize import sanitize_html
 
 
 class AnimateurSerializer(serializers.ModelSerializer):
@@ -41,6 +42,11 @@ class SectionProgramSerializer(serializers.ModelSerializer):
         ]
         model = SectionProgram
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
+
 
 class OutingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -56,6 +62,11 @@ class OutingSerializer(serializers.ModelSerializer):
             "transport",
         ]
         model = Outing
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
 
 
 class HolidaySectionSerializer(serializers.ModelSerializer):
@@ -90,6 +101,11 @@ class HolidaySectionSerializer(serializers.ModelSerializer):
             "description",
         ]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
+
 
 class HolidaySerializer(serializers.ModelSerializer):
     sections = serializers.SerializerMethodField("get_sections_list")
@@ -116,6 +132,11 @@ class HolidaySerializer(serializers.ModelSerializer):
             "book_by_day",
             "sections",
         ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["description"] = sanitize_html(data.get("description"))
+        return data
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

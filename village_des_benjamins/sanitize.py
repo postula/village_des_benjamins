@@ -36,7 +36,7 @@ ALLOWED_TAGS = {
 }
 
 ALLOWED_ATTRIBUTES = {
-    "*": {"class"},
+    "*": {"class", "style"},
     "a": {"href", "title", "target"},
     "img": {"src", "alt", "width", "height"},
     "td": {"colspan", "rowspan"},

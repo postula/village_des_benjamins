@@ -37,7 +37,7 @@ ALLOWED_TAGS = {
 
 ALLOWED_ATTRIBUTES = {
     "*": {"class"},
-    "a": {"href", "title", "target", "rel"},
+    "a": {"href", "title", "target"},
     "img": {"src", "alt", "width", "height"},
     "td": {"colspan", "rowspan"},
     "th": {"colspan", "rowspan"},
@@ -53,5 +53,6 @@ def sanitize_html(value):
         value,
         tags=ALLOWED_TAGS,
         attributes=ALLOWED_ATTRIBUTES,
+        link_rel=None,
         strip_comments=True,
     )

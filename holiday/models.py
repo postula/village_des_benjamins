@@ -86,6 +86,8 @@ class HolidaySection(models.Model):
     description = HTMLField(verbose_name=("description"), blank=True, null=True)
 
     def _remaining_capacity(self):
+        if not self.holiday_id:
+            return "N/A"
         # 1) count weekdays
         num_days = 0
         d = self.holiday.start_date
@@ -111,6 +113,8 @@ class HolidaySection(models.Model):
     remaining_capacity = property(_remaining_capacity)
 
     def _remaining_capacity_table(self):
+        if not self.holiday_id:
+            return ""
         # 1) build your list of working dates
         dates = []
         d = self.holiday.start_date
@@ -296,6 +300,8 @@ class Outing(models.Model):
     transport = models.CharField(_("transport"), max_length=255, blank=True, null=True)
 
     def clean(self):
+        if not self.section_holiday_id:
+            return
         start_date = self.section_holiday.holiday.start_date
         end_date = self.section_holiday.holiday.end_date
         has_errors = False

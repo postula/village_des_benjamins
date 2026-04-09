@@ -1,5 +1,5 @@
 import Vue from "vue";
-// import * as Sentry from "@sentry/vue";
+import * as Sentry from "@sentry/vue";
 import VueHtmlToPaper from "vue-html-to-paper";
 import App from "./App.vue";
 import router from "./router";
@@ -30,6 +30,14 @@ Vue.use(Argon);
 Vue.use(VueAxios, Axios);
 Vue.mixin(titleMixin);
 Vue.use(VueHtmlToPaper, print_options);
+
+Sentry.init({
+  Vue,
+  dsn: process.env.VUE_APP_SENTRY_DSN,
+  autoSessionTracking: false,
+  tracesSampleRate: 0.01,
+});
+
 new Vue({
   router,
   store,

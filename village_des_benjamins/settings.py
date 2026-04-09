@@ -284,9 +284,8 @@ if not DEBUG:
     sentry_sdk.init(
         dsn=os.getenv("SENTRY_DSN", None),
         integrations=[DjangoIntegration()],
-        traces_sample_rate=0.05,
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
+        auto_session_tracking=False,
+        traces_sample_rate=0.01,
         send_default_pii=False,
     )
 

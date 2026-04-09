@@ -148,7 +148,7 @@ Production uses:
 - PostgreSQL database
 - SendGrid for email delivery
 - AWS S3 for file storage
-- Sentry for error tracking
+- GlitchTip for error tracking
 
 Required environment variables:
 - `SECRET_KEY`

@@ -285,7 +285,7 @@ if not DEBUG:
         dsn=os.getenv("SENTRY_DSN", None),
         integrations=[DjangoIntegration()],
         auto_session_tracking=False,
-        traces_sample_rate=0.01,
+        traces_sample_rate=1,
         send_default_pii=False,
     )
 

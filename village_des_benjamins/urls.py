@@ -24,6 +24,7 @@ from members.views import UserViewSet, ChildViewSet, TeamViewSet
 from holiday.views import HolidayViewSet, RegistrationViewSet
 from site_content.views import ContentViewSet, SiteSectionViewSet, NewsViewSet
 from parent_messages.views import MessageViewSet
+from village_des_benjamins.views import health_check
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenVerifyView,
@@ -56,6 +57,7 @@ urlpatterns = [
         include("django_rest_passwordreset.urls", namespace="reset_password"),
     ),
     path("tinymce/", include("tinymce.urls")),
+    path("api/health/", health_check, name="health_check"),
     path(
         "",
         TemplateView.as_view(template_name="index.html"),

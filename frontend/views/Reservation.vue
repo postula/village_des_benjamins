@@ -294,6 +294,7 @@
             </div>
           </div>
         </card>
+        <div data-testid="reservation-modal">
         <modal
           :show.sync="reservation_modal.show"
           modal-classes="modal-dialog-centered modal-lg"
@@ -417,6 +418,7 @@
             </base-button>
           </template>
         </modal>
+        </div>
       </div>
     </section>
   </div>

@@ -155,7 +155,15 @@ node_modules/
 
 # ignore log files and databases
 *.sql
+!e2e-seed.sql
 *.sqlite
+
+# Playwright
+playwright-report/
+test-results/
+
+# Planning docs
+plan.md
 
 # End of https://www.toptal.com/developers/gitignore/api/wordpress,django
 dist/

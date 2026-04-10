@@ -1,13 +1,13 @@
 <template>
   <header class="header-global" style="position:relative">
     <base-nav class="navbar-main" transparent type="" effect="light" expand>
-      <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
+      <router-link slot="brand" class="navbar-brand mr-lg-5" to="/" data-testid="nav-logo">
         <img class="logo" src="@/assets/brand/village_des_benjamins.png" alt="logo" />
       </router-link>
 
       <ul class="navbar-nav  align-items-lg-center">
         <li class="nav-item">
-          <base-dropdown tag="li" title="Accueil">
+          <base-dropdown tag="li" title="Accueil" data-testid="nav-accueil">
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#service'}">Nos services</router-link>
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#objectif'}">Missions et objectifs</router-link>
             <router-link class="dropdown-item" :to="{name: 'landing', hash: '#team'}">Notre équipe</router-link>
@@ -16,12 +16,12 @@
           </base-dropdown>
         </li>
         <li class="nav-item">
-          <router-link to="/reservation" class="nav-link nav-link-icon">
+          <router-link to="/reservation" class="nav-link nav-link-icon" data-testid="nav-reservation">
             Réservation
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/children" class="nav-link nav-link-icon">
+          <router-link to="/children" class="nav-link nav-link-icon" data-testid="nav-enfants">
             Enfants
           </router-link>
         </li>
@@ -35,6 +35,7 @@
             rel="noopener"
             data-toggle="tooltip"
             title="Aimez-nous sur Facebook"
+            data-testid="nav-facebook"
           >
             <i class="fa fa-facebook-square"></i>
             <span class="nav-link-inner--text d-lg-none">Facebook</span>
@@ -42,16 +43,16 @@
         </li>
         <template v-if="is_authenticated">
           <li class="nav-item">
-            <a href="#" class="nav-link nav-link-icon" @click="logout">
+            <a href="#" class="nav-link nav-link-icon" @click="logout" data-testid="nav-deconnexion">
               Déconnexion
             </a>
           </li>
         </template>
         <template v-else>
-          <router-link to="/login" class="nav-link nav-link-icon">
+          <router-link to="/login" class="nav-link nav-link-icon" data-testid="nav-connexion">
             Connexion
           </router-link>
-          <router-link to="/register" class="nav-link nav-link-icon">
+          <router-link to="/register" class="nav-link nav-link-icon" data-testid="nav-register">
             S'enregistrer
           </router-link>
         </template>

@@ -13,7 +13,7 @@
     </section>
     <section class="section section-skew">
       <div class="container">
-        <card shadow class="card-profile mt--300" no-body>
+        <card shadow class="card-profile mt--300" no-body data-testid="profile-card">
           <div class="px-4">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
@@ -39,7 +39,7 @@
             </div>
             <div class="text-center mt-5">
               <h3>{{ currentUser.first_name }} {{ currentUser.last_name }}</h3>
-              <div class="h6 font-weight-300">
+              <div class="h6 font-weight-300" data-testid="user-email">
                 {{ currentUser.email }}
               </div>
             </div>
@@ -93,7 +93,7 @@
                     </div>
                   </div>
                   <div class="d-none d-md-block">
-                    <table v-if="numberOfChildren > 0" class="table">
+                    <table v-if="numberOfChildren > 0" class="table" data-testid="children-table">
                       <thead>
                         <tr>
                           <th scope="col">Prénom</th>
@@ -150,11 +150,12 @@
               </div>
               <div class="row justify-content-center mt-5">
                 <div class="col-lg-9">
-                  <button class="btn btn-primary" @click="addChildForm">
+                  <button class="btn btn-primary" @click="addChildForm" data-testid="add-child-btn">
                     Ajouter un enfant
                   </button>
                 </div>
               </div>
+              <div data-testid="child-modal">
               <modal :show.sync="modal.show">
                 <template slot="header">
                   <h5>
@@ -239,6 +240,8 @@
                   </base-button>
                 </template>
               </modal>
+              </div>
+              <div data-testid="picture-modal">
               <modal :show.sync="picture_modal.show">
                 <template slot="header">
                   <h5>Modifier ma photo</h5>
@@ -302,6 +305,7 @@
                   >
                 </template>
               </modal>
+              </div>
             </div>
           </div>
         </card>

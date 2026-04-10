@@ -44,7 +44,7 @@
               </form>
             </template>
           </card>
-          <div class="row mt-3">
+          <div class="row mt-3" data-testid="forgot-links">
             <div class="col-6">
               <router-link to="login" class="text-light">
                 <small>Connexion</small>

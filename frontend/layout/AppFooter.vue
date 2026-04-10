@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer has-cards">
+  <footer class="footer has-cards" data-testid="footer">
     <div class="container">
       <div class="row align-items-center justify-content-md-between">
         <div class="col-md-6">

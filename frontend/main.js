@@ -35,7 +35,6 @@ Sentry.init({
   Vue,
   dsn: process.env.VUE_APP_SENTRY_DSN,
   autoSessionTracking: false,
-  tracesSampleRate: 1,
 });
 
 new Vue({
